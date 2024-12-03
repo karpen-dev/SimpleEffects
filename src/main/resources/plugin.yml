@@ -1,0 +1,9 @@
+name: SimpleEffects
+version: '1.0.0'
+main: com.karpen.simpleEffects.SimpleEffects
+api-version: '1.21'
+commands:
+  eff:
+    description: Управление эффектами
+    usage: /eff
+    permission: simpleEffects.eff.all

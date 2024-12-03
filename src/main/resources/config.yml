@@ -1,0 +1,23 @@
+# SimpleEffects - v1.0.0 https://karpen-dev/simpleeffects
+# karpen-dev https://github.com/karpen-dev/
+
+# Only russian locale
+
+# Количество частиц
+count: 10
+
+# Время повтора появления частиц от 0 до 20
+speed: 0
+
+# Сообщения
+selected-cherry: "Эффект вишни активирован"
+selected-endRod: "Эффект энд род активирован"
+selected-totem: "Эффект тотема активирован"
+
+disable-cherry: "Эффект вишни выключен"
+disable-endRod: "Эффект энд род выключен"
+disable-totem: "Эффект тотем выключен"
+
+err-console: "Эту команду может отправлять только игрок"
+err-args: "Используйте /eff <cherry|endrod|totem>"
+err-command: "Неизвестная команда. Используйте /eff <cherry|endrod|totem>"
