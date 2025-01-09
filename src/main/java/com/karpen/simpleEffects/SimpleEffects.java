@@ -2,26 +2,30 @@ package com.karpen.simpleEffects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.block.data.type.Bed;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public final class SimpleEffects extends JavaPlugin implements Listener {
+public final class SimpleEffects extends JavaPlugin implements Listener, CommandExecutor, TabCompleter {
 
     private int count;
-    private int speed;
 
     private String msgCherry;
     private String msgEndRod;
@@ -39,10 +43,6 @@ public final class SimpleEffects extends JavaPlugin implements Listener {
     private final Set<Player> endRodPlayers = new HashSet<>();
     private final Set<Player> totemPlayers = new HashSet<>();
 
-    private BukkitRunnable cherryTask;
-    private BukkitRunnable endRodTask;
-    private BukkitRunnable totemTask;
-
     @Override
     public void onEnable() {
         loadConfig();
@@ -57,7 +57,6 @@ public final class SimpleEffects extends JavaPlugin implements Listener {
         FileConfiguration config = getConfig();
 
         count = config.getInt("count");
-        speed = config.getInt("speed");
 
         msgCherry = config.getString("selected-cherry");
         msgEndRod = config.getString("selected-endRod");
@@ -72,52 +71,13 @@ public final class SimpleEffects extends JavaPlugin implements Listener {
         errCommand = config.getString("err-command");
     }
 
-    private void startCherryEffects(Player player){
-        cherryTask = new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (cherryPlayers.contains(player)){
-                    player.getWorld()
-                            .spawnParticle(Particle.CHERRY_LEAVES, player.getLocation().add(0, 1, 0), count, 0.5, 1, 0.5, 0);
-                }
-            }
-        };
-        cherryTask.runTaskTimer(this, speed, 20);
-    }
-
-    private void startEndRodEffects(Player player){
-        endRodTask = new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (endRodPlayers.contains(player)){
-                    player.getWorld()
-                            .spawnParticle(Particle.END_ROD, player.getLocation().add(0, 1, 0), count, 0.5, 1, 0.5, 0);
-                }
-            }
-        };
-        endRodTask.runTaskTimer(this, speed, 20);
-    }
-
-    private void startTotemEffects(Player player){
-        totemTask = new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (totemPlayers.contains(player)){
-                    player.getWorld()
-                            .spawnParticle(Particle.TOTEM_OF_UNDYING, player.getLocation().add(0, 1, 0), count, 0.5, 1, 0.5, 0);
-                }
-            }
-        };
-        totemTask.runTaskTimer(this, speed, 20);
+    private void spawnEff(Location location, Particle particle){
+        location.getWorld().spawnParticle(particle, location, count, 0.5, 0.5, 0.5);
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
-
-        startCherryEffects(player);
-        startTotemEffects(player);
-        startEndRodEffects(player);
 
         cherryPlayers.remove(player);
         totemPlayers.remove(player);
@@ -133,22 +93,47 @@ public final class SimpleEffects extends JavaPlugin implements Listener {
         endRodPlayers.remove(player);
     }
 
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event){
+        Player player = event.getPlayer();
+
+        double oldX = event.getFrom().getX();
+        double oldY = event.getFrom().getY();
+        double oldZ = event.getFrom().getZ();
+
+        double newX = event.getTo().getX();
+        double newY = event.getTo().getY();
+        double newZ = event.getTo().getZ();
+
+        if (oldX != newX || oldY != newY || oldZ != newZ){
+            if (cherryPlayers.contains(player)){
+                spawnEff(player.getLocation(), Particle.CHERRY_LEAVES);
+            }
+            if (endRodPlayers.contains(player)){
+                spawnEff(player.getLocation(), Particle.END_ROD);
+            }
+            if (totemPlayers.contains(player)){
+                spawnEff(player.getLocation(), Particle.TOTEM_OF_UNDYING);
+            }
+        }
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)){
+            sender.sendMessage(ChatColor.RED + errConsole);
+            return true;
+        }
+
+        Player player = (Player) sender;
+
         if (command.getName().equalsIgnoreCase("eff")){
-            if (!(sender instanceof Player)){
-                sender.sendMessage(ChatColor.RED + errConsole);
-                return true;
-            }
-
-            Player player = (Player) sender;
-
             if (args.length == 0){
-                player.sendMessage(ChatColor.GREEN + errArgs);
+                player.sendMessage(ChatColor.RED + errArgs);
                 return true;
             }
 
-            switch (args[0].toLowerCase()) {
+            switch (args[0].toLowerCase()){
                 case "cherry":
                     return activeCherry(player);
                 case "endrod":
@@ -169,7 +154,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener {
         if (cherryPlayers.contains(player)){
             cherryPlayers.remove(player);
             player.sendMessage(ChatColor.GREEN + msgDisCherry);
-        } else {
+        } else{
             cherryPlayers.add(player);
             player.sendMessage(ChatColor.GREEN + msgCherry);
         }
@@ -204,9 +189,24 @@ public final class SimpleEffects extends JavaPlugin implements Listener {
         return true;
     }
 
-    private boolean errCommand(Player player) {
+    private boolean errCommand(Player player){
         player.sendMessage(ChatColor.RED + errCommand);
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> suggestions = new ArrayList<>();
+
+        if (command.getName().equalsIgnoreCase("eff")){
+            if (args.length == 1){
+                suggestions.add("cherry");
+                suggestions.add("endrod");
+                suggestions.add("totem");
+            }
+        }
+
+        return suggestions;
     }
 
     @Override

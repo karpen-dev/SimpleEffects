@@ -4,6 +4,7 @@ main: com.karpen.simpleEffects.SimpleEffects
 api-version: '1.21'
 commands:
   eff:
-    description: Управление эффектами
-    usage: /eff
-    permission: simpleEffects.eff.all
+    usage: /eff <cherry | endrod | totem>
+    description: Создает эффект
+    permission: karpen.simpleEffects.eff
+    permission-message: У вас недостаточно прав
