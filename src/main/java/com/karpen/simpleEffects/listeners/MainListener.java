@@ -1,41 +1,18 @@
 package com.karpen.simpleEffects.listeners;
 
-import com.karpen.simpleEffects.Effects;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import com.karpen.simpleEffects.services.Effects;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.projectiles.ProjectileSource;
 
 public class MainListener implements Listener {
 
-    private Effects effects;
+    private final Effects effects;
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
-        Player player = event.getPlayer();
-
-        effects.cherryPlayers.remove(player);
-        effects.endRodPlayers.remove(player);
-        effects.totemPlayers.remove(player);
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event){
-        Player player = event.getPlayer();
-
-        effects.cherryPlayers.remove(player);
-        effects.totemPlayers.remove(player);
-        effects.endRodPlayers.remove(player);
+    public MainListener(Effects effects){
+        this.effects = effects;
     }
 
     @EventHandler

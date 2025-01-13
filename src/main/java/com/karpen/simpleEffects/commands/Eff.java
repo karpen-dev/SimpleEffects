@@ -1,6 +1,6 @@
 package com.karpen.simpleEffects.commands;
 
-import com.karpen.simpleEffects.Effects;
+import com.karpen.simpleEffects.services.Effects;
 import com.karpen.simpleEffects.model.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,13 +10,23 @@ import org.bukkit.entity.Player;
 
 public class Eff implements CommandExecutor {
 
-    Config config;
-    Effects effects = new Effects();
+    private final Config config;
+    private final Effects effects;
+
+    public Eff(Config config, Effects effects) {
+        this.config = config;
+        this.effects = effects;
+    }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (!(commandSender instanceof Player)){
             commandSender.sendMessage(ChatColor.RED + config.getErrConsole());
+            return true;
+        }
+
+        if (config == null){
+            commandSender.sendMessage(ChatColor.RED + "Конфиг не инициализировался");
             return true;
         }
 
