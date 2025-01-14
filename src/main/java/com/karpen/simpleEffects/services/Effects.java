@@ -29,35 +29,56 @@ public class Effects {
     public final Set<Player> endRodPlayers = new HashSet<>();
     public final Set<Player> totemPlayers = new HashSet<>();
 
-    public void savePlayers(Set<Player> players, String playerType){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(datafile, true))){
-            for (Player player : players){
-                writer.write(player.getUniqueId().toString() + "," + playerType);
-                writer.newLine();
+    public void savePlayers(Set<Player> players, String playerType) {
+        for (Player player : players) {
+            if (!isPlayerInFile(player.getUniqueId(), playerType)) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(datafile, true))) {
+                    writer.write(player.getUniqueId().toString() + "," + playerType);
+                    writer.newLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e){
-            e.printStackTrace();
         }
     }
 
-    public Set<Player> loadPlayers(){
+    private boolean isPlayerInFile(UUID playerUUID, String playerType) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(datafile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2) {
+                    String uuidString = parts[0];
+                    String type = parts[1];
+                    if (uuidString.equals(playerUUID.toString()) && type.equals(playerType)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Set<Player> loadPlayers() {
         Set<Player> players = new HashSet<>();
 
-        if (!datafile.exists()){
+        if (!datafile.exists()) {
             return players;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(datafile))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(datafile))) {
             String line;
-            while ((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 2){
+                if (parts.length == 2) {
                     String uuidString = parts[0];
                     String playerType = parts[1];
 
                     Player player = plugin.getServer().getPlayer(UUID.fromString(uuidString));
-                    if (player != null){
-                        switch (playerType){
+                    if (player != null) {
+                        switch (playerType) {
                             case "cherry":
                                 cherryPlayers.add(player);
                                 break;
@@ -72,21 +93,54 @@ public class Effects {
                     }
                 }
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return players;
     }
 
-    public void clearData(){
-        if (datafile.exists()){
+    public void clearData() {
+        if (datafile.exists()) {
             datafile.delete();
         }
     }
 
-    public void spawnEffect(Location location, Particle particle){
+    public void removePlayer(Player player) {
+
+        cherryPlayers.remove(player);
+        endRodPlayers.remove(player);
+        totemPlayers.remove(player);
+
+        Set<Player> allPlayers = loadPlayers();
+        clearData();
+
+        for (Player p : allPlayers) {
+            if (!p.equals(player)) {
+                if (cherryPlayers.contains(p)) {
+                    savePlayers(Set.of(p), "cherry");
+                }
+                if (endRodPlayers.contains(p)) {
+                    savePlayers(Set.of(p), "endrod");
+                }
+                if (totemPlayers.contains(p)) {
+                    savePlayers(Set.of(p), "totem");
+                }
+            }
+        }
+    }
+
+    public void spawnEffect(Location location, Particle particle) {
         Config config = plugin.getConfigObject();
-        location.getWorld().spawnParticle(particle, location, config.getCount(), 0.5, 0.5, 0.5);
+
+        if (particle.equals(Particle.CHERRY_LEAVES)) {
+            location.getWorld().spawnParticle(particle, location, config.getCountCherry(), 0.5, 0.5, 0.5);
+        }
+        if (particle.equals(Particle.END_ROD)) {
+            location.getWorld().spawnParticle(particle, location, config.getCountEndrod(), 0.5, 0.5, 0.5);
+        }
+        if (particle.equals(Particle.TOTEM_OF_UNDYING)) {
+            location.getWorld().spawnParticle(particle, location, config.getCountTotem(), 0.5, 0.5, 0.5);
+        }
     }
 }

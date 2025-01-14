@@ -1,20 +1,53 @@
-# SimpleEffects - v1.0.0 https://karpen-dev/simpleeffects
+# SimpleEffects - v1.1.3 https://karpen-dev/simpleeffects
 # karpen-dev https://github.com/karpen-dev/
 
-# Only russian locale
+# Plugin language - ru, en (jp - soon)
+# Язык плагина - ru, en (jp - скоро)
+lang: en
 
-# Количество частиц
-count: 3
+# Количество частиц вишни
+# Count cherry particle
+count-cherry: 1
+
+# Количество частиц энд род
+# Count endrod particle
+count-endrod: 1
+
+# Количество частиц тотема
+# Count totem particle
+count-totem: 1
 
 # Сообщения
-selected-cherry: "Эффект вишни активирован"
-selected-endRod: "Эффект энд род активирован"
-selected-totem: "Эффект тотема активирован"
+# Messages
 
-disable-cherry: "Эффект вишни выключен"
-disable-endRod: "Эффект энд род выключен"
-disable-totem: "Эффект тотем выключен"
+# The translation of the plugin is not perfect and may contain errors,
+# I will be glad to receive feedback from X: https://x.com/karpen5i5
 
-err-console: "Эту команду может отправлять только игрок"
-err-args: "Используйте /eff <cherry|endrod|totem>"
-err-command: "Неизвестная команда. Используйте /eff <cherry|endrod|totem>"
+# Перевод плагина не идеальный и может содержать ошибки,
+# буду рад фитбеку X: https://x.com/karpen5i5
+
+# English
+selected-cherry: "Cherry effect enabled"
+selected-endRod: "Endrod effect enabled"
+selected-totem: "Totem effect enabled"
+
+disable-cherry: "Cherry effect disabled"
+disable-endRod: "Endrod effect disabled"
+disable-totem: "Totem effect disabled"
+
+err-console: "You can't send this command"
+err-args: "Using /eff <cherry | endrod | totem>"
+err-command: "Invalid command. Use /eff <cherry | endrod | totem>"
+
+# Russian
+selected-cherry-ru: "Эффект вишни активирован"
+selected-endRod-ru: "Эффект энд род активирован"
+selected-totem-ru: "Эффект тотема активирован"
+
+disable-cherry-ru: "Эффект вишни выключен"
+disable-endRod-ru: "Эффект энд род выключен"
+disable-totem-ru: "Эффект тотем выключен"
+
+err-console-ru: "Эту команду может отправлять только игрок"
+err-args-ru: "Используйте /eff <cherry | endrod | totem>"
+err-command-ru: "Неизвестная команда. Используйте /eff <cherry|endrod|totem>"

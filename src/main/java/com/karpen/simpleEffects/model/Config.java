@@ -1,7 +1,9 @@
 package com.karpen.simpleEffects.model;
 
 public class Config {
-    private int count;
+    private int countCherry;
+    private int countEndrod;
+    private int countTotem;
 
     private String msgCherry;
     private String msgEndRod;
@@ -15,12 +17,28 @@ public class Config {
     private String errArgs;
     private String errCommand;
 
-    public int getCount() {
-        return count;
+    public int getCountCherry() {
+        return countCherry;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public int getCountEndrod() {
+        return countEndrod;
+    }
+
+    public int getCountTotem() {
+        return countTotem;
+    }
+
+    public void setCountCherry(int countCherry) {
+        this.countCherry = countCherry;
+    }
+
+    public void setCountEndrod(int countEndrod) {
+        this.countEndrod = countEndrod;
+    }
+
+    public void setCountTotem(int countTotem) {
+        this.countTotem = countTotem;
     }
 
     public String getErrConsole() {

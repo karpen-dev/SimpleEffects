@@ -26,7 +26,7 @@ public class Eff implements CommandExecutor {
         }
 
         if (config == null){
-            commandSender.sendMessage(ChatColor.RED + "Конфиг не инициализировался");
+            commandSender.sendMessage(ChatColor.RED + "Config not initialized");
             return true;
         }
 
@@ -48,6 +48,7 @@ public class Eff implements CommandExecutor {
     private boolean activeCherry(Player player){
         if (effects.cherryPlayers.contains(player)){
             effects.cherryPlayers.remove(player);
+            effects.removePlayer(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgDisCherry());
         } else{
             effects.cherryPlayers.add(player);
@@ -59,6 +60,7 @@ public class Eff implements CommandExecutor {
     private boolean activeEndRod(Player player){
         if (effects.endRodPlayers.contains(player)){
             effects.endRodPlayers.remove(player);
+            effects.removePlayer(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgDisEndRod());
         } else {
             effects.endRodPlayers.add(player);
@@ -70,6 +72,7 @@ public class Eff implements CommandExecutor {
     private boolean activeTotem(Player player){
         if (effects.totemPlayers.contains(player)){
             effects.totemPlayers.remove(player);
+            effects.removePlayer(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgDisTotem());
         } else {
             effects.totemPlayers.add(player);
