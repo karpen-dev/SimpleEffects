@@ -2,9 +2,13 @@ package com.karpen.simpleEffects.services;
 
 import com.karpen.simpleEffects.SimpleEffects;
 import com.karpen.simpleEffects.model.Config;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.block.data.type.Bed;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 
 import java.io.*;
 import java.util.HashSet;
@@ -142,5 +146,25 @@ public class Effects {
         if (particle.equals(Particle.TOTEM_OF_UNDYING)) {
             location.getWorld().spawnParticle(particle, location, config.getCountTotem(), 0.5, 0.5, 0.5);
         }
+    }
+
+    public void spawnEffectSnowball(Snowball snowball, Particle particle){
+        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            if (snowball.isValid()){
+                Location location = snowball.getLocation();
+
+                spawnEffect(location, particle);
+            }
+        }, 0L, 5L);
+    }
+
+    public void spawnEffectArrow(Arrow arrow, Particle particle){
+        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            if (arrow.isValid()){
+                Location location = arrow.getLocation();
+
+                spawnEffect(location, particle);
+            }
+        }, 0L, 5L);
     }
 }
