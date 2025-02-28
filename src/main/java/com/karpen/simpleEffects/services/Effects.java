@@ -32,6 +32,7 @@ public class Effects {
     public final Set<Player> cherryPlayers = new HashSet<>();
     public final Set<Player> endRodPlayers = new HashSet<>();
     public final Set<Player> totemPlayers = new HashSet<>();
+    public final Set<Player> heartPlayers = new HashSet<>();
 
     public void savePlayers(Set<Player> players, String playerType) {
         for (Player player : players) {
@@ -64,7 +65,7 @@ public class Effects {
         }
         return false;
     }
-
+    
     public Set<Player> loadPlayers() {
         Set<Player> players = new HashSet<>();
 
@@ -92,6 +93,8 @@ public class Effects {
                             case "totem":
                                 totemPlayers.add(player);
                                 break;
+                            case "heart":
+                                heartPlayers.add(player);
                         }
                         players.add(player);
                     }
@@ -115,6 +118,7 @@ public class Effects {
         cherryPlayers.remove(player);
         endRodPlayers.remove(player);
         totemPlayers.remove(player);
+        heartPlayers.remove(player);
 
         Set<Player> allPlayers = loadPlayers();
         clearData();
@@ -129,6 +133,9 @@ public class Effects {
                 }
                 if (totemPlayers.contains(p)) {
                     savePlayers(Set.of(p), "totem");
+                }
+                if (heartPlayers.contains(p)){
+                    savePlayers(Set.of(p), "heart");
                 }
             }
         }
@@ -145,6 +152,9 @@ public class Effects {
         }
         if (particle.equals(Particle.TOTEM_OF_UNDYING)) {
             location.getWorld().spawnParticle(particle, location, config.getCountTotem(), 0.5, 0.5, 0.5);
+        }
+        if (particle.equals(Particle.HEART)){
+            location.getWorld().spawnParticle(particle, location, config.getCountHeart(), 0.2, 0.2, 0.2);
         }
     }
 

@@ -4,6 +4,7 @@ import com.karpen.simpleEffects.services.Effects;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.block.data.type.Bed;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -41,6 +42,10 @@ public class MainListener implements Listener {
         if (effects.totemPlayers.contains(player)){
             effects.savePlayers(Set.of(player), "totem");
         }
+
+        if (effects.heartPlayers.contains(player)){
+            effects.savePlayers(Set.of(player), "heart");
+        }
     }
 
     @EventHandler
@@ -70,6 +75,9 @@ public class MainListener implements Listener {
             if (effects.totemPlayers.contains(player)){
                 effects.spawnEffect(player.getLocation(), Particle.TOTEM_OF_UNDYING);
             }
+            if (effects.heartPlayers.contains(player)){
+                effects.spawnEffect(player.getLocation(), Particle.HEART);
+            }
         }
     }
 
@@ -88,6 +96,9 @@ public class MainListener implements Listener {
             if (effects.totemPlayers.contains(player)){
                 effects.spawnEffectSnowball(snowball, Particle.TOTEM_OF_UNDYING);
             }
+            if (effects.heartPlayers.contains(player)){
+                effects.spawnEffectSnowball(snowball, Particle.HEART);
+            }
         }
 
         if (event.getEntity() instanceof Arrow){
@@ -102,6 +113,9 @@ public class MainListener implements Listener {
             }
             if (effects.totemPlayers.contains(player)){
                 effects.spawnEffectArrow(arrow, Particle.TOTEM_OF_UNDYING);
+            }
+            if (effects.heartPlayers.contains(player)){
+                effects.spawnEffectArrow(arrow, Particle.HEART);
             }
         }
     }

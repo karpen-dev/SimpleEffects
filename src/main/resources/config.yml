@@ -1,4 +1,4 @@
-# SimpleEffects - v1.1.4 https://karpen-dev/simpleeffects
+# SimpleEffects - v1.1.5.1 https://karpen-dev/simpleeffects
 # karpen-dev https://github.com/karpen-dev/
 
 # Plugin language - ru, en (jp - soon)
@@ -17,6 +17,10 @@ count-endrod: 1
 # Count totem particle
 count-totem: 1
 
+# Количество частиц сердец
+# Count heart particle
+count-heart: 1
+
 # Сообщения
 # Messages
 
@@ -30,24 +34,28 @@ count-totem: 1
 selected-cherry: "Cherry effect enabled"
 selected-endRod: "Endrod effect enabled"
 selected-totem: "Totem effect enabled"
+selected-heart: "Heart effect enabled"
 
 disable-cherry: "Cherry effect disabled"
 disable-endRod: "Endrod effect disabled"
 disable-totem: "Totem effect disabled"
+disable-heart: "Heart effect disabled"
 
 err-console: "You can't send this command"
-err-args: "Using /eff <cherry | endrod | totem>"
-err-command: "Invalid command. Use /eff <cherry | endrod | totem>"
+err-args: "Using /eff <cherry | endrod | totem | heart>"
+err-command: "Invalid command. Use /eff <cherry | endrod | totem | heart>"
 
 # Russian
 selected-cherry-ru: "Эффект вишни активирован"
 selected-endRod-ru: "Эффект энд род активирован"
 selected-totem-ru: "Эффект тотема активирован"
+selected-heart-ru: "Эффект сердец активирован"
 
 disable-cherry-ru: "Эффект вишни выключен"
 disable-endRod-ru: "Эффект энд род выключен"
 disable-totem-ru: "Эффект тотем выключен"
+disable-heart-ru: "Эффект сердец выключен"
 
 err-console-ru: "Эту команду может отправлять только игрок"
-err-args-ru: "Используйте /eff <cherry | endrod | totem>"
-err-command-ru: "Неизвестная команда. Используйте /eff <cherry|endrod|totem>"
+err-args-ru: "Используйте /eff <cherry | endrod | totem | heart>"
+err-command-ru: "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart>"

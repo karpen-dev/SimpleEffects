@@ -41,6 +41,7 @@ public class Eff implements CommandExecutor {
             case "cherry" -> activeCherry(player);
             case "endrod" -> activeEndRod(player);
             case "totem" -> activeTotem(player);
+            case "heart" -> activeHeart(player);
             default -> errCommand(player);
         };
     }
@@ -77,6 +78,18 @@ public class Eff implements CommandExecutor {
         } else {
             effects.totemPlayers.add(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgTotem());
+        }
+        return true;
+    }
+
+    private boolean activeHeart(Player player){
+        if (effects.heartPlayers.contains(player)){
+            effects.heartPlayers.remove(player);
+            effects.removePlayer(player);
+            player.sendMessage(ChatColor.GREEN + config.getMsgDisHeart());
+        } else {
+            effects.heartPlayers.add(player);
+            player.sendMessage(ChatColor.GREEN + config.getMsgHeart());
         }
         return true;
     }

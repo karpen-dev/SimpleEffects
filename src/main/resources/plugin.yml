@@ -1,10 +1,10 @@
 name: SimpleEffects
-version: '1.1.4'
+version: '1.1.5.1'
 main: com.karpen.simpleEffects.SimpleEffects
 api-version: '1.21'
 commands:
   eff:
-    usage: /eff <cherry | endrod | totem>
+    usage: /eff <cherry | endrod | totem | heart>
     description: Create effect
     permission: karpen.simpleEffects.eff
     permission-message: You don't have permission

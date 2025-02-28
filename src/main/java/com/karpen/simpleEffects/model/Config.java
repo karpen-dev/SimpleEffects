@@ -4,18 +4,45 @@ public class Config {
     private int countCherry;
     private int countEndrod;
     private int countTotem;
+    private int countHeart;
 
     private String msgCherry;
     private String msgEndRod;
     private String msgTotem;
+    private String msgHeart;
 
     private String msgDisCherry;
     private String msgDisEndRod;
     private String msgDisTotem;
+    private String msgDisHeart;
 
     private String errConsole;
     private String errArgs;
     private String errCommand;
+
+    public int getCountHeart() {
+        return countHeart;
+    }
+
+    public void setCountHeart(int countHeart) {
+        this.countHeart = countHeart;
+    }
+
+    public String getMsgHeart() {
+        return msgHeart;
+    }
+
+    public String getMsgDisHeart() {
+        return msgDisHeart;
+    }
+
+    public void setMsgHeart(String msgHeart) {
+        this.msgHeart = msgHeart;
+    }
+
+    public void setMsgDisHeart(String msgDisHeart) {
+        this.msgDisHeart = msgDisHeart;
+    }
 
     public int getCountCherry() {
         return countCherry;

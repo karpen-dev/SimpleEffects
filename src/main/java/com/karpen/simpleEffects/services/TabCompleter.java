@@ -16,6 +16,7 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
                 suggestions.add("cherry");
                 suggestions.add("endrod");
                 suggestions.add("totem");
+                suggestions.add("heart");
             }
         }
 
