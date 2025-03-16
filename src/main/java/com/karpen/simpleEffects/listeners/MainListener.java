@@ -65,7 +65,13 @@ public class MainListener implements Listener {
         double newY = event.getTo().getY();
         double newZ = event.getTo().getZ();
 
+        float yaw = player.getLocation().getYaw();
+
         if (oldX != newX || oldY != newY || oldZ != newZ){
+            if (oldX == newX && oldZ == newZ && ((yaw <= 90.0 || yaw >= 0.0) || (oldY != newY))){
+                return;
+            }
+
             if (effects.cherryPlayers.contains(player)){
                 effects.spawnEffect(player.getLocation(), Particle.CHERRY_LEAVES);
             }
