@@ -85,6 +85,11 @@ public class MainListener implements Listener {
     public void onSnowBallThrow(ProjectileLaunchEvent event){
         if (event.getEntity() instanceof Snowball){
             Snowball snowball = (Snowball)  event.getEntity();
+
+            if (!(snowball.getShooter() instanceof Player)){
+                return;
+            }
+
             Player player = (Player) snowball.getShooter();
 
             if (effects.cherryPlayers.contains(player)){
@@ -103,6 +108,11 @@ public class MainListener implements Listener {
 
         if (event.getEntity() instanceof Arrow){
             Arrow arrow = (Arrow) event.getEntity();
+
+            if (!(arrow.getShooter() instanceof Player)){
+                return;
+            }
+
             Player player = (Player) arrow.getShooter();
 
             if (effects.cherryPlayers.contains(player)){

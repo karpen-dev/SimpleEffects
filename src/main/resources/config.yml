@@ -1,8 +1,7 @@
-# SimpleEffects - v1.1.5.1 https://karpen-dev/simpleeffects
-# karpen-dev https://github.com/karpen-dev/
+# SimpleEffects - v1.1.5.2 https://karpen-dev/simpleeffects
 
-# Plugin language - ru, en (jp - soon)
-# Язык плагина - ru, en (jp - скоро)
+# Plugin language - ru, en
+# Язык плагина - ru, en
 lang: en
 
 # Количество частиц вишни
@@ -19,7 +18,7 @@ count-totem: 1
 
 # Количество частиц сердец
 # Count heart particle
-count-heart: 1
+count-heart: 0.5
 
 # Сообщения
 # Messages
