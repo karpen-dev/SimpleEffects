@@ -42,6 +42,7 @@ public class Eff implements CommandExecutor {
             case "endrod" -> activeEndRod(player);
             case "totem" -> activeTotem(player);
             case "heart" -> activeHeart(player);
+            case "pale" -> activePale(player);
             default -> errCommand(player);
         };
     }
@@ -50,10 +51,10 @@ public class Eff implements CommandExecutor {
         if (effects.cherryPlayers.contains(player)){
             effects.cherryPlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisCherry());
+            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else{
             effects.cherryPlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgCherry());
+            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
         return true;
     }
@@ -62,10 +63,10 @@ public class Eff implements CommandExecutor {
         if (effects.endRodPlayers.contains(player)){
             effects.endRodPlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisEndRod());
+            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else {
             effects.endRodPlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEndRod());
+            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
         return true;
     }
@@ -74,10 +75,10 @@ public class Eff implements CommandExecutor {
         if (effects.totemPlayers.contains(player)){
             effects.totemPlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisTotem());
+            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else {
             effects.totemPlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgTotem());
+            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
         return true;
     }
@@ -86,10 +87,22 @@ public class Eff implements CommandExecutor {
         if (effects.heartPlayers.contains(player)){
             effects.heartPlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisHeart());
+            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else {
             effects.heartPlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgHeart());
+            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+        }
+        return true;
+    }
+
+    private boolean activePale(Player player){
+        if (effects.palePlayers.contains(player)){
+            effects.palePlayers.remove(player);
+            effects.removePlayer(player);
+            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+        } else {
+            effects.palePlayers.add(player);
+            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
         return true;
     }

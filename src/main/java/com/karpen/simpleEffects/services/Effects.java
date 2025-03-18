@@ -1,6 +1,7 @@
 package com.karpen.simpleEffects.services;
 
 import com.karpen.simpleEffects.SimpleEffects;
+import com.karpen.simpleEffects.database.DBManager;
 import com.karpen.simpleEffects.model.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -20,8 +21,14 @@ public class Effects {
     private final SimpleEffects plugin;
     private final File datafile;
 
-    public Effects(SimpleEffects plugin) {
+    private Config config;
+    private DBManager dbManager;
+
+    public Effects(SimpleEffects plugin, Config config, DBManager dbManager) {
         this.plugin = plugin;
+        this.config = config;
+        this.dbManager = dbManager;
+
         this.datafile = new File(plugin.getDataFolder(), "players.txt");
 
         if (!plugin.getDataFolder().exists()) {
@@ -29,10 +36,11 @@ public class Effects {
         }
     }
 
-    public final Set<Player> cherryPlayers = new HashSet<>();
-    public final Set<Player> endRodPlayers = new HashSet<>();
-    public final Set<Player> totemPlayers = new HashSet<>();
-    public final Set<Player> heartPlayers = new HashSet<>();
+    public Set<Player> cherryPlayers = new HashSet<>();
+    public Set<Player> endRodPlayers = new HashSet<>();
+    public Set<Player> totemPlayers = new HashSet<>();
+    public Set<Player> heartPlayers = new HashSet<>();
+    public Set<Player> palePlayers = new HashSet<>();
 
     public void savePlayers(Set<Player> players, String playerType) {
         for (Player player : players) {
@@ -65,7 +73,7 @@ public class Effects {
         }
         return false;
     }
-    
+
     public Set<Player> loadPlayers() {
         Set<Player> players = new HashSet<>();
 
@@ -95,6 +103,10 @@ public class Effects {
                                 break;
                             case "heart":
                                 heartPlayers.add(player);
+                                break;
+                            case "pale":
+                                palePlayers.add(player);
+                                break;
                         }
                         players.add(player);
                     }
@@ -114,28 +126,43 @@ public class Effects {
     }
 
     public void removePlayer(Player player) {
-
         cherryPlayers.remove(player);
         endRodPlayers.remove(player);
         totemPlayers.remove(player);
         heartPlayers.remove(player);
+        palePlayers.remove(player);
 
-        Set<Player> allPlayers = loadPlayers();
-        clearData();
+        dbManager.removePlayerByName(player.getName());
+
+        Set<Player> allPlayers;
+
+        if (config.getMethod().equals("TXT")) {
+            allPlayers = loadPlayers();
+            clearData();
+        } else if (config.getMethod().equals("MYSQL")) {
+            allPlayers = dbManager.loadPlayers();
+        } else {
+            allPlayers = new HashSet<>();
+        }
 
         for (Player p : allPlayers) {
             if (!p.equals(player)) {
-                if (cherryPlayers.contains(p)) {
-                    savePlayers(Set.of(p), "cherry");
-                }
-                if (endRodPlayers.contains(p)) {
-                    savePlayers(Set.of(p), "endrod");
-                }
-                if (totemPlayers.contains(p)) {
-                    savePlayers(Set.of(p), "totem");
-                }
-                if (heartPlayers.contains(p)){
-                    savePlayers(Set.of(p), "heart");
+                if (config.getMethod().equals("TXT")) {
+                    if (cherryPlayers.contains(p)) {
+                        savePlayers(cherryPlayers, "cherry");
+                    }
+                    if (endRodPlayers.contains(p)) {
+                        savePlayers(endRodPlayers, "endrod");
+                    }
+                    if (totemPlayers.contains(p)) {
+                        savePlayers(totemPlayers, "totem");
+                    }
+                    if (heartPlayers.contains(p)) {
+                        savePlayers(heartPlayers, "heart");
+                    }
+                    if (palePlayers.contains(p)) {
+                        savePlayers(palePlayers, "pale");
+                    }
                 }
             }
         }
@@ -155,6 +182,9 @@ public class Effects {
         }
         if (particle.equals(Particle.HEART)){
             location.getWorld().spawnParticle(particle, location, config.getCountHeart(), 0.2, 0.2, 0.2);
+        }
+        if (particle.equals(Particle.PALE_OAK_LEAVES)){
+            location.getWorld().spawnParticle(particle, location, 10);
         }
     }
 

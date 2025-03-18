@@ -2,6 +2,7 @@ package com.karpen.simpleEffects;
 
 import com.karpen.simpleEffects.commands.Eff;
 import com.karpen.simpleEffects.commands.EffReload;
+import com.karpen.simpleEffects.database.DBManager;
 import com.karpen.simpleEffects.listeners.MainListener;
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.services.Effects;
@@ -19,15 +20,18 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
     EffReload effReload;
     Effects effects;
     Config config;
+    DBManager dbManager;
 
     @Override
     public void onEnable() {
-        effects = new Effects(this);
         config = new Config();
-        eff = new Eff(config, effects);
-        effReload = new EffReload(this);
 
         loadConfig();
+
+        dbManager = new DBManager(config, this, effects);
+        effects = new Effects(this, config, dbManager);
+        eff = new Eff(config, effects);
+        effReload = new EffReload(this);
 
         if (getCommand("eff") != null) {
             getCommand("eff-reload").setExecutor(effReload);
@@ -37,7 +41,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
             getLogger().warning("Command 'eff' is not registered in plugin.yml");
         }
 
-        Bukkit.getPluginManager().registerEvents(new MainListener(effects), this);
+        Bukkit.getPluginManager().registerEvents(new MainListener(effects, config, dbManager), this);
         getLogger().info("SimpleEffects by karpen");
     }
 
@@ -50,38 +54,37 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
         config.setCountTotem(configuration.getInt("count-totem", 0));
         config.setCountHeart(configuration.getInt("count-heart", 0));
 
+        String method = configuration.getString("method", "TXT");
+        switch (method.toLowerCase()){
+            case "txt" -> config.setMethod("TXT");
+            case "mysql" -> {
+                config.setMethod("MYSQL");
+
+                config.setDbUrl(configuration.getString("db-url", "localhost:3306/effects"));
+                config.setDbUser(configuration.getString("db-username", "root"));
+                config.setDbPassword(configuration.getString("db-password", "root"));
+            }
+            default -> config.setMethod("TXT");
+        }
+
         String lang = configuration.getString("lang", "en");
         switch (lang.toLowerCase()) {
             case "en":
-                config.setMsgCherry(configuration.getString("selected-cherry", "Cherry effect enabled"));
-                config.setMsgEndRod(configuration.getString("selected-endRod", "Endrod effect enabled"));
-                config.setMsgTotem(configuration.getString("selected-totem", "Totem effect enabled"));
-                config.setMsgHeart(configuration.getString("selected-heart", "Heart effect enabled"));
-
-                config.setMsgDisCherry(configuration.getString("disable-cherry", "Cherry effect disabled"));
-                config.setMsgDisEndRod(configuration.getString("disable-endRod", "Endrod effect disabled"));
-                config.setMsgDisTotem(configuration.getString("disable-totem", "Totem effect disabled"));
-                config.setMsgDisHeart(configuration.getString("disable-heart", "Heart effect disabled"));
+                config.setMsgEnable(configuration.getString("enable-effect", "Effect enabled"));
+                config.setMsgDisable(configuration.getString("disable-effect", "Effect disabled"));
 
                 config.setErrConsole(configuration.getString("err-console", "You can't send this command"));
-                config.setErrArgs(configuration.getString("err-args", "Using /eff <cherry | endrod | totem | heart>"));
-                config.setErrCommand(configuration.getString("err-command", "Invalid command. Use /eff <cherry | endrod | totem | heart>"));
+                config.setErrArgs(configuration.getString("err-args", "Using /eff <cherry | endrod | totem | heart | pale>"));
+                config.setErrCommand(configuration.getString("err-command", "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"));
                 break;
 
             case "ru":
-                config.setMsgCherry(configuration.getString("selected-cherry-ru", "Эффект вишни активирован"));
-                config.setMsgEndRod(configuration.getString("selected-endRod-ru", "Эффект энд род активирован"));
-                config.setMsgTotem(configuration.getString("selected-totem-ru", "Эффект тотема активирован"));
-                config.setMsgHeart(configuration.getString("selected-heart-ru", "Эффект сердец активирован"));
-
-                config.setMsgDisCherry(configuration.getString("disable-cherry-ru", "Эффект вишни выключен"));
-                config.setMsgDisEndRod(configuration.getString("disable-endRod-ru", "Эффект энд род выключен"));
-                config.setMsgDisTotem(configuration.getString("disable-totem-ru", "Эффект тотем выключен"));
-                config.setMsgDisHeart(configuration.getString("disable-heart-ru", "Эффект сердец выключен"));
+                config.setMsgEnable(configuration.getString("enable-effect-ru", "Эффект включен"));
+                config.setMsgDisable(configuration.getString("disable-effect-ru", "Эффект выключен"));
 
                 config.setErrConsole(configuration.getString("err-console-ru", "Эту команду может отправлять только игрок"));
-                config.setErrArgs(configuration.getString("err-args-ru", "Используйте /eff <cherry | endrod | totem | heart>"));
-                config.setErrCommand(configuration.getString("err-command-ru", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart>"));
+                config.setErrArgs(configuration.getString("err-args-ru", "Используйте /eff <cherry | endrod | totem | heart | pale>"));
+                config.setErrCommand(configuration.getString("err-command-ru", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
                 break;
 
             default:
@@ -92,19 +95,12 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
     }
 
     private void loadDefaultEnglishMessages() {
-        config.setMsgCherry("Default Cherry Message");
-        config.setMsgEndRod("Default End Rod Message");
-        config.setMsgTotem("Default Totem Message");
-        config.setMsgHeart("Default Heart Message");
+        config.setMsgEnable("Effect enabled");
+        config.setMsgDisable("Effect disabled");
 
-        config.setMsgDisCherry("Default Disable Cherry Message");
-        config.setMsgDisEndRod("Default Disable End Rod Message");
-        config.setMsgDisTotem("Default Disable Totem Message");
-        config.setMsgDisHeart("Default Disable Heart Message");
-
-        config.setErrConsole("Default Console Error");
-        config.setErrArgs("Default Arguments Error");
-        config.setErrCommand("Default Command Error");
+        config.setErrConsole("You can't send this command");
+        config.setErrArgs("Using /eff <cherry | endrod | totem | heart | pale>");
+        config.setErrCommand("Invalid command. Use /eff <cherry | endrod | totem | heart | pale>");
     }
 
     public Config getConfigObject() {
@@ -113,6 +109,9 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        if (config.getMethod().equals("MYSQL")){
+            getLogger().info("Closing db connection");
+            dbManager.close();
+        }
     }
 }

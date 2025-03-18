@@ -1,5 +1,7 @@
 package com.karpen.simpleEffects.listeners;
 
+import com.karpen.simpleEffects.database.DBManager;
+import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.services.Effects;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,34 +25,73 @@ public class MainListener implements Listener {
 
     private final Effects effects;
 
-    public MainListener(Effects effects){
+    private Config config;
+    private DBManager dbManager;
+
+    public MainListener(Effects effects, Config config, DBManager dbManager){
         this.effects = effects;
+        this.config = config;
+        this.dbManager = dbManager;
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
 
-        if (effects.cherryPlayers.contains(player)){
-            effects.savePlayers(Set.of(player), "cherry");
-        }
+        if (config.getMethod().equals("MYSQL")){
+            if (effects.cherryPlayers.contains(player)){
+                dbManager.savePlayers(effects.cherryPlayers, "cherry");
+            }
 
-        if (effects.endRodPlayers.contains(player)){
-            effects.savePlayers(Set.of(player), "endrod");
-        }
+            if (effects.endRodPlayers.contains(player)){
+                dbManager.savePlayers(effects.endRodPlayers, "endrod");
+            }
 
-        if (effects.totemPlayers.contains(player)){
-            effects.savePlayers(Set.of(player), "totem");
-        }
+            if (effects.totemPlayers.contains(player)){
+                dbManager.savePlayers(effects.totemPlayers, "totem");
+            }
 
-        if (effects.heartPlayers.contains(player)){
-            effects.savePlayers(Set.of(player), "heart");
+            if (effects.heartPlayers.contains(player)){
+                dbManager.savePlayers(effects.heartPlayers, "heart");
+            }
+
+            if (effects.palePlayers.contains(player)){
+                dbManager.savePlayers(effects.palePlayers, "pale");
+            }
+        } else if (config.getMethod().equals("TXT")){
+            if (effects.cherryPlayers.contains(player)){
+                effects.savePlayers(Set.of(player), "cherry");
+            }
+
+            if (effects.endRodPlayers.contains(player)){
+                effects.savePlayers(Set.of(player), "endrod");
+            }
+
+            if (effects.totemPlayers.contains(player)){
+                effects.savePlayers(Set.of(player), "totem");
+            }
+
+            if (effects.heartPlayers.contains(player)){
+                effects.savePlayers(Set.of(player), "heart");
+            }
+
+            if (effects.palePlayers.contains(player)){
+                effects.savePlayers(Set.of(player), "pale");
+            }
         }
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-        effects.loadPlayers();
+        if (config.getMethod().equals("TXT")){
+            effects.loadPlayers();
+        } else if (config.getMethod().equals("MYSQL")) {
+            effects.cherryPlayers = dbManager.loadPlayersByType("cherry");
+            effects.endRodPlayers = dbManager.loadPlayersByType("endrod");
+            effects.totemPlayers = dbManager.loadPlayersByType("totem");
+            effects.heartPlayers = dbManager.loadPlayersByType("heart");
+            effects.palePlayers = dbManager.loadPlayersByType("pale");
+        }
     }
 
     @EventHandler
@@ -84,6 +125,9 @@ public class MainListener implements Listener {
             if (effects.heartPlayers.contains(player)){
                 effects.spawnEffect(player.getLocation(), Particle.HEART);
             }
+            if (effects.palePlayers.contains(player)){
+                effects.spawnEffect(player.getLocation(), Particle.PALE_OAK_LEAVES);
+            }
         }
     }
 
@@ -110,6 +154,9 @@ public class MainListener implements Listener {
             if (effects.heartPlayers.contains(player)){
                 effects.spawnEffectSnowball(snowball, Particle.HEART);
             }
+            if (effects.palePlayers.contains(player)){
+                effects.spawnEffectSnowball(snowball, Particle.PALE_OAK_LEAVES);
+            }
         }
 
         if (event.getEntity() instanceof Arrow){
@@ -132,6 +179,9 @@ public class MainListener implements Listener {
             }
             if (effects.heartPlayers.contains(player)){
                 effects.spawnEffectArrow(arrow, Particle.HEART);
+            }
+            if (effects.palePlayers.contains(player)){
+                effects.spawnEffectArrow(arrow, Particle.PALE_OAK_LEAVES);
             }
         }
     }
