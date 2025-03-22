@@ -1,7 +1,9 @@
 package com.karpen.simpleEffects.commands;
 
+import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.services.Effects;
 import com.karpen.simpleEffects.model.Config;
+import com.karpen.simpleEffects.services.FileManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,10 +14,12 @@ public class Eff implements CommandExecutor {
 
     private final Config config;
     private final Effects effects;
+    private Types types;
 
-    public Eff(Config config, Effects effects) {
+    public Eff(Config config, Effects effects, Types types) {
         this.config = config;
         this.effects = effects;
+        this.types = types;
     }
 
     @Override
@@ -48,60 +52,60 @@ public class Eff implements CommandExecutor {
     }
 
     private boolean activeCherry(Player player){
-        if (effects.cherryPlayers.contains(player)){
-            effects.cherryPlayers.remove(player);
+        if (types.cherryPlayers.contains(player)){
+            types.cherryPlayers.remove(player);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else{
-            effects.cherryPlayers.add(player);
+            types.cherryPlayers.add(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
         return true;
     }
 
     private boolean activeEndRod(Player player){
-        if (effects.endRodPlayers.contains(player)){
-            effects.endRodPlayers.remove(player);
+        if (types.endRodPlayers.contains(player)){
+            types.endRodPlayers.remove(player);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else {
-            effects.endRodPlayers.add(player);
+            types.endRodPlayers.add(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
         return true;
     }
 
     private boolean activeTotem(Player player){
-        if (effects.totemPlayers.contains(player)){
-            effects.totemPlayers.remove(player);
+        if (types.totemPlayers.contains(player)){
+            types.totemPlayers.remove(player);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else {
-            effects.totemPlayers.add(player);
+            types.totemPlayers.add(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
         return true;
     }
 
     private boolean activeHeart(Player player){
-        if (effects.heartPlayers.contains(player)){
-            effects.heartPlayers.remove(player);
+        if (types.heartPlayers.contains(player)){
+            types.heartPlayers.remove(player);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else {
-            effects.heartPlayers.add(player);
+            types.heartPlayers.add(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
         return true;
     }
 
     private boolean activePale(Player player){
-        if (effects.palePlayers.contains(player)){
-            effects.palePlayers.remove(player);
+        if (types.palePlayers.contains(player)){
+            types.palePlayers.remove(player);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else {
-            effects.palePlayers.add(player);
+            types.palePlayers.add(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
         return true;

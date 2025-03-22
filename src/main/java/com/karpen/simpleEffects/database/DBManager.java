@@ -1,7 +1,7 @@
 package com.karpen.simpleEffects.database;
 
 import com.karpen.simpleEffects.model.Config;
-import com.karpen.simpleEffects.services.Effects;
+import com.karpen.simpleEffects.model.Types;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,23 +9,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
-
-import static java.sql.DriverManager.getConnection;
 
 public class DBManager {
 
     Config config;
     JavaPlugin plugin;
-    Effects effects;
+    com.karpen.simpleEffects.model.Types types;
 
     @Setter
     private Connection connection;
 
-    public DBManager(Config config, JavaPlugin plugin, Effects effects){
+    public DBManager(Config config, JavaPlugin plugin, Types types){
         this.config = config;
         this.plugin = plugin;
-        this.effects = effects;
+        this.types = types;
 
         if (config.getMethod().equals("MYSQL")){
             final String url = config.getDbUrl();
@@ -61,16 +58,15 @@ public class DBManager {
         }
     }
 
-    public void removePlayerByName(String playerName) {
-        String deleteSQL = "DELETE FROM player_types WHERE playerName = ?";
+    public void removePlayer(Player player){
+        String removeSQL = "DELETE FROM player_types WHERE playerName = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(deleteSQL)) {
-            if (playerName == null || playerName.isEmpty()) {
-                return;
-            }
-            stmt.setString(1, playerName);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
+        try(PreparedStatement stmt = connection.prepareStatement(removeSQL)) {
+            stmt.setString(1, player.getName());
+            stmt.addBatch();
+
+            stmt.executeBatch();
+        } catch (SQLException e){
             e.printStackTrace();
         }
     }
@@ -116,35 +112,36 @@ public class DBManager {
     public Set<Player> loadPlayers() {
         Set<Player> players = new HashSet<>();
 
-        String query = "SELECT player_uuid, player_type FROM player_effects";  // Название таблицы и столбцов в БД
+        String query = "SELECT playerName, type FROM player_effects";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                String uuidString = resultSet.getString("player_uuid");
-                String playerType = resultSet.getString("player_type");
+                String name = resultSet.getString("playerName");
+                String type = resultSet.getString("type");
 
-                Player player = plugin.getServer().getPlayer(UUID.fromString(uuidString));
+                Player player = plugin.getServer().getPlayer(name);
                 if (player != null) {
-                    switch (playerType) {
+                    switch (type) {
                         case "cherry":
-                            effects.cherryPlayers.add(player);
+                            types.cherryPlayers.add(player);
                             break;
                         case "endrod":
-                            effects.endRodPlayers.add(player);
+                            types.endRodPlayers.add(player);
                             break;
                         case "totem":
-                            effects.totemPlayers.add(player);
+                            types.totemPlayers.add(player);
                             break;
                         case "heart":
-                            effects.heartPlayers.add(player);
+                            types.heartPlayers.add(player);
                             break;
                         case "pale":
-                            effects.palePlayers.add(player);
+                            types.palePlayers.add(player);
                             break;
                     }
+
                     players.add(player);
                 }
             }

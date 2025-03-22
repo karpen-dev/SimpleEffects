@@ -5,7 +5,9 @@ import com.karpen.simpleEffects.commands.EffReload;
 import com.karpen.simpleEffects.database.DBManager;
 import com.karpen.simpleEffects.listeners.MainListener;
 import com.karpen.simpleEffects.model.Config;
+import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.services.Effects;
+import com.karpen.simpleEffects.services.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
@@ -21,6 +23,8 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
     Effects effects;
     Config config;
     DBManager dbManager;
+    Types types;
+    FileManager manager;
 
     @Override
     public void onEnable() {
@@ -28,10 +32,14 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
 
         loadConfig();
 
-        dbManager = new DBManager(config, this, effects);
-        effects = new Effects(this, config, dbManager);
-        eff = new Eff(config, effects);
+        types = new Types();
+
+        dbManager = new DBManager(config, this, types);
+        manager = new FileManager(this, types);
+        effects = new Effects(this, config, manager, dbManager);
+        eff = new Eff(config, effects, types);
         effReload = new EffReload(this);
+
 
         if (getCommand("eff") != null) {
             getCommand("eff-reload").setExecutor(effReload);
@@ -41,7 +49,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
             getLogger().warning("Command 'eff' is not registered in plugin.yml");
         }
 
-        Bukkit.getPluginManager().registerEvents(new MainListener(effects, config, dbManager), this);
+        Bukkit.getPluginManager().registerEvents(new MainListener(config, dbManager, types, manager, effects), this);
         getLogger().info("SimpleEffects by karpen");
     }
 
@@ -60,9 +68,9 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
             case "mysql" -> {
                 config.setMethod("MYSQL");
 
-                config.setDbUrl(configuration.getString("db-url", "localhost:3306/effects"));
-                config.setDbUser(configuration.getString("db-username", "root"));
-                config.setDbPassword(configuration.getString("db-password", "root"));
+                config.setDbUrl(configuration.getString("db.url", "localhost:3306/effects"));
+                config.setDbUser(configuration.getString("db.username", "root"));
+                config.setDbPassword(configuration.getString("db.password", "root"));
             }
             default -> config.setMethod("TXT");
         }
