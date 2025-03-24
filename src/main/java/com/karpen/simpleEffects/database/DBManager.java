@@ -137,9 +137,9 @@ public class DBManager {
                         case "heart":
                             types.heartPlayers.add(player);
                             break;
-                        case "pale":
-                            types.palePlayers.add(player);
-                            break;
+//                        case "pale":
+//                            types.palePlayers.add(player);
+//                            break;
                     }
 
                     players.add(player);

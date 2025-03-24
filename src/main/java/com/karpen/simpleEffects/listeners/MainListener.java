@@ -61,9 +61,9 @@ public class MainListener implements Listener {
                 dbManager.savePlayers(types.heartPlayers, "heart");
             }
 
-            if (types.palePlayers.contains(player)){
-                dbManager.savePlayers(types.palePlayers, "pale");
-            }
+//            if (types.palePlayers.contains(player)){
+//                dbManager.savePlayers(types.palePlayers, "pale");
+//            }
         } else if (config.getMethod().equals("TXT")){
             if (types.cherryPlayers.contains(player)){
                 manager.savePlayers(Set.of(player), "cherry");
@@ -81,9 +81,9 @@ public class MainListener implements Listener {
                 manager.savePlayers(Set.of(player), "heart");
             }
 
-            if (types.palePlayers.contains(player)){
-                manager.savePlayers(Set.of(player), "pale");
-            }
+//            if (types.palePlayers.contains(player)){
+//                manager.savePlayers(Set.of(player), "pale");
+//            }
         }
     }
 
@@ -96,7 +96,7 @@ public class MainListener implements Listener {
             types.endRodPlayers = dbManager.loadPlayersByType("endrod");
             types.totemPlayers = dbManager.loadPlayersByType("totem");
             types.heartPlayers = dbManager.loadPlayersByType("heart");
-            types.palePlayers = dbManager.loadPlayersByType("pale");
+//            types.palePlayers = dbManager.loadPlayersByType("pale");
         }
     }
 
@@ -131,9 +131,9 @@ public class MainListener implements Listener {
             if (types.heartPlayers.contains(player)){
                 effects.spawnEffect(player.getLocation(), Particle.HEART);
             }
-            if (types.palePlayers.contains(player)){
-                effects.spawnEffect(player.getLocation(), Particle.PALE_OAK_LEAVES);
-            }
+//            if (types.palePlayers.contains(player)){
+//                effects.spawnEffect(player.getLocation(), Particle.PALE_OAK_LEAVES);
+//            }
         }
     }
 
@@ -160,9 +160,9 @@ public class MainListener implements Listener {
             if (types.heartPlayers.contains(player)){
                 effects.spawnEffectSnowball(snowball, Particle.HEART);
             }
-            if (types.palePlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.PALE_OAK_LEAVES);
-            }
+//            if (types.palePlayers.contains(player)){
+//                effects.spawnEffectSnowball(snowball, Particle.PALE_OAK_LEAVES);
+//            }
         }
 
         if (event.getEntity() instanceof Arrow){
@@ -186,9 +186,9 @@ public class MainListener implements Listener {
             if (types.heartPlayers.contains(player)){
                 effects.spawnEffectArrow(arrow, Particle.HEART);
             }
-            if (types.palePlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.PALE_OAK_LEAVES);
-            }
+//            if (types.palePlayers.contains(player)){
+//                effects.spawnEffectArrow(arrow, Particle.PALE_OAK_LEAVES);
+//            }
         }
     }
 

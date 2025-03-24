@@ -1,4 +1,4 @@
-# SimpleEffects - v1.2.1 https://github.com/karpen-dev/SimpleEffects
+# SimpleEffects - v1.2-special https://github.com/karpen-dev/SimpleEffects
 
 # Plugin language - ru, en
 # Язык плагина - ru, en
@@ -39,10 +39,6 @@ count-totem: 1
 # Количество частиц сердец
 # Count heart particle
 count-heart: 0.5
-
-# Количество бледных частиц
-# Count pale particle
-count-pale: 1
 
 # Сообщения
 # Messages

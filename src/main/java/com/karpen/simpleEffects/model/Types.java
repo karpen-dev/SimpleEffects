@@ -10,5 +10,5 @@ public class Types {
     public Set<Player> endRodPlayers = new HashSet<>();
     public Set<Player> totemPlayers = new HashSet<>();
     public Set<Player> heartPlayers = new HashSet<>();
-    public Set<Player> palePlayers = new HashSet<>();
+//    public Set<Player> palePlayers = new HashSet<>();
 }

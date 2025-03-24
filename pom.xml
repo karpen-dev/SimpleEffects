@@ -6,7 +6,7 @@
 
     <groupId>com.karpen</groupId>
     <artifactId>SimpleEffects</artifactId>
-    <version>1.2.1</version>
+    <version>1.2-special</version>
     <packaging>jar</packaging>
 
     <name>SimpleEffects</name>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.21.4-R0.1-SNAPSHOT</version>
+            <version>1.21.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->

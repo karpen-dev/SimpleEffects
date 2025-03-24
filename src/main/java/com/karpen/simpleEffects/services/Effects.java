@@ -54,9 +54,9 @@ public class Effects {
         if (particle.equals(Particle.HEART)){
             location.getWorld().spawnParticle(particle, location, config.getCountHeart(), 0.2, 0.2, 0.2);
         }
-        if (particle.equals(Particle.PALE_OAK_LEAVES)){
-            location.getWorld().spawnParticle(particle, location, 10);
-        }
+//        if (particle.equals(Particle.PALE_OAK_LEAVES)){
+//            location.getWorld().spawnParticle(particle, location, 10);
+//        }
     }
 
     public void spawnEffectSnowball(Snowball snowball, Particle particle){

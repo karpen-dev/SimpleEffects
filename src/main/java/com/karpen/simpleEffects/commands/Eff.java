@@ -46,7 +46,7 @@ public class Eff implements CommandExecutor {
             case "endrod" -> activeEndRod(player);
             case "totem" -> activeTotem(player);
             case "heart" -> activeHeart(player);
-            case "pale" -> activePale(player);
+//            case "pale" -> activePale(player);
             default -> errCommand(player);
         };
     }
@@ -99,17 +99,17 @@ public class Eff implements CommandExecutor {
         return true;
     }
 
-    private boolean activePale(Player player){
-        if (types.palePlayers.contains(player)){
-            types.palePlayers.remove(player);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
-        } else {
-            types.palePlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
-        }
-        return true;
-    }
+//    private boolean activePale(Player player){
+//        if (types.palePlayers.contains(player)){
+//            types.palePlayers.remove(player);
+//            effects.removePlayer(player);
+//            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+//        } else {
+//            types.palePlayers.add(player);
+//            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+//        }
+//        return true;
+//    }
 
     private boolean errCommand(Player player){
         player.sendMessage(ChatColor.RED + config.getErrCommand());

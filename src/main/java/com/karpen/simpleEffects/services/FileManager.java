@@ -94,9 +94,9 @@ public class FileManager {
                             case "heart":
                                 types.heartPlayers.add(player);
                                 break;
-                            case "pale":
-                                types.palePlayers.add(player);
-                                break;
+//                            case "pale":
+//                                types.palePlayers.add(player);
+//                                break;
                         }
 
                         players.add(player);
@@ -126,7 +126,7 @@ public class FileManager {
                 if (types.endRodPlayers.contains(p)) savePlayers(types.endRodPlayers, "endrod");
                 if (types.totemPlayers.contains(p)) savePlayers(types.totemPlayers, "totem");
                 if (types.heartPlayers.contains(p)) savePlayers(types.heartPlayers, "heart");
-                if (types.palePlayers.contains(p)) savePlayers(types.palePlayers, "pale");
+//                if (types.palePlayers.contains(p)) savePlayers(types.palePlayers, "pale");
             }
         }
     }
