@@ -12,10 +12,12 @@ Available at:
 [Modrinth](https://modrinth.com/plugin/simpleeffects)
 [Spigotmc](https://www.spigotmc.org/resources/simpleeffects.121141/)
 
-### Api docs
-1. Add api to you project   
+## Api docs
+### Add api to you project   
 
-Maven:
+<details>
+<summary>Maven</summary>
+
 ```xml
 <!-- Jitpack repo -->
 <repository>
@@ -23,14 +25,18 @@ Maven:
     <url>https://jitpack.io</url>
 </repository>
 
-<!-- Main dependency -->
+        <!-- Main dependency -->
 <dependency>
-    <groupId>com.github.karpen-dev</groupId>
-    <artifactId>SimpleEffects</artifactId>
-    <version>1.2.2</version>
+<groupId>com.github.karpen-dev</groupId>
+<artifactId>SimpleEffects</artifactId>
+<version>1.2.2</version>
 </dependency>
 ```
-Gradle
+</details> 
+
+<details>
+<summary>Gradle</summary>
+
 ```groovy
 // Jitpack repo
 repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -42,7 +48,11 @@ repositories {
 // Main dependency
 implementation 'com.github.karpen-dev:SimpleEffects:1.2.2'
 ```
-Gradle.kts:
+</details>
+
+<details>
+<summary>Gradle.kts:</summary>
+
 ``` kotlin
 // Jitpack repo
 repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -54,9 +64,13 @@ repositories {
 // Main dependency
 implementation("com.github.karpen-dev:SimpleEffects:1.2.2")
 ```
-2. Using api   
+</details>
 
-Java:
+### Using api   
+
+<details>
+<summary>Java:</summary>
+
 ```java
 // Install api
 SimpleEffectsApi api = SimpleEffects.getApi();
@@ -64,7 +78,11 @@ SimpleEffectsApi api = SimpleEffects.getApi();
 // Active cherry effect
 api.activeEffectCherryToPlayer(player);
 ```
-Kotlin:
+</details>
+
+<details>
+<summary>Kotlin:</summary>
+
 ```kotlin
 // Install api
 val api = SimpleEffects.getApi();
@@ -72,3 +90,4 @@ val api = SimpleEffects.getApi();
 // Active cherry effect
 api.activeEffectCherryToPlayer(player);
 ```
+</details>

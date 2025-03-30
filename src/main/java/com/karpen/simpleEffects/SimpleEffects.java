@@ -27,7 +27,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
     private DBManager dbManager;
     private Types types;
     private FileManager manager;
-    private SimpleEffectsApi api;
+    private volatile SimpleEffectsApi api;
 
     public static SimpleEffects instance;
 
@@ -41,14 +41,13 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
 
         types = new Types();
 
-        this.api = new SimpleEffectImpl(this, types);
-
         dbManager = new DBManager(config, this, types);
         manager = new FileManager(this, types);
         effects = new Effects(this, config, manager, dbManager);
         eff = new Eff(config, effects, types);
         effReload = new EffReload(this);
 
+        this.api = new SimpleEffectImpl(this, types);
 
         if (getCommand("eff") != null) {
             getCommand("eff-reload").setExecutor(effReload);
@@ -124,7 +123,19 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
         return config;
     }
 
-    public static SimpleEffectsApi getApi(){
+    public static SimpleEffectsApi getApi() {
+        SimpleEffects instance = SimpleEffects.instance;
+        if (instance == null) {
+            throw new IllegalStateException("SimpleEffects not initialized");
+        }
+
+        if (instance.api == null) {
+            synchronized (SimpleEffects.class) {
+                if (instance.api == null) {
+                    instance.api = new SimpleEffectImpl(instance, instance.types);
+                }
+            }
+        }
         return instance.api;
     }
 
