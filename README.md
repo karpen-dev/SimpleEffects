@@ -25,11 +25,11 @@ Available at:
     <url>https://jitpack.io</url>
 </repository>
 
-        <!-- Main dependency -->
+<!-- Main dependency -->
 <dependency>
-<groupId>com.github.karpen-dev</groupId>
-<artifactId>SimpleEffects</artifactId>
-<version>1.2.2</version>
+    <groupId>com.github.karpen-dev</groupId>
+    <artifactId>SimpleEffects</artifactId>
+    <version>1.2.2</version>
 </dependency>
 ```
 </details> 
