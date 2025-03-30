@@ -51,7 +51,7 @@ implementation 'com.github.karpen-dev:SimpleEffects:1.2.2'
 </details>
 
 <details>
-<summary>Gradle.kts:</summary>
+<summary>Gradle.kts</summary>
 
 ``` kotlin
 // Jitpack repo
@@ -69,7 +69,7 @@ implementation("com.github.karpen-dev:SimpleEffects:1.2.2")
 ### Using api   
 
 <details>
-<summary>Java:</summary>
+<summary>Java</summary>
 
 ```java
 // Install api
@@ -81,7 +81,7 @@ api.activeEffectCherryToPlayer(player);
 </details>
 
 <details>
-<summary>Kotlin:</summary>
+<summary>Kotlin</summary>
 
 ```kotlin
 // Install api
