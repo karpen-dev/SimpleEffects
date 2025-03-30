@@ -1,5 +1,7 @@
 package com.karpen.simpleEffects;
 
+import com.karpen.simpleEffects.api.SimpleEffectImpl;
+import com.karpen.simpleEffects.api.SimpleEffectsApi;
 import com.karpen.simpleEffects.commands.Eff;
 import com.karpen.simpleEffects.commands.EffReload;
 import com.karpen.simpleEffects.database.DBManager;
@@ -18,21 +20,28 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SimpleEffects extends JavaPlugin implements Listener, CommandExecutor, TabCompleter {
 
-    Eff eff;
-    EffReload effReload;
-    Effects effects;
-    Config config;
-    DBManager dbManager;
-    Types types;
-    FileManager manager;
+    private Eff eff;
+    private EffReload effReload;
+    private Effects effects;
+    private Config config;
+    private DBManager dbManager;
+    private Types types;
+    private FileManager manager;
+    private SimpleEffectsApi api;
+
+    public static SimpleEffects instance;
 
     @Override
     public void onEnable() {
+        instance = this;
+
         config = new Config();
 
         loadConfig();
 
         types = new Types();
+
+        this.api = new SimpleEffectImpl(this, types);
 
         dbManager = new DBManager(config, this, types);
         manager = new FileManager(this, types);
@@ -113,6 +122,10 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
 
     public Config getConfigObject() {
         return config;
+    }
+
+    public static SimpleEffectsApi getApi(){
+        return instance.api;
     }
 
     @Override
