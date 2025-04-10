@@ -1,108 +1,106 @@
 package com.karpen.simpleEffects.database;
 
 import com.karpen.simpleEffects.model.Config;
+import com.karpen.simpleEffects.model.PlayerTypeEntity;
 import com.karpen.simpleEffects.model.Types;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
-import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
 
 public class DBManager {
 
-    Config config;
-    JavaPlugin plugin;
-    com.karpen.simpleEffects.model.Types types;
+    private final Config config;
+    private final JavaPlugin plugin;
+    private final Types types;
 
     @Setter
-    private Connection connection;
+    private SessionFactory sessionFactory;
 
     public DBManager(Config config, JavaPlugin plugin, Types types){
         this.config = config;
         this.plugin = plugin;
         this.types = types;
 
-        if (config.getMethod().equals("MYSQL")){
-            final String url = config.getDbUrl();
-            final String user = config.getDbUser();
-            final String password = config.getDbPassword();
-
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-
-                connection = DriverManager.getConnection(url, user, password);
-                createTableIfNotExists();
-            } catch (SQLException e){
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+        if (config.getMethod().equalsIgnoreCase("MYSQL")){
+            configureHibernate();
         }
     }
 
-    public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(config.getDbUrl(), config.getDbUser(), config.getDbPassword());
-    }
+    private void configureHibernate() {
+        try {
+            Configuration hibernateConfig = new Configuration();
 
-    private void createTableIfNotExists(){
-        String createTableSQL = "CREATE TABLE IF NOT EXISTS player_types (" +
-                "playerName VARCHAR(100) PRIMARY KEY, " +
-                "type VARCHAR(50) NOT NULL)";
+            hibernateConfig.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
+            hibernateConfig.setProperty("hibernate.connection.url", config.getDbUrl());
+            hibernateConfig.setProperty("hibernate.connection.username", config.getDbUser());
+            hibernateConfig.setProperty("hibernate.connection.password", config.getDbPassword());
 
-        try(Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate(createTableSQL);
-        } catch (SQLException e){
-            e.printStackTrace();
+            hibernateConfig.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+            hibernateConfig.setProperty("hibernate.hbm2ddl.auto", "update");
+            hibernateConfig.setProperty("hibernate.show_sql", "true");
+
+            hibernateConfig.addAnnotatedClass(PlayerTypeEntity.class);
+
+            sessionFactory = hibernateConfig.buildSessionFactory();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     public void removePlayer(Player player){
-        String removeSQL = "DELETE FROM player_types WHERE playerName = ?";
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        try(PreparedStatement stmt = connection.prepareStatement(removeSQL)) {
-            stmt.setString(1, player.getName());
-            stmt.addBatch();
+            Query<?> query = session.createQuery("DELETE FROM PlayerTypeEntity WHERE playerName = :name");
+            query.setParameter("name", player.getName());
+            query.executeUpdate();
 
-            stmt.executeBatch();
-        } catch (SQLException e){
+            transaction.commit();
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void savePlayers(Set<Player> players, String type) {
-        String insertSQL = "INSERT INTO player_types (playerName, type) VALUES (?, ?)";
+    public void savePlayers(Set<Player> players, String type){
+        try(Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        try (PreparedStatement stmt = connection.prepareStatement(insertSQL)) {
-            for (Player player : players) {
-                stmt.setString(1, player.getName());
-                stmt.setString(2, type);
-                stmt.addBatch();
+            for (Player player : players){
+                removePlayer(player);
+
+                PlayerTypeEntity entity = new PlayerTypeEntity();
+                entity.setPlayerName(player.getName());
+                entity.setType(type);
+                session.save(entity);
             }
-
-            stmt.executeBatch();
-        } catch (SQLException e) {
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
 
     public Set<Player> loadPlayersByType(String type) {
         Set<Player> players = new HashSet<>();
-        String selectSQL = "SELECT playerName FROM player_types WHERE type = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(selectSQL)) {
-            stmt.setString(1, type);
-            ResultSet resultSet = stmt.executeQuery();
+        try (Session session = sessionFactory.openSession()) {
+            Query<PlayerTypeEntity> query = session.createQuery(
+                    "FROM PlayerTypeEntity WHERE type = :type", PlayerTypeEntity.class);
+            query.setParameter("type", type);
 
-            while (resultSet.next()) {
-                String playerName = resultSet.getString("playerName");
-                Player player = plugin.getServer().getPlayer(playerName);
+            for (PlayerTypeEntity entity : query.list()) {
+                Player player = plugin.getServer().getPlayer(entity.getPlayerName());
                 if (player != null) {
                     players.add(player);
                 }
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -112,19 +110,14 @@ public class DBManager {
     public Set<Player> loadPlayers() {
         Set<Player> players = new HashSet<>();
 
-        String query = "SELECT playerName, type FROM player_effects";
+        try (Session session = sessionFactory.openSession()) {
+            Query<PlayerTypeEntity> query = session.createQuery(
+                    "FROM PlayerTypeEntity", PlayerTypeEntity.class);
 
-        try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);
-             ResultSet resultSet = statement.executeQuery()) {
-
-            while (resultSet.next()) {
-                String name = resultSet.getString("playerName");
-                String type = resultSet.getString("type");
-
-                Player player = plugin.getServer().getPlayer(name);
+            for (PlayerTypeEntity entity : query.list()) {
+                Player player = plugin.getServer().getPlayer(entity.getPlayerName());
                 if (player != null) {
-                    switch (type) {
+                    switch (entity.getType()) {
                         case "cherry":
                             types.cherryPlayers.add(player);
                             break;
@@ -141,24 +134,19 @@ public class DBManager {
                             types.palePlayers.add(player);
                             break;
                     }
-
                     players.add(player);
                 }
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return players;
     }
 
-    public void close(){
-        try {
-            if (connection != null && !connection.isClosed()){
-                connection.close();
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
+    public void close() {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
+            sessionFactory.close();
         }
     }
 

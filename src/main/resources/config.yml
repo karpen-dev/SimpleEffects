@@ -1,4 +1,4 @@
-# SimpleEffects - v1.2.4 https://github.com/karpen-dev/SimpleEffects
+# SimpleEffects - v1.2.5 https://github.com/karpen-dev/SimpleEffects
 
 # Plugin language - ru, en
 # Язык плагина - ru, en
@@ -14,7 +14,7 @@ db:
 
   # Connection url
   # Url для подключения к базе
-  url: "jdbc:mysql://localhost:3306/effects"
+  url: "mysql://localhost:3306/effects"
 
   # db username
   # Пользователь базы
