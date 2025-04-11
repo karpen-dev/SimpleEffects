@@ -23,12 +23,14 @@ public class Effects {
     private Config config;
     private FileManager manager;
     private DBManager dbManager;
+    private Types types;
 
-    public Effects(SimpleEffects plugin, Config config, FileManager manager, DBManager dbManager) {
+    public Effects(SimpleEffects plugin, Config config, FileManager manager, DBManager dbManager, Types types) {
         this.plugin = plugin;
         this.config = config;
         this.manager = manager;
         this.dbManager = dbManager;
+        this.types = types;
     }
 
     public void removePlayer(Player player){
@@ -46,10 +48,40 @@ public class Effects {
             location.getWorld().spawnParticle(particle, location, config.getCountCherry(), 0.5, 0.5, 0.5);
         }
         if (particle.equals(Particle.END_ROD)) {
-            location.getWorld().spawnParticle(particle, location, config.getCountEndrod(), 0.5, 0.5, 0.5);
+            for (int i = 0; i < config.getCountEndrod(); i++) {
+                Location particleLoc = location.clone().add(
+                        (Math.random() - 0.5) * 0.2,
+                        Math.random() * 0.5,
+                        (Math.random() - 0.5) * 0.2
+                );
+                location.getWorld().spawnParticle(
+                        Particle.END_ROD,
+                        particleLoc,
+                        1,
+                        0,
+                        -0.02,
+                        0,
+                        0.1
+                );
+            }
         }
         if (particle.equals(Particle.TOTEM_OF_UNDYING)) {
-            location.getWorld().spawnParticle(particle, location, config.getCountTotem(), 0.5, 0.5, 0.5);
+            for (int i = 0; i < config.getCountTotem(); i++) {
+                Location particleLoc = location.clone().add(
+                        (Math.random() - 0.5) * 0.3,
+                        Math.random() * 0.7,
+                        (Math.random() - 0.5) * 0.3
+                );
+                location.getWorld().spawnParticle(
+                        Particle.TOTEM_OF_UNDYING,
+                        particleLoc,
+                        1,
+                        0,
+                        -0.01,
+                        0,
+                        0.05
+                );
+            }
         }
         if (particle.equals(Particle.HEART)){
             location.getWorld().spawnParticle(particle, location, config.getCountHeart(), 0.2, 0.2, 0.2);

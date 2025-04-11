@@ -10,6 +10,9 @@ public class Config {
     private int countEndrod;
     private int countTotem;
     private int countHeart;
+    private int countPale;
+
+    private boolean doubleUsing;
 
     private String method;
 

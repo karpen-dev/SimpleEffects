@@ -14,7 +14,7 @@ db:
 
   # Connection url
   # Url для подключения к базе
-  url: "mysql://localhost:3306/effects"
+  url: "jdbc:mysql://localhost:3306/effects"
 
   # db username
   # Пользователь базы
@@ -24,25 +24,14 @@ db:
   # Пароль пользователя базы
   password: "root"
 
-# Количество частиц вишни
-# Count cherry particle
-count-cherry: 1
-
-# Количество частиц энд род
-# Count endrod particle
-count-endrod: 1
-
-# Количество частиц тотема
-# Count totem particle
-count-totem: 1
-
-# Количество частиц сердец
-# Count heart particle
-count-heart: 0.5
-
-# Количество бледных частиц
-# Count pale particle
-count-pale: 1
+# Количество частиц
+# Count particle
+count:
+  cherry: 1
+  endrod: 1
+  totem: 1
+  heart: 1
+  pale: 1
 
 # Сообщения
 # Messages
@@ -54,17 +43,19 @@ count-pale: 1
 # буду рад фитбеку X: https://x.com/karpen5i5
 
 # English
-enable-effect: "Effect enabled"
-disable-effect: "Effect disabled"
+en:
+  enable-effect: "Effect enabled"
+  disable-effect: "Effect disabled"
 
-err-console: "You can't send this command"
-err-args: "Using /eff <cherry | endrod | totem | heart | pale>"
-err-command: "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"
+  err-console: "You can't send this command"
+  err-args: "Using /eff <cherry | endrod | totem | heart | pale>"
+  err-command: "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"
 
 # Russian
-enable-effect-ru: "Эффект включен"
-disable-effect-ru: "Эффект выключен"
+ru:
+  enable-effect: "Эффект включен"
+  disable-effect: "Эффект выключен"
 
-err-console-ru: "Эту команду может отправлять только игрок"
-err-args-ru: "Используйте /eff <cherry | endrod | totem | heart>"
-err-command-ru: "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"
+  err-console: "Эту команду может отправлять только игрок"
+  err-args: "Используйте /eff <cherry | endrod | totem | heart>"
+  err-command: "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"

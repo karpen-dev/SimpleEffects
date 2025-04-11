@@ -14,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -43,7 +44,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
 
         dbManager = new DBManager(config, this, types);
         manager = new FileManager(this, types);
-        effects = new Effects(this, config, manager, dbManager);
+        effects = new Effects(this, config, manager, dbManager, types);
         eff = new Eff(config, effects, types);
         effReload = new EffReload(this);
 
@@ -63,60 +64,38 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
 
     public void loadConfig() {
         saveDefaultConfig();
-        FileConfiguration configuration = getConfig();
+        Configuration configuration = getConfig();
 
-        config.setCountCherry(configuration.getInt("count-cherry", 0));
-        config.setCountEndrod(configuration.getInt("count-endrod", 0));
-        config.setCountTotem(configuration.getInt("count-totem", 0));
-        config.setCountHeart(configuration.getInt("count-heart", 0));
+        config.setMethod(configuration.getString("method", "TXT"));
+        config.setDbUrl(configuration.getString("db.url"));
+        config.setDbUser(configuration.getString("db.username"));
+        config.setDbPassword(configuration.getString("db.password"));
 
-        String method = configuration.getString("method", "TXT");
-        switch (method.toLowerCase()){
-            case "txt" -> config.setMethod("TXT");
-            case "mysql" -> {
-                config.setMethod("MYSQL");
+        config.setCountCherry(configuration.getInt("count.cherry", 1));
+        config.setCountEndrod(configuration.getInt("count.endrod", 1));
+        config.setCountTotem(configuration.getInt("count.totem", 1));
+        config.setCountHeart(configuration.getInt("count.heart", 1));
+        config.setCountPale(configuration.getInt("count.pale", 1));
 
-                config.setDbUrl(configuration.getString("db.url", "localhost:3306/effects"));
-                config.setDbUser(configuration.getString("db.username", "root"));
-                config.setDbPassword(configuration.getString("db.password", "root"));
-            }
-            default -> config.setMethod("TXT");
-        }
-
-        String lang = configuration.getString("lang", "en");
-        switch (lang.toLowerCase()) {
+        switch (configuration.getString("lang", "en").toLowerCase()){
             case "en":
-                config.setMsgEnable(configuration.getString("enable-effect", "Effect enabled"));
-                config.setMsgDisable(configuration.getString("disable-effect", "Effect disabled"));
+                config.setMsgEnable(configuration.getString("en.enable-effect", "Effect enabled"));
+                config.setMsgDisable(configuration.getString("en.disable-effect", "Effect disabled"));
+                config.setErrConsole(configuration.getString("en.err-console", "You can't send this command"));
+                config.setErrArgs(configuration.getString("en.err-args", "Using /eff <cherry | endrod | totem | heart | pale>"));
+                config.setErrCommand(configuration.getString("en.err-command", "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"));
 
-                config.setErrConsole(configuration.getString("err-console", "You can't send this command"));
-                config.setErrArgs(configuration.getString("err-args", "Using /eff <cherry | endrod | totem | heart | pale>"));
-                config.setErrCommand(configuration.getString("err-command", "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"));
                 break;
-
             case "ru":
-                config.setMsgEnable(configuration.getString("enable-effect-ru", "Эффект включен"));
-                config.setMsgDisable(configuration.getString("disable-effect-ru", "Эффект выключен"));
+                config.setMsgEnable(configuration.getString("ru.enable-effect", "Эффект включен"));
+                config.setMsgDisable(configuration.getString("ru.disable-effect", "Эффект выключен"));
+                config.setErrConsole(configuration.getString("ru.err-console", "Эту команду может отправлять только игрок"));
+                config.setErrArgs(configuration.getString("ru.err-args", "Используйте /eff <cherry | endrod | totem | heart>"));
+                config.setErrCommand(configuration.getString("ru.err-command", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
 
-                config.setErrConsole(configuration.getString("err-console-ru", "Эту команду может отправлять только игрок"));
-                config.setErrArgs(configuration.getString("err-args-ru", "Используйте /eff <cherry | endrod | totem | heart | pale>"));
-                config.setErrCommand(configuration.getString("err-command-ru", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
-                break;
-
-            default:
-                getLogger().info(ChatColor.RED + "Language " + lang + " not found in plugin base. Defaulting to English.");
-                loadDefaultEnglishMessages();
                 break;
         }
-    }
 
-    private void loadDefaultEnglishMessages() {
-        config.setMsgEnable("Effect enabled");
-        config.setMsgDisable("Effect disabled");
-
-        config.setErrConsole("You can't send this command");
-        config.setErrArgs("Using /eff <cherry | endrod | totem | heart | pale>");
-        config.setErrCommand("Invalid command. Use /eff <cherry | endrod | totem | heart | pale>");
     }
 
     public Config getConfigObject() {

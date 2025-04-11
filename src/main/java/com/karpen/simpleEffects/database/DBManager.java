@@ -47,6 +47,10 @@ public class DBManager {
             hibernateConfig.setProperty("hibernate.hbm2ddl.auto", "update");
             hibernateConfig.setProperty("hibernate.show_sql", "true");
 
+            hibernateConfig.setProperty("hibernate.show_sql", "false");
+            hibernateConfig.setProperty("hibernate.format_sql", "false");
+            hibernateConfig.setProperty("hibernate.use_sql_comments", "false");
+
             hibernateConfig.addAnnotatedClass(PlayerTypeEntity.class);
 
             sessionFactory = hibernateConfig.buildSessionFactory();
