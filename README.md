@@ -1,5 +1,7 @@
 ## SimpleEffects plugin
 
+[![](https://jitpack.io/v/karpen-dev/SimpleEffects.svg)](https://jitpack.io/#karpen-dev/SimpleEffects)
+
 Plugin versions 1.2 and higher only support game versions 1.21.4+  
 
 Commands: ``/eff <effect name>``  
@@ -29,7 +31,7 @@ Available at:
 <dependency>
     <groupId>com.github.karpen-dev</groupId>
     <artifactId>SimpleEffects</artifactId>
-    <version>1.2.2</version>
+    <version>SEE VERSION IN GITHUB REPO</version>
 </dependency>
 ```
 </details> 
@@ -46,7 +48,7 @@ repositories {
 }
 
 // Main dependency
-implementation 'com.github.karpen-dev:SimpleEffects:1.2.2'
+implementation 'com.github.karpen-dev:SimpleEffects:SEE VERSION IN GITHUB REPO'
 ```
 </details>
 
@@ -62,7 +64,7 @@ repositories {
 }
 
 // Main dependency
-implementation("com.github.karpen-dev:SimpleEffects:1.2.2")
+implementation("com.github.karpen-dev:SimpleEffects:SEE VERSION IN GITHUB REPO")
 ```
 </details>
 
