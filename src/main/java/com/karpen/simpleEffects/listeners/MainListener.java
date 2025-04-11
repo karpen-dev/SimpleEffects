@@ -5,18 +5,13 @@ import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.services.Effects;
 import com.karpen.simpleEffects.services.FileManager;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.block.data.type.Bed;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -64,6 +59,15 @@ public class MainListener implements Listener {
             if (types.palePlayers.contains(player)){
                 dbManager.savePlayers(types.palePlayers, "pale");
             }
+
+            if (types.purplePlayers.contains(player)){
+                dbManager.savePlayers(types.purplePlayers, "purple");
+            }
+
+            if (types.notePlayers.contains(player)){
+                dbManager.savePlayers(types.notePlayers, "note");
+            }
+
         } else if (config.getMethod().equals("TXT")){
             if (types.cherryPlayers.contains(player)){
                 manager.savePlayers(Set.of(player), "cherry");
@@ -84,6 +88,14 @@ public class MainListener implements Listener {
             if (types.palePlayers.contains(player)){
                 manager.savePlayers(Set.of(player), "pale");
             }
+
+            if (types.purplePlayers.contains(player)){
+                manager.savePlayers(Set.of(player), "purple");
+            }
+
+            if (types.notePlayers.contains(player)){
+                manager.savePlayers(Set.of(player), "note");
+            }
         }
     }
 
@@ -97,6 +109,8 @@ public class MainListener implements Listener {
             types.totemPlayers = dbManager.loadPlayersByType("totem");
             types.heartPlayers = dbManager.loadPlayersByType("heart");
             types.palePlayers = dbManager.loadPlayersByType("pale");
+            types.notePlayers = dbManager.loadPlayersByType("note");
+            types.purplePlayers = dbManager.loadPlayersByType("purple");
         }
     }
 
@@ -134,6 +148,12 @@ public class MainListener implements Listener {
             if (types.palePlayers.contains(player)){
                 effects.spawnEffect(player.getLocation(), Particle.PALE_OAK_LEAVES);
             }
+            if (types.purplePlayers.contains(player)){
+                effects.spawnEffect(player.getLocation(), Particle.WITCH);
+            }
+            if (types.notePlayers.contains(player)){
+                effects.spawnEffect(player.getLocation(),Particle.NOTE);
+            }
         }
     }
 
@@ -163,6 +183,12 @@ public class MainListener implements Listener {
             if (types.palePlayers.contains(player)){
                 effects.spawnEffectSnowball(snowball, Particle.PALE_OAK_LEAVES);
             }
+            if (types.purplePlayers.contains(player)){
+                effects.spawnEffectSnowball(snowball, Particle.WITCH);
+            }
+            if (types.notePlayers.contains(player)){
+                effects.spawnEffectSnowball(snowball, Particle.NOTE);
+            }
         }
 
         if (event.getEntity() instanceof Arrow){
@@ -188,6 +214,12 @@ public class MainListener implements Listener {
             }
             if (types.palePlayers.contains(player)){
                 effects.spawnEffectArrow(arrow, Particle.PALE_OAK_LEAVES);
+            }
+            if (types.purplePlayers.contains(player)){
+                effects.spawnEffectArrow(arrow, Particle.WITCH);
+            }
+            if (types.notePlayers.contains(player)){
+                effects.spawnEffectArrow(arrow, Particle.NOTE);
             }
         }
     }

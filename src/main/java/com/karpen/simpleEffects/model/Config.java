@@ -11,6 +11,18 @@ public class Config {
     private int countTotem;
     private int countHeart;
     private int countPale;
+    private int countNotes;
+    private int countPurple;
+
+    private boolean rightsUsing;
+
+    private String rightsCherry;
+    private String rightsEndRod;
+    private String rightsTotem;
+    private String rightsHeart;
+    private String rightsPale;
+    private String rightsNotes;
+    private String rightsPurple;
 
     private boolean doubleUsing;
 
@@ -24,6 +36,7 @@ public class Config {
     private String msgDisable;
 
     private String errConsole;
+    private String errPerms;
     private String errArgs;
     private String errCommand;
 }

@@ -34,23 +34,39 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
         types.heartPlayers.add(player);
     }
 
+    public void activePurpleToPlayer(Player player){
+        types.purplePlayers.add(player);
+    }
+
+    public void activeNoteToPlayer(Player player){
+        types.notePlayers.add(player);
+    }
+
     public void disableEffectCherryToPlayer(Player player){
-        types.cherryPlayers.add(player);
+        types.cherryPlayers.remove(player);
     }
 
     public void disableEndrodToPlayer(Player player){
-        types.endRodPlayers.add(player);
+        types.endRodPlayers.remove(player);
     }
 
     public void disableTotemToPlayer(Player player){
-        types.totemPlayers.add(player);
+        types.totemPlayers.remove(player);
     }
 
     public void disablePaleToPlayer(Player player){
-        types.palePlayers.add(player);
+        types.palePlayers.remove(player);
     }
 
     public void disableHeartToPlayer(Player player){
-        types.heartPlayers.add(player);
+        types.heartPlayers.remove(player);
+    }
+
+    public void disablePurpleToPlayer(Player player){
+        types.purplePlayers.remove(player);
+    }
+
+    public void disableNoteToPlayer(Player player){
+        types.notePlayers.remove(player);
     }
 }

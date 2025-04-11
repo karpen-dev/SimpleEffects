@@ -137,6 +137,12 @@ public class DBManager {
                         case "pale":
                             types.palePlayers.add(player);
                             break;
+                        case "purple":
+                            types.purplePlayers.add(player);
+                            break;
+                        case "note":
+                            types.notePlayers.add(player);
+                            break;
                     }
                     players.add(player);
                 }

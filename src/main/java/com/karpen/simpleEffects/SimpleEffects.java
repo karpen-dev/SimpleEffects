@@ -11,11 +11,9 @@ import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.services.Effects;
 import com.karpen.simpleEffects.services.FileManager;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -44,7 +42,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
 
         dbManager = new DBManager(config, this, types);
         manager = new FileManager(this, types);
-        effects = new Effects(this, config, manager, dbManager, types);
+        effects = new Effects(this, config, manager, dbManager);
         eff = new Eff(config, effects, types);
         effReload = new EffReload(this);
 
@@ -76,12 +74,25 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
         config.setCountTotem(configuration.getInt("count.totem", 1));
         config.setCountHeart(configuration.getInt("count.heart", 1));
         config.setCountPale(configuration.getInt("count.pale", 1));
+        config.setCountPurple(configuration.getInt("count.purple", 1));
+        config.setCountNotes(configuration.getInt("count.notes", 1));
+
+        config.setRightsUsing(configuration.getBoolean("rights.using"));
+        config.setRightsCherry(configuration.getString("rights.cherry", "karpen.simpleeffects.cherry"));
+        config.setRightsEndRod(configuration.getString("rights.endrod", "karpen.simpleeffects.endrod"));
+        config.setRightsTotem(configuration.getString("rights.totem", "karpen.simpleeffects.totem"));
+        config.setRightsHeart(configuration.getString("rights.heart", "karpen.simpleeffects.heart"));
+        config.setRightsPale(configuration.getString("rights.pale", "karpen.simpleeffects.pale"));
+        config.setRightsPurple(configuration.getString("rights.purple", "karpen.simpleeffects.purple"));
+        config.setRightsNotes(configuration.getString("rights.notes", "karpen.simpleeffects.notes"));
+
 
         switch (configuration.getString("lang", "en").toLowerCase()){
             case "en":
                 config.setMsgEnable(configuration.getString("en.enable-effect", "Effect enabled"));
                 config.setMsgDisable(configuration.getString("en.disable-effect", "Effect disabled"));
                 config.setErrConsole(configuration.getString("en.err-console", "You can't send this command"));
+                config.setErrPerms(configuration.getString("en.err-perms", "You can't have permission for using this"));
                 config.setErrArgs(configuration.getString("en.err-args", "Using /eff <cherry | endrod | totem | heart | pale>"));
                 config.setErrCommand(configuration.getString("en.err-command", "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"));
 
@@ -90,6 +101,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
                 config.setMsgEnable(configuration.getString("ru.enable-effect", "Эффект включен"));
                 config.setMsgDisable(configuration.getString("ru.disable-effect", "Эффект выключен"));
                 config.setErrConsole(configuration.getString("ru.err-console", "Эту команду может отправлять только игрок"));
+                config.setErrPerms(configuration.getString("ru.err-perms", "Вы не имейте прав для использования этой команды"));
                 config.setErrArgs(configuration.getString("ru.err-args", "Используйте /eff <cherry | endrod | totem | heart>"));
                 config.setErrCommand(configuration.getString("ru.err-command", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
 

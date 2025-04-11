@@ -3,19 +3,12 @@ package com.karpen.simpleEffects.services;
 import com.karpen.simpleEffects.SimpleEffects;
 import com.karpen.simpleEffects.database.DBManager;
 import com.karpen.simpleEffects.model.Config;
-import com.karpen.simpleEffects.model.Types;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.block.data.type.Bed;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
-
-import java.io.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 public class Effects {
 
@@ -23,14 +16,12 @@ public class Effects {
     private Config config;
     private FileManager manager;
     private DBManager dbManager;
-    private Types types;
 
-    public Effects(SimpleEffects plugin, Config config, FileManager manager, DBManager dbManager, Types types) {
+    public Effects(SimpleEffects plugin, Config config, FileManager manager, DBManager dbManager) {
         this.plugin = plugin;
         this.config = config;
         this.manager = manager;
         this.dbManager = dbManager;
-        this.types = types;
     }
 
     public void removePlayer(Player player){
@@ -87,7 +78,13 @@ public class Effects {
             location.getWorld().spawnParticle(particle, location, config.getCountHeart(), 0.2, 0.2, 0.2);
         }
         if (particle.equals(Particle.PALE_OAK_LEAVES)){
-            location.getWorld().spawnParticle(particle, location, 10);
+            location.getWorld().spawnParticle(particle, location, config.getCountPale(), 0.5, 0.5, 0.5);
+        }
+        if (particle.equals(Particle.WITCH)){
+            location.getWorld().spawnParticle(particle, location, config.getCountPurple(), 0.5, 0.5, 0.5);
+        }
+        if (particle.equals(Particle.NOTE)){
+            location.getWorld().spawnParticle(particle, location, config.getCountNotes(), 0.5, 0.5, 0.5);
         }
     }
 
