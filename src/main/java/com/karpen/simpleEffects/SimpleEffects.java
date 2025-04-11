@@ -6,6 +6,7 @@ import com.karpen.simpleEffects.commands.Eff;
 import com.karpen.simpleEffects.commands.EffReload;
 import com.karpen.simpleEffects.database.DBManager;
 import com.karpen.simpleEffects.listeners.MainListener;
+import com.karpen.simpleEffects.menus.SelectEffectMenu;
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.services.Effects;
@@ -26,6 +27,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
     private DBManager dbManager;
     private Types types;
     private FileManager manager;
+    private SelectEffectMenu effectMenu;
     private volatile SimpleEffectsApi api;
 
     public static SimpleEffects instance;
@@ -43,7 +45,8 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
         dbManager = new DBManager(config, this, types);
         manager = new FileManager(this, types);
         effects = new Effects(this, config, manager, dbManager);
-        eff = new Eff(config, effects, types);
+        effectMenu = new SelectEffectMenu(config, effects, types);
+        eff = new Eff(config, effects, types, effectMenu);
         effReload = new EffReload(this);
 
         this.api = new SimpleEffectImpl(this, types);
@@ -57,6 +60,8 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
         }
 
         Bukkit.getPluginManager().registerEvents(new MainListener(config, dbManager, types, manager, effects), this);
+        Bukkit.getPluginManager().registerEvents(effectMenu, this);
+
         getLogger().info("SimpleEffects by karpen");
     }
 
@@ -96,6 +101,18 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
                 config.setErrArgs(configuration.getString("en.err-args", "Using /eff <cherry | endrod | totem | heart | pale>"));
                 config.setErrCommand(configuration.getString("en.err-command", "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"));
 
+                config.setMenuName(configuration.getString("en.menu-name", "Select effect"));
+                config.setItemsEnable(configuration.getString("en.item-enable", "Enable this effect"));
+                config.setItemsDisable(configuration.getString("en.item-disable", "Disable this effect"));
+
+                config.setItemCherryName(configuration.getString("en.cherry", "Cherry"));
+                config.setItemEndRodName(configuration.getString("en.endrod", "Endrod"));
+                config.setItemTotemName(configuration.getString("en.totem", "Totem"));
+                config.setItemHeartName(configuration.getString("en.heart", "Heart"));
+                config.setItemPaleName(configuration.getString("en.pale", "Pale"));
+                config.setItemPurpleName(configuration.getString("en.purple", "Purple"));
+                config.setItemNotesName(configuration.getString("en.notes", "Notes"));
+
                 break;
             case "ru":
                 config.setMsgEnable(configuration.getString("ru.enable-effect", "Эффект включен"));
@@ -104,6 +121,18 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
                 config.setErrPerms(configuration.getString("ru.err-perms", "Вы не имейте прав для использования этой команды"));
                 config.setErrArgs(configuration.getString("ru.err-args", "Используйте /eff <cherry | endrod | totem | heart>"));
                 config.setErrCommand(configuration.getString("ru.err-command", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
+
+                config.setMenuName(configuration.getString("en.menu-name", "Выбрать эффект"));
+                config.setItemsEnable(configuration.getString("en.item-enable", "Включить этот эффект"));
+                config.setItemsDisable(configuration.getString("en.item-disable", "Выключить этот эффект"));
+
+                config.setItemCherryName(configuration.getString("en.cherry", "Cherry"));
+                config.setItemEndRodName(configuration.getString("en.endrod", "Endrod"));
+                config.setItemTotemName(configuration.getString("en.totem", "Totem"));
+                config.setItemHeartName(configuration.getString("en.heart", "Heart"));
+                config.setItemPaleName(configuration.getString("en.pale", "Pale"));
+                config.setItemPurpleName(configuration.getString("en.purple", "Purple"));
+                config.setItemNotesName(configuration.getString("en.notes", "Notes"));
 
                 break;
         }

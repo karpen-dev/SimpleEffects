@@ -32,6 +32,18 @@ public class Config {
     private String dbUser;
     private String dbPassword;
 
+    private String menuName;
+    private String itemsEnable;
+    private String itemsDisable;
+
+    private String itemCherryName;
+    private String itemEndRodName;
+    private String itemTotemName;
+    private String itemHeartName;
+    private String itemPaleName;
+    private String itemNotesName;
+    private String itemPurpleName;
+
     private String msgEnable;
     private String msgDisable;
 

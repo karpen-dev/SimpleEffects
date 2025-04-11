@@ -62,6 +62,18 @@ en:
   enable-effect: "Effect enabled"
   disable-effect: "Effect disabled"
 
+  menu-name: "Select effect"
+  item-enable: "Enable this effect"
+  item-disable: "Disable this effect"
+
+  cherry: "Cherry"
+  endrod: "Endrod"
+  totem: "Totem"
+  heart: "Heart"
+  pale: "Pale"
+  purple: "Purple"
+  notes: "Notes"
+
   err-console: "You can't send this command"
   err-perms: "You can't have permission for using this"
   err-args: "Using /eff <cherry | endrod | totem | heart | pale>"
@@ -71,6 +83,18 @@ en:
 ru:
   enable-effect: "Эффект включен"
   disable-effect: "Эффект выключен"
+
+  menu-name: "Выбрать эффект"
+  item-enable: "Включить этот эффект"
+  item-disable: "Выключить этот эффект"
+
+  cherry: "Cherry"
+  endrod: "Endrod"
+  totem: "Totem"
+  heart: "Heart"
+  pale: "Pale"
+  purple: "Purple"
+  notes: "Notes"
 
   err-console: "Эту команду может отправлять только игрок"
   err-perms: "Вы не имейте прав для использования этой команды"

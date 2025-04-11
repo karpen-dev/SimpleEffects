@@ -1,5 +1,6 @@
 package com.karpen.simpleEffects.commands;
 
+import com.karpen.simpleEffects.menus.SelectEffectMenu;
 import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.services.Effects;
 import com.karpen.simpleEffects.model.Config;
@@ -14,11 +15,13 @@ public class Eff implements CommandExecutor {
     private final Config config;
     private final Effects effects;
     private Types types;
+    private SelectEffectMenu effectMenu;
 
-    public Eff(Config config, Effects effects, Types types) {
+    public Eff(Config config, Effects effects, Types types, SelectEffectMenu effectMenu) {
         this.config = config;
         this.effects = effects;
         this.types = types;
+        this.effectMenu = effectMenu;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class Eff implements CommandExecutor {
         Player player = (Player) commandSender;
 
         if (strings.length == 0){
-            player.sendMessage(ChatColor.RED + config.getErrArgs());
+            effectMenu.openMenu(player);
 
             return true;
         }
@@ -188,6 +191,7 @@ public class Eff implements CommandExecutor {
 
         return true;
     }
+
     private boolean errCommand(Player player){
         player.sendMessage(ChatColor.RED + config.getErrCommand());
 
