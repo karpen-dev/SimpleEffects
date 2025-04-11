@@ -4,7 +4,7 @@
 
 Plugin versions 1.2 and higher only support game versions 1.21.4+  
 
-Commands: ``/eff <effect name>``  
+Command: ``/eff``  
 To enable effects, give permission `karpen.simpleEffects.eff`.  
    
 Reload command: ``/eff-reload``.   
