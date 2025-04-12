@@ -143,6 +143,9 @@ public class DBManager {
                         case "note":
                             types.notePlayers.add(player);
                             break;
+                        case "cloud":
+                            types.cloudPlayers.add(player);
+                            break;
                     }
                     players.add(player);
                 }

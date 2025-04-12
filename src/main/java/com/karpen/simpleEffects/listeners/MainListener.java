@@ -68,6 +68,10 @@ public class MainListener implements Listener {
                 dbManager.savePlayers(types.notePlayers, "note");
             }
 
+            if (types.cloudPlayers.contains(player)){
+                dbManager.savePlayers(types.cloudPlayers, "cloud");
+            }
+
         } else if (config.getMethod().equals("TXT")){
             if (types.cherryPlayers.contains(player)){
                 manager.savePlayers(Set.of(player), "cherry");
@@ -96,6 +100,10 @@ public class MainListener implements Listener {
             if (types.notePlayers.contains(player)){
                 manager.savePlayers(Set.of(player), "note");
             }
+
+            if (types.cloudPlayers.contains(player)){
+                manager.savePlayers(Set.of(player), "cloud");
+            }
         }
     }
 
@@ -111,6 +119,11 @@ public class MainListener implements Listener {
             types.palePlayers = dbManager.loadPlayersByType("pale");
             types.notePlayers = dbManager.loadPlayersByType("note");
             types.purplePlayers = dbManager.loadPlayersByType("purple");
+            types.cloudPlayers = dbManager.loadPlayersByType("cloud");
+        }
+
+        if (types.cloudPlayers.contains(event.getPlayer())){
+            effects.startCloudEffect(event.getPlayer());
         }
     }
 
@@ -134,25 +147,25 @@ public class MainListener implements Listener {
             }
 
             if (types.cherryPlayers.contains(player)){
-                effects.spawnEffect(player.getLocation(), Particle.CHERRY_LEAVES);
+                effects.spawnEffect(Particle.CHERRY_LEAVES, player);
             }
             if (types.endRodPlayers.contains(player)){
-                effects.spawnEffect(player.getLocation(), Particle.END_ROD);
+                effects.spawnEffect(Particle.END_ROD, player);
             }
             if (types.totemPlayers.contains(player)){
-                effects.spawnEffect(player.getLocation(), Particle.TOTEM_OF_UNDYING);
+                effects.spawnEffect(Particle.TOTEM_OF_UNDYING, player);
             }
             if (types.heartPlayers.contains(player)){
-                effects.spawnEffect(player.getLocation(), Particle.HEART);
+                effects.spawnEffect(Particle.HEART, player);
             }
             if (types.palePlayers.contains(player)){
-                effects.spawnEffect(player.getLocation(), Particle.PALE_OAK_LEAVES);
+                effects.spawnEffect(Particle.PALE_OAK_LEAVES, player);
             }
             if (types.purplePlayers.contains(player)){
-                effects.spawnEffect(player.getLocation(), Particle.WITCH);
+                effects.spawnEffect(Particle.WITCH, player);
             }
             if (types.notePlayers.contains(player)){
-                effects.spawnEffect(player.getLocation(),Particle.NOTE);
+                effects.spawnEffect(Particle.NOTE, player);
             }
         }
     }
@@ -169,25 +182,25 @@ public class MainListener implements Listener {
             Player player = (Player) snowball.getShooter();
 
             if (types.cherryPlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.CHERRY_LEAVES);
+                effects.spawnEffectSnowball(snowball, Particle.CHERRY_LEAVES, player);
             }
             if (types.endRodPlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.END_ROD);
+                effects.spawnEffectSnowball(snowball, Particle.END_ROD, player);
             }
             if (types.totemPlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.TOTEM_OF_UNDYING);
+                effects.spawnEffectSnowball(snowball, Particle.TOTEM_OF_UNDYING, player);
             }
             if (types.heartPlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.HEART);
+                effects.spawnEffectSnowball(snowball, Particle.HEART, player);
             }
             if (types.palePlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.PALE_OAK_LEAVES);
+                effects.spawnEffectSnowball(snowball, Particle.PALE_OAK_LEAVES, player);
             }
             if (types.purplePlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.WITCH);
+                effects.spawnEffectSnowball(snowball, Particle.WITCH, player);
             }
             if (types.notePlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.NOTE);
+                effects.spawnEffectSnowball(snowball, Particle.NOTE, player);
             }
         }
 
@@ -201,25 +214,25 @@ public class MainListener implements Listener {
             Player player = (Player) arrow.getShooter();
 
             if (types.cherryPlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.CHERRY_LEAVES);
+                effects.spawnEffectArrow(arrow, Particle.CHERRY_LEAVES, player);
             }
             if (types.endRodPlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.END_ROD);
+                effects.spawnEffectArrow(arrow, Particle.END_ROD, player);
             }
             if (types.totemPlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.TOTEM_OF_UNDYING);
+                effects.spawnEffectArrow(arrow, Particle.TOTEM_OF_UNDYING, player);
             }
             if (types.heartPlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.HEART);
+                effects.spawnEffectArrow(arrow, Particle.HEART, player);
             }
             if (types.palePlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.PALE_OAK_LEAVES);
+                effects.spawnEffectArrow(arrow, Particle.PALE_OAK_LEAVES, player);
             }
             if (types.purplePlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.WITCH);
+                effects.spawnEffectArrow(arrow, Particle.WITCH, player);
             }
             if (types.notePlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.NOTE);
+                effects.spawnEffectArrow(arrow, Particle.NOTE, player);
             }
         }
     }

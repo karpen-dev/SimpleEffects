@@ -12,13 +12,10 @@ import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.services.Effects;
 import com.karpen.simpleEffects.services.FileManager;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.Configuration;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class SimpleEffects extends JavaPlugin implements Listener, CommandExecutor, TabCompleter {
+public final class SimpleEffects extends JavaPlugin {
 
     private Eff eff;
     private EffReload effReload;
@@ -44,7 +41,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
 
         dbManager = new DBManager(config, this, types);
         manager = new FileManager(this, types);
-        effects = new Effects(this, config, manager, dbManager);
+        effects = new Effects(this, config, manager, dbManager, types);
         effectMenu = new SelectEffectMenu(config, effects, types);
         eff = new Eff(config, effects, types, effectMenu);
         effReload = new EffReload(this);
@@ -90,6 +87,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
         config.setRightsPale(configuration.getString("rights.pale", "karpen.simpleeffects.pale"));
         config.setRightsPurple(configuration.getString("rights.purple", "karpen.simpleeffects.purple"));
         config.setRightsNotes(configuration.getString("rights.notes", "karpen.simpleeffects.notes"));
+        config.setRightsCloud(configuration.getString("rights.cloud", "karpen.simpleeffects.cloud"));
 
 
         switch (configuration.getString("lang", "en").toLowerCase()){
@@ -105,6 +103,12 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
                 config.setItemsEnable(configuration.getString("en.item-enable", "Enable this effect"));
                 config.setItemsDisable(configuration.getString("en.item-disable", "Disable this effect"));
 
+                if (configuration.getBoolean("warning")){
+                    config.setWarning(configuration.getString("en.warning", "While using this effect you may see flashes and blurry images."));
+                } else {
+                    config.setWarning(null);
+                }
+
                 config.setItemCherryName(configuration.getString("en.cherry", "Cherry"));
                 config.setItemEndRodName(configuration.getString("en.endrod", "Endrod"));
                 config.setItemTotemName(configuration.getString("en.totem", "Totem"));
@@ -112,6 +116,7 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
                 config.setItemPaleName(configuration.getString("en.pale", "Pale"));
                 config.setItemPurpleName(configuration.getString("en.purple", "Purple"));
                 config.setItemNotesName(configuration.getString("en.notes", "Notes"));
+                config.setItemCloudName(configuration.getString("en.cloud", "Cloud"));
 
                 break;
             case "ru":
@@ -122,17 +127,24 @@ public final class SimpleEffects extends JavaPlugin implements Listener, Command
                 config.setErrArgs(configuration.getString("ru.err-args", "Используйте /eff <cherry | endrod | totem | heart>"));
                 config.setErrCommand(configuration.getString("ru.err-command", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
 
-                config.setMenuName(configuration.getString("en.menu-name", "Выбрать эффект"));
-                config.setItemsEnable(configuration.getString("en.item-enable", "Включить этот эффект"));
-                config.setItemsDisable(configuration.getString("en.item-disable", "Выключить этот эффект"));
+                config.setMenuName(configuration.getString("ru.menu-name", "Выбрать эффект"));
+                config.setItemsEnable(configuration.getString("ru.item-enable", "Включить этот эффект"));
+                config.setItemsDisable(configuration.getString("ru.item-disable", "Выключить этот эффект"));
 
-                config.setItemCherryName(configuration.getString("en.cherry", "Cherry"));
-                config.setItemEndRodName(configuration.getString("en.endrod", "Endrod"));
-                config.setItemTotemName(configuration.getString("en.totem", "Totem"));
-                config.setItemHeartName(configuration.getString("en.heart", "Heart"));
-                config.setItemPaleName(configuration.getString("en.pale", "Pale"));
-                config.setItemPurpleName(configuration.getString("en.purple", "Purple"));
-                config.setItemNotesName(configuration.getString("en.notes", "Notes"));
+                if (configuration.getBoolean("warning")){
+                    config.setWarning(configuration.getString("ru.warning", "При использовании этого эффекта вы можете увидеть вспышки и размытие изображения."));
+                } else {
+                    config.setWarning(null);
+                }
+
+                config.setItemCherryName(configuration.getString("ru.cherry", "Cherry"));
+                config.setItemEndRodName(configuration.getString("ru.endrod", "Endrod"));
+                config.setItemTotemName(configuration.getString("ru.totem", "Totem"));
+                config.setItemHeartName(configuration.getString("ru.heart", "Heart"));
+                config.setItemPaleName(configuration.getString("ru.pale", "Pale"));
+                config.setItemPurpleName(configuration.getString("ru.purple", "Purple"));
+                config.setItemNotesName(configuration.getString("ru.notes", "Notes"));
+                config.setItemCloudName(configuration.getString("ru.cloud", "Cloud"));
 
                 break;
         }

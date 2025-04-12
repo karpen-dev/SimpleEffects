@@ -54,6 +54,7 @@ public class Eff implements CommandExecutor {
             case "pale" -> activePale(player);
             case "note" -> activeNote(player);
             case "purple" -> activePurple(player);
+            case "cloud" -> activeCloud(player);
             default -> errCommand(player);
         };
     }
@@ -186,6 +187,26 @@ public class Eff implements CommandExecutor {
             player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else {
             types.notePlayers.add(player);
+            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+        }
+
+        return true;
+    }
+
+    private boolean activeCloud(Player player){
+        if (config.isRightsUsing() && !player.hasPermission(config.getRightsCloud())){
+            player.sendMessage(ChatColor.RED + config.getErrPerms());
+
+            return true;
+        }
+
+        if (types.cloudPlayers.contains(player)){
+            types.cloudPlayers.remove(player);
+            effects.removePlayer(player);
+            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+        } else {
+            types.cloudPlayers.add(player);
+            effects.startCloudEffect(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
 

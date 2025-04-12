@@ -13,4 +13,5 @@ public class Types {
     public Set<Player> palePlayers = new HashSet<>();
     public Set<Player> notePlayers = new HashSet<>();
     public Set<Player> purplePlayers = new HashSet<>();
+    public Set<Player> cloudPlayers = new HashSet<>();
 }

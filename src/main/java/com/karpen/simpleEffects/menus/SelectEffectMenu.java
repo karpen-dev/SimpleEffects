@@ -31,7 +31,7 @@ public class SelectEffectMenu implements Listener {
     }
 
     public void openMenu(Player player){
-        Inventory inventory = Bukkit.createInventory(player, 9, config.getMenuName());
+        Inventory inventory = Bukkit.createInventory(player, 27, config.getMenuName());
         playerInventors.put(player, inventory);
 
         inventory.setItem(1, cherryItem(player));
@@ -41,6 +41,8 @@ public class SelectEffectMenu implements Listener {
         inventory.setItem(5, paleItem(player));
         inventory.setItem(6, purpleItem(player));
         inventory.setItem(7, noteItem(player));
+
+        inventory.setItem(13, cloudItem(player));
 
         player.openInventory(inventory);
     }
@@ -64,6 +66,8 @@ public class SelectEffectMenu implements Listener {
                 case 5 -> activePale(player);
                 case 6 -> activePurple(player);
                 case 7 -> activeNote(player);
+
+                case 13 -> activeCloud(player);
             }
         }
     }
@@ -188,6 +192,32 @@ public class SelectEffectMenu implements Listener {
         } else {
             meta.setLore(Collections.singletonList(ChatColor.GREEN + config.getItemsEnable()));
         }
+
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
+    private ItemStack cloudItem(Player player){
+        ItemStack item = new ItemStack(Material.LIGHT_GRAY_DYE, 1);
+        ItemMeta meta = item.getItemMeta();
+
+        assert meta != null;
+        meta.setDisplayName(ChatColor.DARK_GRAY + config.getItemCloudName());
+
+        List<String> lore = new ArrayList<>();
+
+        if (types.cloudPlayers.contains(player)){
+            lore.add(ChatColor.RED + config.getItemsDisable());
+        } else {
+            lore.add(ChatColor.GREEN + config.getItemsEnable());
+        }
+
+        if (config.getWarning() != null){
+            lore.add(ChatColor.RED + config.getWarning());
+        }
+
+        meta.setLore(lore);
 
         item.setItemMeta(meta);
 
@@ -349,6 +379,30 @@ public class SelectEffectMenu implements Listener {
             player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
         } else {
             types.notePlayers.add(player);
+            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+        }
+
+        return true;
+    }
+
+    private boolean activeCloud(Player player){
+        playerInventors.remove(player);
+
+        player.closeInventory();
+
+        if (config.isRightsUsing() && !player.hasPermission(config.getRightsCloud())){
+            player.sendMessage(ChatColor.RED + config.getErrPerms());
+
+            return true;
+        }
+
+        if (types.cloudPlayers.contains(player)){
+            types.cloudPlayers.remove(player);
+            effects.removePlayer(player);
+            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+        } else {
+            types.cloudPlayers.add(player);
+            effects.startCloudEffect(player);
             player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
         }
 

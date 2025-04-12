@@ -20,6 +20,7 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
                 suggestions.add("pale");
                 suggestions.add("purple");
                 suggestions.add("note");
+                suggestions.add("cloud");
             }
         }
 

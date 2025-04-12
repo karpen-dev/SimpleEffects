@@ -10,6 +10,7 @@ public interface SimpleEffectsApi {
     void activeHeartToPlayer(Player player);
     void activePurpleToPlayer(Player player);
     void activeNoteToPlayer(Player player);
+    void activeCloudToPlayer(Player player);
     void disableEffectCherryToPlayer(Player player);
     void disableEndrodToPlayer(Player player);
     void disableTotemToPlayer(Player player);
@@ -17,4 +18,5 @@ public interface SimpleEffectsApi {
     void disableHeartToPlayer(Player player);
     void disablePurpleToPlayer(Player player);
     void disableNoteToPlayer(Player player);
+    void disableCloudToPlayer(Player player);
 }

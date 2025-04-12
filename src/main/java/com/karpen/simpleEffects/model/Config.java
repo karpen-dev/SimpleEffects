@@ -23,6 +23,7 @@ public class Config {
     private String rightsPale;
     private String rightsNotes;
     private String rightsPurple;
+    private String rightsCloud;
 
     private boolean doubleUsing;
 
@@ -43,6 +44,9 @@ public class Config {
     private String itemPaleName;
     private String itemNotesName;
     private String itemPurpleName;
+    private String itemCloudName;
+
+    private String warning;
 
     private String msgEnable;
     private String msgDisable;

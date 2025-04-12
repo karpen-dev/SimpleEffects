@@ -8,6 +8,12 @@ lang: en
 # Метод сохранения (TXT, MYSQL)
 method: TXT
 
+# Waring for flashes effects
+# Don't recommend disable this
+# Предупреждения о резких вспышках
+# Не рекомендую отключать это
+warning: true
+
 # If you using mysql, change db config
 # Если вы используйте mysql настройте данные для подключения
 db:
@@ -37,6 +43,8 @@ rights:
   notes: "karpen.simpleeffects.notes"
   purple: "karpen.simpleeffects.purple"
 
+  cloud: "karpen.simpleeffects.cloud"
+
 # Количество частиц
 # Count particle
 count:
@@ -47,6 +55,9 @@ count:
   pale: 1
   notes: 1
   purple: 1
+
+  # The count of cloud doesn't change
+  # Количество частиц для эффекта облака изменять не возможно
 
 # Сообщения
 # Messages
@@ -73,11 +84,15 @@ en:
   pale: "Pale"
   purple: "Purple"
   notes: "Notes"
+  cloud: "Cloud"
+
+  # Warning
+  warning: "While using this effect you may see flashes and blurry images."
 
   err-console: "You can't send this command"
   err-perms: "You can't have permission for using this"
-  err-args: "Using /eff <cherry | endrod | totem | heart | pale>"
-  err-command: "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"
+  err-args: "Using /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
+  err-command: "Invalid command. Use /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
 
 # Russian
 ru:
@@ -95,8 +110,12 @@ ru:
   pale: "Pale"
   purple: "Purple"
   notes: "Notes"
+  cloud: "Cloud"
+
+  # Warning
+  warning: "При использовании этого эффекта вы можете увидеть вспышки и размытие изображения."
 
   err-console: "Эту команду может отправлять только игрок"
   err-perms: "Вы не имейте прав для использования этой команды"
-  err-args: "Используйте /eff <cherry | endrod | totem | heart>"
-  err-command: "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"
+  err-args: "Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>>"
+  err-command: "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"

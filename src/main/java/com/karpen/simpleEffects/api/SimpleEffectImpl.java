@@ -42,6 +42,10 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
         types.notePlayers.add(player);
     }
 
+    public void activeCloudToPlayer(Player player){
+        types.cloudPlayers.add(player);
+    }
+
     public void disableEffectCherryToPlayer(Player player){
         types.cherryPlayers.remove(player);
     }
@@ -68,5 +72,9 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
 
     public void disableNoteToPlayer(Player player){
         types.notePlayers.remove(player);
+    }
+
+    public void disableCloudToPlayer(Player player){
+        types.cloudPlayers.remove(player);
     }
 }
