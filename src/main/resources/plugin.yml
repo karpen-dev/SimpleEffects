@@ -1,7 +1,7 @@
 name: SimpleEffects
 version: '1.4'
 main: com.karpen.simpleEffects.SimpleEffects
-api-version: '1.21.4'
+api-version: '1.21'
 commands:
   eff:
     usage: /eff <cherry | endrod | totem | heart>

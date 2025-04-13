@@ -6,6 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Config {
+    private boolean oldVer;
+    private String notAvailableMsg;
+
     private int countCherry;
     private int countEndrod;
     private int countTotem;

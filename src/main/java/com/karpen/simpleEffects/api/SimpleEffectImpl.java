@@ -27,6 +27,10 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
     }
 
     public void activePaleToPlayer(Player player){
+        if (plugin.isOldVer()){
+            return;
+        }
+
         types.palePlayers.add(player);
     }
 
@@ -59,6 +63,10 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
     }
 
     public void disablePaleToPlayer(Player player){
+        if (plugin.isOldVer()){
+            return;
+        }
+
         types.palePlayers.remove(player);
     }
 

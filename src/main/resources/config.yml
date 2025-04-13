@@ -16,7 +16,7 @@ warning: true
 
 update:
   using: true
-  msg: "You do not have the latest version of the plugin installed.\nYou can download the latest version at https://modrinth.com/plugin/simpleeffects"
+  msg: "You do not have the latest version of the plugin installed. You can download the latest version at https://modrinth.com/plugin/simpleeffects"
 
 # If you using mysql, change db config
 # Если вы используйте mysql настройте данные для подключения
@@ -81,6 +81,8 @@ en:
   item-enable: "Enable this effect"
   item-disable: "Disable this effect"
 
+  unsupported-ver: "You are using a version lower than 1.21.4, the some feature not available"
+
   cherry: "Cherry"
   endrod: "Endrod"
   totem: "Totem"
@@ -106,6 +108,8 @@ ru:
   menu-name: "Выбрать эффект"
   item-enable: "Включить этот эффект"
   item-disable: "Выключить этот эффект"
+
+  unsupported-ver: "Вы используйте версию сервера ниже 1.21.4, эта функция недоступна"
 
   cherry: "Cherry"
   endrod: "Endrod"

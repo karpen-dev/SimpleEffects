@@ -158,8 +158,14 @@ public class MainListener implements Listener {
             if (types.heartPlayers.contains(player)){
                 effects.spawnEffect(Particle.HEART, player);
             }
-            if (types.palePlayers.contains(player)){
-                effects.spawnEffect(Particle.PALE_OAK_LEAVES, player);
+            if (!config.isOldVer()){
+                if (types.palePlayers.contains(player)){
+                    try {
+                        effects.spawnEffect(Particle.PALE_OAK_LEAVES, player);
+                    } catch (Exception e) {
+                        return;
+                    }
+                }
             }
             if (types.purplePlayers.contains(player)){
                 effects.spawnEffect(Particle.WITCH, player);
@@ -193,8 +199,14 @@ public class MainListener implements Listener {
             if (types.heartPlayers.contains(player)){
                 effects.spawnEffectSnowball(snowball, Particle.HEART, player);
             }
-            if (types.palePlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.PALE_OAK_LEAVES, player);
+            if (!config.isOldVer()){
+                if (types.palePlayers.contains(player)){
+                    try {
+                        effects.spawnEffectSnowball(snowball, Particle.PALE_OAK_LEAVES, player);
+                    } catch (Exception e){
+                        return;
+                    }
+                }
             }
             if (types.purplePlayers.contains(player)){
                 effects.spawnEffectSnowball(snowball, Particle.WITCH, player);
@@ -225,8 +237,14 @@ public class MainListener implements Listener {
             if (types.heartPlayers.contains(player)){
                 effects.spawnEffectArrow(arrow, Particle.HEART, player);
             }
-            if (types.palePlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.PALE_OAK_LEAVES, player);
+            if (!config.isOldVer()){
+                if (types.palePlayers.contains(player)){
+                    try {
+                        effects.spawnEffectArrow(arrow, Particle.PALE_OAK_LEAVES, player);
+                    } catch (Exception e){
+                        return;
+                    }
+                }
             }
             if (types.purplePlayers.contains(player)){
                 effects.spawnEffectArrow(arrow, Particle.WITCH, player);

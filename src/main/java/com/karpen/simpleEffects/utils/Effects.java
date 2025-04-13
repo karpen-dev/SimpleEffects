@@ -89,8 +89,10 @@ public class Effects {
             location.getWorld().spawnParticle(particle, location, config.getCountHeart(), 0.2, 0.2, 0.2);
         }
 
-        if (particle.equals(Particle.PALE_OAK_LEAVES)){
-            location.getWorld().spawnParticle(particle, location, config.getCountPale(), 0.5, 0.5, 0.5);
+        if (!config.isOldVer()){
+            if (particle.equals(Particle.PALE_OAK_LEAVES)){
+                location.getWorld().spawnParticle(particle, location, config.getCountPale(), 0.5, 0.5, 0.5);
+            }
         }
 
         if (particle.equals(Particle.WITCH)){

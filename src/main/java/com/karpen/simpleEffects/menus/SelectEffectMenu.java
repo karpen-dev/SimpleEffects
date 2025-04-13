@@ -151,6 +151,10 @@ public class SelectEffectMenu implements Listener {
         assert meta != null;
         meta.setDisplayName(ChatColor.GRAY + config.getItemPaleName());
 
+        if (config.isOldVer()){
+            meta.setDisplayName(ChatColor.RED + config.getNotAvailableMsg());
+        }
+
         if (types.palePlayers.contains(player)){
             meta.setLore(Collections.singletonList(ChatColor.RED + config.getItemsDisable()));
         } else {
@@ -321,6 +325,12 @@ public class SelectEffectMenu implements Listener {
         playerInventors.remove(player);
 
         player.closeInventory();
+
+        if (config.isOldVer()){
+            player.sendMessage(ChatColor.RED + config.getNotAvailableMsg());
+
+            return true;
+        }
 
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsPale())){
             player.sendMessage(ChatColor.RED + config.getErrPerms());

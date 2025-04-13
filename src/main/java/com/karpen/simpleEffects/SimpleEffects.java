@@ -39,6 +39,16 @@ public final class SimpleEffects extends JavaPlugin {
 
         loadConfig();
 
+        String version = Bukkit.getVersion().split("-")[0];
+        String[] parts = version.split("\\.");
+
+        int major = Integer.parseInt(parts[1]);
+        int minor = Integer.parseInt(parts[2]);
+
+        if (!(major == 21 && (minor == 4 || minor == 5))){
+            config.setOldVer(true);
+        }
+
         types = new Types();
 
         dbManager = new DBManager(config, this, types);
@@ -54,7 +64,7 @@ public final class SimpleEffects extends JavaPlugin {
         if (getCommand("eff") != null) {
             getCommand("eff-reload").setExecutor(effReload);
             getCommand("eff").setExecutor(eff);
-            getCommand("eff").setTabCompleter(new com.karpen.simpleEffects.utils.TabCompleter());
+            getCommand("eff").setTabCompleter(new com.karpen.simpleEffects.utils.TabCompleter(config));
         } else {
             getLogger().warning("Command 'eff' is not registered in plugin.yml");
         }
@@ -63,6 +73,11 @@ public final class SimpleEffects extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(effectMenu, this);
 
         getLogger().info("SimpleEffects v" + getDescription().getVersion() + " by karpen");
+
+        if (config.isOldVer()){
+            getLogger().info("You are using a version lower than 1.21.4, the server may be unstable.");
+            getLogger().info("Don't report issue.");
+        }
 
         Configuration configuration = getConfig();
         if (configuration.getBoolean("update.using") && !checkVersion.isLatest()){
@@ -107,6 +122,8 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setErrArgs(configuration.getString("en.err-args", "Using /eff <cherry | endrod | totem | heart | pale>"));
                 config.setErrCommand(configuration.getString("en.err-command", "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"));
 
+                config.setNotAvailableMsg(configuration.getString("en.unsupported-ver", "You are using a version lower than 1.21.4, the some feature not available"));
+
                 config.setMenuName(configuration.getString("en.menu-name", "Select effect"));
                 config.setItemsEnable(configuration.getString("en.item-enable", "Enable this effect"));
                 config.setItemsDisable(configuration.getString("en.item-disable", "Disable this effect"));
@@ -134,6 +151,8 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setErrPerms(configuration.getString("ru.err-perms", "Вы не имейте прав для использования этой команды"));
                 config.setErrArgs(configuration.getString("ru.err-args", "Используйте /eff <cherry | endrod | totem | heart>"));
                 config.setErrCommand(configuration.getString("ru.err-command", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
+
+                config.setNotAvailableMsg(configuration.getString("ru.unsupported-ver", "Вы используйте версию сервера ниже 1.21.4, эта функция недоступна"));
 
                 config.setMenuName(configuration.getString("ru.menu-name", "Выбрать эффект"));
                 config.setItemsEnable(configuration.getString("ru.item-enable", "Включить этот эффект"));
@@ -177,6 +196,10 @@ public final class SimpleEffects extends JavaPlugin {
             }
         }
         return instance.api;
+    }
+
+    public boolean isOldVer(){
+        return config.isOldVer();
     }
 
     @Override

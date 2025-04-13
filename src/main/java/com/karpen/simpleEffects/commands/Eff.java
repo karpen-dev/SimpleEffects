@@ -137,6 +137,12 @@ public class Eff implements CommandExecutor {
     }
 
     private boolean activePale(Player player){
+        if (config.isOldVer()){
+            player.sendMessage(ChatColor.RED + config.getNotAvailableMsg());
+
+            return true;
+        }
+
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsPale())){
             player.sendMessage(ChatColor.RED + config.getErrPerms());
 
