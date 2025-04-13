@@ -2,7 +2,7 @@
 
 [![](https://jitpack.io/v/karpen-dev/SimpleEffects.svg)](https://jitpack.io/#karpen-dev/SimpleEffects)
 
-Plugin versions 1.2 and higher only support game versions 1.21.4+  
+If you are using a version lower than 1.21.4, don't report issues.
 
 Command: ``/eff``  
 To enable effects, give permission `karpen.simpleEffects.eff`.  
