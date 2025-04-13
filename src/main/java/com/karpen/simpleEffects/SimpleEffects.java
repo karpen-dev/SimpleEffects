@@ -9,8 +9,9 @@ import com.karpen.simpleEffects.listeners.MainListener;
 import com.karpen.simpleEffects.menus.SelectEffectMenu;
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Types;
-import com.karpen.simpleEffects.services.Effects;
-import com.karpen.simpleEffects.services.FileManager;
+import com.karpen.simpleEffects.utils.CheckVersion;
+import com.karpen.simpleEffects.utils.Effects;
+import com.karpen.simpleEffects.utils.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +26,7 @@ public final class SimpleEffects extends JavaPlugin {
     private Types types;
     private FileManager manager;
     private SelectEffectMenu effectMenu;
+    private CheckVersion checkVersion;
     private volatile SimpleEffectsApi api;
 
     public static SimpleEffects instance;
@@ -45,13 +47,14 @@ public final class SimpleEffects extends JavaPlugin {
         effectMenu = new SelectEffectMenu(config, effects, types);
         eff = new Eff(config, effects, types, effectMenu);
         effReload = new EffReload(this);
+        checkVersion = new CheckVersion(this);
 
         this.api = new SimpleEffectImpl(this, types);
 
         if (getCommand("eff") != null) {
             getCommand("eff-reload").setExecutor(effReload);
             getCommand("eff").setExecutor(eff);
-            getCommand("eff").setTabCompleter(new com.karpen.simpleEffects.services.TabCompleter());
+            getCommand("eff").setTabCompleter(new com.karpen.simpleEffects.utils.TabCompleter());
         } else {
             getLogger().warning("Command 'eff' is not registered in plugin.yml");
         }
@@ -59,7 +62,12 @@ public final class SimpleEffects extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new MainListener(config, dbManager, types, manager, effects), this);
         Bukkit.getPluginManager().registerEvents(effectMenu, this);
 
-        getLogger().info("SimpleEffects by karpen");
+        getLogger().info("SimpleEffects v" + getDescription().getVersion() + " by karpen");
+
+        Configuration configuration = getConfig();
+        if (configuration.getBoolean("update.using") && !checkVersion.isLatest()){
+            getLogger().info(configuration.getString("update.msg"));
+        }
     }
 
     public void loadConfig() {

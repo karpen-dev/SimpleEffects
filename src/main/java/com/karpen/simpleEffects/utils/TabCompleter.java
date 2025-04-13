@@ -1,4 +1,4 @@
-package com.karpen.simpleEffects.services;
+package com.karpen.simpleEffects.utils;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

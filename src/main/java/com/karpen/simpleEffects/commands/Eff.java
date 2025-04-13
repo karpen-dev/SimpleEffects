@@ -2,7 +2,7 @@ package com.karpen.simpleEffects.commands;
 
 import com.karpen.simpleEffects.menus.SelectEffectMenu;
 import com.karpen.simpleEffects.model.Types;
-import com.karpen.simpleEffects.services.Effects;
+import com.karpen.simpleEffects.utils.Effects;
 import com.karpen.simpleEffects.model.Config;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

@@ -1,4 +1,4 @@
-# SimpleEffects - v1.3 https://github.com/karpen-dev/SimpleEffects
+# SimpleEffects - v1.4 https://github.com/karpen-dev/SimpleEffects
 
 # Plugin language - ru, en
 # Язык плагина - ru, en
@@ -13,6 +13,10 @@ method: TXT
 # Предупреждения о резких вспышках
 # Не рекомендую отключать это
 warning: true
+
+update:
+  using: true
+  msg: "You do not have the latest version of the plugin installed.\nYou can download the latest version at https://modrinth.com/plugin/simpleeffects"
 
 # If you using mysql, change db config
 # Если вы используйте mysql настройте данные для подключения

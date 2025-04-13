@@ -2,7 +2,7 @@ package com.karpen.simpleEffects.menus;
 
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Types;
-import com.karpen.simpleEffects.services.Effects;
+import com.karpen.simpleEffects.utils.Effects;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -214,6 +214,7 @@ public class SelectEffectMenu implements Listener {
         }
 
         if (config.getWarning() != null){
+            lore.add(" ");
             lore.add(ChatColor.RED + config.getWarning());
         }
 

@@ -1,4 +1,4 @@
-package com.karpen.simpleEffects.services;
+package com.karpen.simpleEffects.utils;
 
 import com.karpen.simpleEffects.SimpleEffects;
 import com.karpen.simpleEffects.model.Types;
@@ -103,6 +103,8 @@ public class FileManager {
                             case "purple":
                                 types.purplePlayers.add(player);
                                 break;
+                            case "cloud":
+                                types.cloudPlayers.add(player);
                         }
 
                         players.add(player);
@@ -135,6 +137,7 @@ public class FileManager {
                 if (types.palePlayers.contains(p)) savePlayers(types.palePlayers, "pale");
                 if (types.purplePlayers.contains(p)) savePlayers(types.purplePlayers, "purple");
                 if (types.notePlayers.contains(p)) savePlayers(types.notePlayers, "note");
+                if (types.cloudPlayers.contains(p)) savePlayers(types.cloudPlayers, "cloud");
             }
         }
     }

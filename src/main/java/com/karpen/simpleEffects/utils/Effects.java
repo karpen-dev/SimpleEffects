@@ -1,4 +1,4 @@
-package com.karpen.simpleEffects.services;
+package com.karpen.simpleEffects.utils;
 
 import com.karpen.simpleEffects.SimpleEffects;
 import com.karpen.simpleEffects.database.DBManager;
@@ -9,6 +9,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class Effects {
 
@@ -119,18 +120,13 @@ public class Effects {
 
     public void startCloudEffect(Player player) {
         new BukkitRunnable() {
+            private Location cloudLocation = null;
+            private int animationStep = 0;
+
             @Override
             public void run() {
-                Location baseLocation = player.getRespawnLocation();
-                if (baseLocation == null) {
-                    baseLocation = player.getLocation();
-                }
-
-                if (!hasSpaceAbove(player, 3)) {
-                    return;
-                }
-
-                if (!types.cloudPlayers.contains(player)){
+                if (!types.cloudPlayers.contains(player)) {
+                    this.cancel();
                     return;
                 }
 
@@ -138,21 +134,39 @@ public class Effects {
                     return;
                 }
 
-                Location cloudLocation = baseLocation.clone().add(0, 3, 0);
+                Location playerLocation = player.getLocation();
 
-                player.spawnParticle(Particle.CLOUD, cloudLocation, 20, 1, 0.1, 1, 0.05);
-
-                for (int i = 0; i < 10; i++) {
-                    Location rainLocation = cloudLocation.clone().add(
-                            Math.random() * 2 - 1,
-                            0,
-                            Math.random() * 2 - 1
-                    );
-
-                    player.spawnParticle(Particle.DRIPPING_WATER, rainLocation, 1, 0, -0.5, 0, 0.5);
+                if (cloudLocation == null || cloudLocation.distance(playerLocation) > 10) {
+                    cloudLocation = playerLocation.clone().add(0, 3, 0);
                 }
+
+                Location targetLocation = playerLocation.clone().add(0, 3, 0);
+                Vector direction = targetLocation.toVector().subtract(cloudLocation.toVector()).multiply(0.2);
+                cloudLocation.add(direction);
+
+                if (!hasSpaceAbove(player, 3)) {
+                    return;
+                }
+
+                player.spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, cloudLocation, 1, 0, 0, 0, 0);
+
+                if (player.getVelocity().lengthSquared() < 0.01) {
+                    if (animationStep % 25 == 0) {
+                        for (int i = 0; i < 3; i++) {
+                            Location rainLocation = cloudLocation.clone().add(
+                                    Math.random() * 0.8 - 0.4,
+                                    -1,
+                                    Math.random() * 0.8 - 0.4
+                            );
+                            player.spawnParticle(Particle.DRIPPING_WATER, rainLocation, 1, 0, -0.3, 0);
+                        }
+                    }
+                }
+
+                animationStep++;
+                if (animationStep > 1000) animationStep = 0;
             }
-        }.runTaskTimer(plugin, 0, 5);
+        }.runTaskTimer(plugin, 0, 1);
     }
 
     private boolean hasSpaceAbove(Player player, int blocksAbove) {
