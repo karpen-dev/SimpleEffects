@@ -5,9 +5,11 @@ import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.utils.Effects;
 import com.karpen.simpleEffects.utils.FileManager;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +18,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class MainListener implements Listener {
@@ -36,75 +40,29 @@ public class MainListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event){
+    public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        String storageMethod = config.getMethod();
 
-        if (config.getMethod().equals("MYSQL")){
-            if (types.cherryPlayers.contains(player)){
-                dbManager.savePlayers(types.cherryPlayers, "cherry");
-            }
+        Map<Set<Player>, String> playerTypes = new HashMap<>();
+        playerTypes.put(types.cherryPlayers, "cherry");
+        playerTypes.put(types.endRodPlayers, "endrod");
+        playerTypes.put(types.totemPlayers, "totem");
+        playerTypes.put(types.heartPlayers, "heart");
+        playerTypes.put(types.palePlayers, "pale");
+        playerTypes.put(types.purplePlayers, "purple");
+        playerTypes.put(types.notePlayers, "note");
+        playerTypes.put(types.cloudPlayers, "cloud");
 
-            if (types.endRodPlayers.contains(player)){
-                dbManager.savePlayers(types.endRodPlayers, "endrod");
+        playerTypes.forEach((players, type) -> {
+            if (players.contains(player)) {
+                if ("MYSQL".equals(storageMethod)) {
+                    dbManager.savePlayers(players, type);
+                } else if ("TXT".equals(storageMethod)) {
+                    manager.savePlayers(Set.of(player), type);
+                }
             }
-
-            if (types.totemPlayers.contains(player)){
-                dbManager.savePlayers(types.totemPlayers, "totem");
-            }
-
-            if (types.heartPlayers.contains(player)){
-                dbManager.savePlayers(types.heartPlayers, "heart");
-            }
-
-            if (types.palePlayers.contains(player)){
-                dbManager.savePlayers(types.palePlayers, "pale");
-            }
-
-            if (types.purplePlayers.contains(player)){
-                dbManager.savePlayers(types.purplePlayers, "purple");
-            }
-
-            if (types.notePlayers.contains(player)){
-                dbManager.savePlayers(types.notePlayers, "note");
-            }
-
-            if (types.cloudPlayers.contains(player)){
-                dbManager.savePlayers(types.cloudPlayers, "cloud");
-            }
-
-        } else if (config.getMethod().equals("TXT")){
-            if (types.cherryPlayers.contains(player)){
-                manager.savePlayers(Set.of(player), "cherry");
-            }
-
-            if (types.endRodPlayers.contains(player)){
-                manager.savePlayers(Set.of(player), "endrod");
-            }
-
-            if (types.totemPlayers.contains(player)){
-                manager.savePlayers(Set.of(player), "totem");
-            }
-
-            if (types.heartPlayers.contains(player)){
-                manager.savePlayers(Set.of(player), "heart");
-            }
-
-            if (types.palePlayers.contains(player)){
-                manager.savePlayers(Set.of(player), "pale");
-            }
-
-            if (types.purplePlayers.contains(player)){
-                manager.savePlayers(Set.of(player), "purple");
-            }
-
-            if (types.notePlayers.contains(player)){
-                manager.savePlayers(Set.of(player), "note");
-            }
-
-            if (types.cloudPlayers.contains(player)){
-                manager.savePlayers(Set.of(player), "cloud");
-            }
-        }
+        });
     }
 
     @EventHandler
@@ -128,131 +86,124 @@ public class MainListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event){
+    public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        double oldX = event.getFrom().getX();
-        double oldY = event.getFrom().getY();
-        double oldZ = event.getFrom().getZ();
+        if (!hasPlayerMovedSignificantly(event, player)) {
+            return;
+        }
 
-        double newX = event.getTo().getX();
-        double newY = event.getTo().getY();
-        double newZ = event.getTo().getZ();
+        Map<Set<Player>, Particle> particleEffects = createParticleMap();
+
+        applyParticleEffects(player, particleEffects);
+    }
+
+    private boolean hasPlayerMovedSignificantly(PlayerMoveEvent event, Player player) {
+        Location from = event.getFrom();
+        Location to = event.getTo();
+
+        if (from.getX() == to.getX() && from.getY() == to.getY() && from.getZ() == to.getZ()) {
+            return false;
+        }
 
         float yaw = player.getLocation().getYaw();
+        if (from.getX() == to.getX() && from.getZ() == to.getZ()
+                && (yaw <= 90.0 || yaw >= 0.0 || from.getY() != to.getY())) {
+            return false;
+        }
 
-        if (oldX != newX || oldY != newY || oldZ != newZ){
-            if (oldX == newX && oldZ == newZ && ((yaw <= 90.0 || yaw >= 0.0) || (oldY != newY))){
-                return;
-            }
+        return true;
+    }
 
-            if (types.cherryPlayers.contains(player)){
-                effects.spawnEffect(Particle.CHERRY_LEAVES, player);
-            }
-            if (types.endRodPlayers.contains(player)){
-                effects.spawnEffect(Particle.END_ROD, player);
-            }
-            if (types.totemPlayers.contains(player)){
-                effects.spawnEffect(Particle.TOTEM_OF_UNDYING, player);
-            }
-            if (types.heartPlayers.contains(player)){
-                effects.spawnEffect(Particle.HEART, player);
-            }
-            if (!config.isOldVer()){
-                if (types.palePlayers.contains(player)){
-                    try {
-                        effects.spawnEffect(Particle.PALE_OAK_LEAVES, player);
-                    } catch (Exception e) {
+    private Map<Set<Player>, Particle> createParticleMap() {
+        Map<Set<Player>, Particle> map = new HashMap<>();
+        map.put(types.cherryPlayers, Particle.CHERRY_LEAVES);
+        map.put(types.endRodPlayers, Particle.END_ROD);
+        map.put(types.totemPlayers, Particle.TOTEM_OF_UNDYING);
+        map.put(types.heartPlayers, Particle.HEART);
+        map.put(types.purplePlayers, Particle.WITCH);
+        map.put(types.notePlayers, Particle.NOTE);
+
+        if (!config.isOldVer()) {
+            map.put(types.palePlayers, Particle.PALE_OAK_LEAVES);
+        }
+
+        return map;
+    }
+
+    private void applyParticleEffects(Player player, Map<Set<Player>, Particle> particleEffects) {
+        particleEffects.forEach((players, particle) -> {
+            if (players.contains(player)) {
+                try {
+                    effects.spawnEffect(particle, player);
+                } catch (Exception e) {
+                    if (particle == Particle.PALE_OAK_LEAVES) {
                         return;
                     }
+                    e.printStackTrace();
                 }
             }
-            if (types.purplePlayers.contains(player)){
-                effects.spawnEffect(Particle.WITCH, player);
-            }
-            if (types.notePlayers.contains(player)){
-                effects.spawnEffect(Particle.NOTE, player);
-            }
-        }
+        });
     }
 
     @EventHandler
-    public void onSnowBallThrow(ProjectileLaunchEvent event){
-        if (event.getEntity() instanceof Snowball){
-            Snowball snowball = (Snowball)  event.getEntity();
-
-            if (!(snowball.getShooter() instanceof Player)){
-                return;
-            }
-
-            Player player = (Player) snowball.getShooter();
-
-            if (types.cherryPlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.CHERRY_LEAVES, player);
-            }
-            if (types.endRodPlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.END_ROD, player);
-            }
-            if (types.totemPlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.TOTEM_OF_UNDYING, player);
-            }
-            if (types.heartPlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.HEART, player);
-            }
-            if (!config.isOldVer()){
-                if (types.palePlayers.contains(player)){
-                    try {
-                        effects.spawnEffectSnowball(snowball, Particle.PALE_OAK_LEAVES, player);
-                    } catch (Exception e){
-                        return;
-                    }
-                }
-            }
-            if (types.purplePlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.WITCH, player);
-            }
-            if (types.notePlayers.contains(player)){
-                effects.spawnEffectSnowball(snowball, Particle.NOTE, player);
-            }
-        }
-
-        if (event.getEntity() instanceof Arrow){
-            Arrow arrow = (Arrow) event.getEntity();
-
-            if (!(arrow.getShooter() instanceof Player)){
-                return;
-            }
-
-            Player player = (Player) arrow.getShooter();
-
-            if (types.cherryPlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.CHERRY_LEAVES, player);
-            }
-            if (types.endRodPlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.END_ROD, player);
-            }
-            if (types.totemPlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.TOTEM_OF_UNDYING, player);
-            }
-            if (types.heartPlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.HEART, player);
-            }
-            if (!config.isOldVer()){
-                if (types.palePlayers.contains(player)){
-                    try {
-                        effects.spawnEffectArrow(arrow, Particle.PALE_OAK_LEAVES, player);
-                    } catch (Exception e){
-                        return;
-                    }
-                }
-            }
-            if (types.purplePlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.WITCH, player);
-            }
-            if (types.notePlayers.contains(player)){
-                effects.spawnEffectArrow(arrow, Particle.NOTE, player);
-            }
+    public void onProjectileLaunch(ProjectileLaunchEvent event) {
+        if (event.getEntity() instanceof Snowball) {
+            handleSnowballEffect((Snowball) event.getEntity());
+        } else if (event.getEntity() instanceof Arrow) {
+            handleArrowEffect((Arrow) event.getEntity());
         }
     }
 
+    private void handleSnowballEffect(Snowball snowball) {
+        applyProjectileEffects(snowball, (player, particle) ->
+                effects.spawnEffectSnowball(snowball, particle, player));
+    }
+
+    private void handleArrowEffect(Arrow arrow) {
+        applyProjectileEffects(arrow, (player, particle) ->
+                effects.spawnEffectArrow(arrow, particle, player));
+    }
+
+    private void applyProjectileEffects(Projectile projectile, ProjectileEffectApplier effectApplier) {
+        if (!(projectile.getShooter() instanceof Player)) {
+            return;
+        }
+
+        Player player = (Player) projectile.getShooter();
+        Map<Set<Player>, Particle> effectMap = createEffectMap();
+
+        effectMap.forEach((players, particle) -> {
+            if (players.contains(player)) {
+                try {
+                    effectApplier.apply(player, particle);
+                } catch (Exception e) {
+                    if (particle != Particle.PALE_OAK_LEAVES) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private Map<Set<Player>, Particle> createEffectMap() {
+        Map<Set<Player>, Particle> map = new HashMap<>();
+        map.put(types.cherryPlayers, Particle.CHERRY_LEAVES);
+        map.put(types.endRodPlayers, Particle.END_ROD);
+        map.put(types.totemPlayers, Particle.TOTEM_OF_UNDYING);
+        map.put(types.heartPlayers, Particle.HEART);
+        map.put(types.purplePlayers, Particle.WITCH);
+        map.put(types.notePlayers, Particle.NOTE);
+
+        if (!config.isOldVer()) {
+            map.put(types.palePlayers, Particle.PALE_OAK_LEAVES);
+        }
+
+        return map;
+    }
+
+    @FunctionalInterface
+    private interface ProjectileEffectApplier {
+        void apply(Player player, Particle particle) throws Exception;
+    }
 }

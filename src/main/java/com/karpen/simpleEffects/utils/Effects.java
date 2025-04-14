@@ -11,24 +11,76 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class Effects {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
+public class Effects {
     private final SimpleEffects plugin;
-    private Config config;
-    private FileManager manager;
-    private DBManager dbManager;
-    private Types types;
+    private final Config config;
+    private final FileManager manager;
+    private final DBManager dbManager;
+    private final Types types;
+    private final Map<Particle, ParticleEffectHandler> particleHandlers;
 
     public Effects(SimpleEffects plugin, Config config, FileManager manager, DBManager dbManager, Types types) {
-        this.plugin = plugin;
-        this.config = config;
-        this.manager = manager;
-        this.dbManager = dbManager;
-        this.types = types;
+        this.plugin = Objects.requireNonNull(plugin, "Plugin cannot be null");
+        this.config = Objects.requireNonNull(config, "Config cannot be null");
+        this.manager = Objects.requireNonNull(manager, "FileManager cannot be null");
+        this.dbManager = Objects.requireNonNull(dbManager, "DBManager cannot be null");
+        this.types = Objects.requireNonNull(types, "Types cannot be null");
+        this.particleHandlers = createParticleHandlers();
     }
 
-    public void removePlayer(Player player){
-        if (config.getMethod().equals("TXT")){
+    private Map<Particle, ParticleEffectHandler> createParticleHandlers() {
+        Map<Particle, ParticleEffectHandler> handlers = new HashMap<>();
+
+        handlers.put(Particle.CHERRY_LEAVES, (location, cfg) ->
+                spawnSimpleParticle(location, cfg.getCountCherry(), 0.5, Particle.CHERRY_LEAVES));
+
+        handlers.put(Particle.END_ROD, (location, cfg) -> {
+            for (int i = 0; i < cfg.getCountEndrod(); i++) {
+                Location particleLoc = location.clone().add(
+                        (Math.random() - 0.5) * 0.2,
+                        Math.random() * 0.5,
+                        (Math.random() - 0.5) * 0.2
+                );
+                spawnParticleWithVelocity(particleLoc, Particle.END_ROD, 0, -0.02, 0, 0.1);
+            }
+        });
+
+        handlers.put(Particle.TOTEM_OF_UNDYING, (location, cfg) -> {
+            for (int i = 0; i < cfg.getCountTotem(); i++) {
+                Location particleLoc = location.clone().add(
+                        (Math.random() - 0.5) * 0.3,
+                        Math.random() * 0.7,
+                        (Math.random() - 0.5) * 0.3
+                );
+                spawnParticleWithVelocity(particleLoc, Particle.TOTEM_OF_UNDYING, 0, -0.01, 0, 0.05);
+            }
+        });
+
+        handlers.put(Particle.HEART, (location, cfg) ->
+                spawnSimpleParticle(location, cfg.getCountHeart(), 0.2, Particle.HEART));
+
+        handlers.put(Particle.WITCH, (location, cfg) ->
+                spawnSimpleParticle(location, cfg.getCountPurple(), 0.5, Particle.WITCH));
+
+        handlers.put(Particle.NOTE, (location, cfg) ->
+                spawnSimpleParticle(location, cfg.getCountNotes(), 0.5, Particle.NOTE));
+
+        if (!config.isOldVer()) {
+            handlers.put(Particle.PALE_OAK_LEAVES, (location, cfg) ->
+                    spawnSimpleParticle(location, cfg.getCountPale(), 0.5, Particle.PALE_OAK_LEAVES));
+        }
+
+        return handlers;
+    }
+
+    public void removePlayer(Player player) {
+        if (player == null) return;
+
+        if (config.getMethod().equals("TXT")) {
             manager.removePlayer(player);
         } else {
             dbManager.removePlayer(player);
@@ -36,91 +88,53 @@ public class Effects {
     }
 
     public void spawnEffect(Particle particle, Player player) {
-        Config config = plugin.getConfigObject();
-        Location location = player.getLocation();
-
-        if (player.getGameMode().equals(GameMode.SPECTATOR)){
+        if (player == null || particle == null || player.getGameMode() == GameMode.SPECTATOR) {
             return;
         }
 
-        if (particle.equals(Particle.CHERRY_LEAVES)) {
-            location.getWorld().spawnParticle(particle, location, config.getCountCherry(), 0.5, 0.5, 0.5);
-        }
-
-        if (particle.equals(Particle.END_ROD)) {
-            for (int i = 0; i < config.getCountEndrod(); i++) {
-                Location particleLoc = location.clone().add(
-                        (Math.random() - 0.5) * 0.2,
-                        Math.random() * 0.5,
-                        (Math.random() - 0.5) * 0.2
-                );
-                location.getWorld().spawnParticle(
-                        Particle.END_ROD,
-                        particleLoc,
-                        1,
-                        0,
-                        -0.02,
-                        0,
-                        0.1
-                );
+        ParticleEffectHandler handler = particleHandlers.get(particle);
+        if (handler != null) {
+            try {
+                handler.handle(player.getLocation(), config);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
-
-        if (particle.equals(Particle.TOTEM_OF_UNDYING)) {
-            for (int i = 0; i < config.getCountTotem(); i++) {
-                Location particleLoc = location.clone().add(
-                        (Math.random() - 0.5) * 0.3,
-                        Math.random() * 0.7,
-                        (Math.random() - 0.5) * 0.3
-                );
-                location.getWorld().spawnParticle(
-                        Particle.TOTEM_OF_UNDYING,
-                        particleLoc,
-                        1,
-                        0,
-                        -0.01,
-                        0,
-                        0.05
-                );
-            }
-        }
-
-        if (particle.equals(Particle.HEART)){
-            location.getWorld().spawnParticle(particle, location, config.getCountHeart(), 0.2, 0.2, 0.2);
-        }
-
-        if (!config.isOldVer()){
-            if (particle.equals(Particle.PALE_OAK_LEAVES)){
-                location.getWorld().spawnParticle(particle, location, config.getCountPale(), 0.5, 0.5, 0.5);
-            }
-        }
-
-        if (particle.equals(Particle.WITCH)){
-            location.getWorld().spawnParticle(particle, location, config.getCountPurple(), 0.5, 0.5, 0.5);
-        }
-
-        if (particle.equals(Particle.NOTE)){
-            location.getWorld().spawnParticle(particle, location, config.getCountNotes(), 0.5, 0.5, 0.5);
         }
     }
 
-    public void spawnEffectSnowball(Snowball snowball, Particle particle, Player player){
-        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-            if (snowball.isValid()){
+    public void spawnEffectSnowball(Snowball snowball, Particle particle, Player player) {
+        if (snowball == null || particle == null || player == null) return;
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!snowball.isValid()) {
+                    this.cancel();
+                    return;
+                }
                 spawnEffect(particle, player);
             }
-        }, 0L, 5L);
+        }.runTaskTimerAsynchronously(plugin, 0L, 5L);
     }
 
-    public void spawnEffectArrow(Arrow arrow, Particle particle, Player player){
-        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-            if (arrow.isValid()){
+    public void spawnEffectArrow(Arrow arrow, Particle particle, Player player) {
+        if (arrow == null || particle == null || player == null) return;
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!arrow.isValid()) {
+                    this.cancel();
+                    return;
+                }
                 spawnEffect(particle, player);
             }
-        }, 0L, 5L);
+        }.runTaskTimerAsynchronously(plugin, 0L, 5L);
     }
 
     public void startCloudEffect(Player player) {
+        if (player == null) return;
+
         new BukkitRunnable() {
             private Location cloudLocation = null;
             private int animationStep = 0;
@@ -132,7 +146,7 @@ public class Effects {
                     return;
                 }
 
-                if (player.getGameMode().equals(GameMode.SPECTATOR)) {
+                if (player.getGameMode() == GameMode.SPECTATOR) {
                     return;
                 }
 
@@ -168,7 +182,22 @@ public class Effects {
                 animationStep++;
                 if (animationStep > 1000) animationStep = 0;
             }
-        }.runTaskTimer(plugin, 0, 1);
+        }.runTaskTimerAsynchronously(plugin, 0, 1);
+    }
+
+    private void spawnSimpleParticle(Location location, int count, double spread, Particle particle) {
+        World world = location.getWorld();
+        if (world != null) {
+            world.spawnParticle(particle, location, count, spread, spread, spread);
+        }
+    }
+
+    private void spawnParticleWithVelocity(Location location, Particle particle,
+                                           double xVel, double yVel, double zVel, double speed) {
+        World world = location.getWorld();
+        if (world != null) {
+            world.spawnParticle(particle, location, 1, xVel, yVel, zVel, speed);
+        }
     }
 
     private boolean hasSpaceAbove(Player player, int blocksAbove) {
@@ -177,13 +206,15 @@ public class Effects {
 
         for (int y = 1; y <= blocksAbove; y++) {
             Location checkLoc = playerLoc.clone().add(0, y, 0);
-            Material blockType = world.getBlockAt(checkLoc).getType();
-
-            if (!blockType.isAir()) {
+            if (!world.getBlockAt(checkLoc).getType().isAir()) {
                 return false;
             }
         }
-
         return true;
+    }
+
+    @FunctionalInterface
+    private interface ParticleEffectHandler {
+        void handle(Location location, Config config) throws Exception;
     }
 }
