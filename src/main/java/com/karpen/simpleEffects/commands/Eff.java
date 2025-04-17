@@ -27,7 +27,7 @@ public class Eff implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
         if (!(commandSender instanceof Player)){
-            commandSender.sendMessage(ChatColor.RED + config.getErrConsole());
+            commandSender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrConsole()));
 
             return true;
         }
@@ -62,7 +62,7 @@ public class Eff implements CommandExecutor {
     private boolean activeCherry(Player player){
 
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsCherry())){
-            player.sendMessage(ChatColor.RED + config.getErrPerms());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
 
             return true;
         }
@@ -70,10 +70,10 @@ public class Eff implements CommandExecutor {
         if (types.cherryPlayers.contains(player)){
             types.cherryPlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else{
             types.cherryPlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
         return true;
@@ -81,7 +81,7 @@ public class Eff implements CommandExecutor {
 
     private boolean activeEndRod(Player player){
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsEndRod())){
-            player.sendMessage(ChatColor.RED + config.getErrPerms());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
 
             return true;
         }
@@ -89,10 +89,10 @@ public class Eff implements CommandExecutor {
         if (types.endRodPlayers.contains(player)){
             types.endRodPlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
             types.endRodPlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
         return true;
@@ -100,7 +100,7 @@ public class Eff implements CommandExecutor {
 
     private boolean activeTotem(Player player){
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsTotem())){
-            player.sendMessage(ChatColor.RED + config.getErrPerms());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
 
             return true;
         }
@@ -108,10 +108,10 @@ public class Eff implements CommandExecutor {
         if (types.totemPlayers.contains(player)){
             types.totemPlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
             types.totemPlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
         return true;
@@ -119,7 +119,7 @@ public class Eff implements CommandExecutor {
 
     private boolean activeHeart(Player player){
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsHeart())){
-            player.sendMessage(ChatColor.RED + config.getErrPerms());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
 
             return true;
         }
@@ -127,10 +127,10 @@ public class Eff implements CommandExecutor {
         if (types.heartPlayers.contains(player)){
             types.heartPlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
             types.heartPlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
         return true;
@@ -138,13 +138,13 @@ public class Eff implements CommandExecutor {
 
     private boolean activePale(Player player){
         if (config.isOldVer()){
-            player.sendMessage(ChatColor.RED + config.getNotAvailableMsg());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getNotAvailableMsg()));
 
             return true;
         }
 
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsPale())){
-            player.sendMessage(ChatColor.RED + config.getErrPerms());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
 
             return true;
         }
@@ -152,10 +152,10 @@ public class Eff implements CommandExecutor {
         if (types.palePlayers.contains(player)){
             types.palePlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
             types.palePlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
         return true;
@@ -163,7 +163,7 @@ public class Eff implements CommandExecutor {
 
     private boolean activePurple(Player player){
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsPurple())){
-            player.sendMessage(ChatColor.RED + config.getErrPerms());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
 
             return true;
         }
@@ -171,10 +171,10 @@ public class Eff implements CommandExecutor {
         if (types.purplePlayers.contains(player)){
             types.purplePlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
             types.purplePlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
         return true;
@@ -182,7 +182,7 @@ public class Eff implements CommandExecutor {
 
     private boolean activeNote(Player player){
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsNotes())){
-            player.sendMessage(ChatColor.RED + config.getErrPerms());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
 
             return true;
         }
@@ -190,10 +190,10 @@ public class Eff implements CommandExecutor {
         if (types.notePlayers.contains(player)){
             types.notePlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
             types.notePlayers.add(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
         return true;
@@ -201,7 +201,7 @@ public class Eff implements CommandExecutor {
 
     private boolean activeCloud(Player player){
         if (config.isRightsUsing() && !player.hasPermission(config.getRightsCloud())){
-            player.sendMessage(ChatColor.RED + config.getErrPerms());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
 
             return true;
         }
@@ -209,18 +209,18 @@ public class Eff implements CommandExecutor {
         if (types.cloudPlayers.contains(player)){
             types.cloudPlayers.remove(player);
             effects.removePlayer(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgDisable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
             types.cloudPlayers.add(player);
             effects.startCloudEffect(player);
-            player.sendMessage(ChatColor.GREEN + config.getMsgEnable());
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
         return true;
     }
 
     private boolean errCommand(Player player){
-        player.sendMessage(ChatColor.RED + config.getErrCommand());
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrCommand()));
 
         return true;
     }
