@@ -123,6 +123,7 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setErrCommand(configuration.getString("en.err-command", "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"));
 
                 config.setNotAvailableMsg(configuration.getString("en.unsupported-ver", "You are using a version lower than 1.21.4, the some feature not available"));
+                config.setUnsupportedName(configuration.getString("en.unsupported-name", "Don't supported to you version"));
 
                 config.setMenuName(configuration.getString("en.menu-name", "Select effect"));
                 config.setItemsEnable(configuration.getString("en.item-enable", "Enable this effect"));
@@ -153,6 +154,7 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setErrCommand(configuration.getString("ru.err-command", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
 
                 config.setNotAvailableMsg(configuration.getString("ru.unsupported-ver", "Вы используйте версию сервера ниже 1.21.4, эта функция недоступна"));
+                config.setUnsupportedName(configuration.getString("ru.unsupported-name", "Недоступно на вашей версии"));
 
                 config.setMenuName(configuration.getString("ru.menu-name", "Выбрать эффект"));
                 config.setItemsEnable(configuration.getString("ru.item-enable", "Включить этот эффект"));

@@ -82,6 +82,7 @@ en:
   item-disable: "Disable this effect"
 
   unsupported-ver: "You are using a version lower than 1.21.4, the some feature not available"
+  unsupported-name: "Don't supported to you version"
 
   cherry: "Cherry"
   endrod: "Endrod"
@@ -110,6 +111,7 @@ ru:
   item-disable: "Выключить этот эффект"
 
   unsupported-ver: "Вы используйте версию сервера ниже 1.21.4, эта функция недоступна"
+  unsupported-name: "Недоступно на вашей версии"
 
   cherry: "Cherry"
   endrod: "Endrod"

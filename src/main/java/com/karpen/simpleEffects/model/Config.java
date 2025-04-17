@@ -7,7 +7,9 @@ import lombok.Setter;
 @Setter
 public class Config {
     private boolean oldVer;
+
     private String notAvailableMsg;
+    private String unsupportedName;
 
     private int countCherry;
     private int countEndrod;

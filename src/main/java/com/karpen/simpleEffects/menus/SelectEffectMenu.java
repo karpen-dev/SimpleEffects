@@ -151,14 +151,15 @@ public class SelectEffectMenu implements Listener {
         assert meta != null;
         meta.setDisplayName(ChatColor.GRAY + config.getItemPaleName());
 
-        if (config.isOldVer()){
-            meta.setDisplayName(ChatColor.RED + config.getNotAvailableMsg());
-        }
-
         if (types.palePlayers.contains(player)){
             meta.setLore(Collections.singletonList(ChatColor.RED + config.getItemsDisable()));
         } else {
             meta.setLore(Collections.singletonList(ChatColor.GREEN + config.getItemsEnable()));
+        }
+
+        if (config.isOldVer()){
+            meta.setDisplayName(ChatColor.RED + config.getUnsupportedName());
+            meta.setLore(Collections.singletonList(ChatColor.RED + config.getNotAvailableMsg()));
         }
 
         item.setItemMeta(meta);
