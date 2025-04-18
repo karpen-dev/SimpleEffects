@@ -180,10 +180,6 @@ public final class SimpleEffects extends JavaPlugin {
 
     }
 
-    public Config getConfigObject() {
-        return config;
-    }
-
     public static SimpleEffectsApi getApi() {
         SimpleEffects instance = SimpleEffects.instance;
         if (instance == null) {

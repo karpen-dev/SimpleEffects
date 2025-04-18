@@ -75,8 +75,6 @@ public class DBManager {
 
     public void savePlayers(Set<Player> players, String type){
         try(Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-
             for (Player player : players){
                 removePlayer(player);
 
@@ -101,52 +99,6 @@ public class DBManager {
             for (PlayerTypeEntity entity : query.list()) {
                 Player player = plugin.getServer().getPlayer(entity.getPlayerName());
                 if (player != null) {
-                    players.add(player);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return players;
-    }
-
-    public Set<Player> loadPlayers() {
-        Set<Player> players = new HashSet<>();
-
-        try (Session session = sessionFactory.openSession()) {
-            Query<PlayerTypeEntity> query = session.createQuery(
-                    "FROM PlayerTypeEntity", PlayerTypeEntity.class);
-
-            for (PlayerTypeEntity entity : query.list()) {
-                Player player = plugin.getServer().getPlayer(entity.getPlayerName());
-                if (player != null) {
-                    switch (entity.getType()) {
-                        case "cherry":
-                            types.cherryPlayers.add(player);
-                            break;
-                        case "endrod":
-                            types.endRodPlayers.add(player);
-                            break;
-                        case "totem":
-                            types.totemPlayers.add(player);
-                            break;
-                        case "heart":
-                            types.heartPlayers.add(player);
-                            break;
-                        case "pale":
-                            types.palePlayers.add(player);
-                            break;
-                        case "purple":
-                            types.purplePlayers.add(player);
-                            break;
-                        case "note":
-                            types.notePlayers.add(player);
-                            break;
-                        case "cloud":
-                            types.cloudPlayers.add(player);
-                            break;
-                    }
                     players.add(player);
                 }
             }
