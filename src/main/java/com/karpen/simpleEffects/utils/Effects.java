@@ -144,6 +144,7 @@ public class Effects {
             public void run() {
                 if (!types.players.containsKey(player) && types.players.get(player) == Type.CLOUD) {
                     this.cancel();
+                    return;
                 }
 
                 if (player.getGameMode() == GameMode.SPECTATOR) {
