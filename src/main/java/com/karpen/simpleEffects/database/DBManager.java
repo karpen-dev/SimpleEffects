@@ -2,6 +2,7 @@ package com.karpen.simpleEffects.database;
 
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.PlayerTypeEntity;
+import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
 import lombok.Setter;
 import org.bukkit.entity.Player;
@@ -12,22 +13,20 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DBManager {
 
     private final Config config;
     private final JavaPlugin plugin;
-    private final Types types;
 
     @Setter
     private SessionFactory sessionFactory;
 
-    public DBManager(Config config, JavaPlugin plugin, Types types){
+    public DBManager(Config config, JavaPlugin plugin){
         this.config = config;
         this.plugin = plugin;
-        this.types = types;
 
         if (config.getMethod().equalsIgnoreCase("MYSQL")){
             configureHibernate();
@@ -59,54 +58,61 @@ public class DBManager {
         }
     }
 
-    public void removePlayer(Player player){
-        try(Session session = sessionFactory.openSession()) {
+    public void removePlayer(Player player) {
+        try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
 
-            Query<?> query = session.createQuery("DELETE FROM PlayerTypeEntity WHERE playerName = :name");
-            query.setParameter("name", player.getName());
+            Query query = session.createQuery(
+                    "DELETE FROM PlayerTypeEntity WHERE playerName = :playerName");
+            query.setParameter("playerName", player.getName());
             query.executeUpdate();
 
             transaction.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void savePlayers(Set<Player> players, String type){
-        try(Session session = sessionFactory.openSession()) {
-            for (Player player : players){
-                removePlayer(player);
+    public void savePlayers(Map<Player, Type> playerTypeMap) {
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
+            for (Player player : playerTypeMap.keySet()) {
+                removePlayer(player);
+            }
+
+            for (Map.Entry<Player, Type> entry : playerTypeMap.entrySet()) {
                 PlayerTypeEntity entity = new PlayerTypeEntity();
-                entity.setPlayerName(player.getName());
-                entity.setType(type);
+                entity.setPlayerName(entry.getKey().getName());
+                entity.setType(entry.getValue().name());
                 session.save(entity);
             }
-        } catch (Exception e){
+
+            transaction.commit();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Set<Player> loadPlayersByType(String type) {
-        Set<Player> players = new HashSet<>();
+    public Map<Player, Type> loadPlayers() {
+        Map<Player, Type> playerTypeMap = new HashMap<>();
 
         try (Session session = sessionFactory.openSession()) {
             Query<PlayerTypeEntity> query = session.createQuery(
-                    "FROM PlayerTypeEntity WHERE type = :type", PlayerTypeEntity.class);
-            query.setParameter("type", type);
+                    "FROM PlayerTypeEntity", PlayerTypeEntity.class);
 
             for (PlayerTypeEntity entity : query.list()) {
                 Player player = plugin.getServer().getPlayer(entity.getPlayerName());
                 if (player != null) {
-                    players.add(player);
+                    Type type = Type.valueOf(entity.getType().toUpperCase());
+                    playerTypeMap.put(player, type);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return players;
+        return playerTypeMap;
     }
 
     public void close() {

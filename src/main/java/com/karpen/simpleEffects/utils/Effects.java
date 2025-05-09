@@ -3,6 +3,7 @@ package com.karpen.simpleEffects.utils;
 import com.karpen.simpleEffects.SimpleEffects;
 import com.karpen.simpleEffects.database.DBManager;
 import com.karpen.simpleEffects.model.Config;
+import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
 import org.bukkit.*;
 import org.bukkit.entity.Arrow;
@@ -141,9 +142,8 @@ public class Effects {
 
             @Override
             public void run() {
-                if (!types.cloudPlayers.contains(player)) {
+                if (!types.players.containsKey(player) && types.players.get(player) == Type.CLOUD) {
                     this.cancel();
-                    return;
                 }
 
                 if (player.getGameMode() == GameMode.SPECTATOR) {

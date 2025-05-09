@@ -2,6 +2,7 @@ package com.karpen.simpleEffects.listeners;
 
 import com.karpen.simpleEffects.database.DBManager;
 import com.karpen.simpleEffects.model.Config;
+import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.utils.Effects;
 import com.karpen.simpleEffects.utils.FileManager;
@@ -42,45 +43,21 @@ public class MainListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        String storageMethod = config.getMethod();
 
-        Map<Set<Player>, String> playerTypes = new HashMap<>();
-        playerTypes.put(types.cherryPlayers, "cherry");
-        playerTypes.put(types.endRodPlayers, "endrod");
-        playerTypes.put(types.totemPlayers, "totem");
-        playerTypes.put(types.heartPlayers, "heart");
-        playerTypes.put(types.palePlayers, "pale");
-        playerTypes.put(types.purplePlayers, "purple");
-        playerTypes.put(types.notePlayers, "note");
-        playerTypes.put(types.cloudPlayers, "cloud");
-
-        playerTypes.forEach((players, type) -> {
-            if (players.contains(player)) {
-                if ("MYSQL".equals(storageMethod)) {
-                    dbManager.savePlayers(players, type);
-                } else if ("TXT".equals(storageMethod)) {
-                    manager.savePlayers(Set.of(player), type);
-                }
-            }
-        });
+        switch (config.getMethod().toLowerCase()){
+            case "mysql" -> dbManager.savePlayers(types.players);
+            case "txt" -> manager.savePlayers(types.players);
+        }
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
-        if (config.getMethod().equals("TXT")){
-            manager.loadPlayers();
-        } else if (config.getMethod().equals("MYSQL")) {
-            types.cherryPlayers = dbManager.loadPlayersByType("cherry");
-            types.endRodPlayers = dbManager.loadPlayersByType("endrod");
-            types.totemPlayers = dbManager.loadPlayersByType("totem");
-            types.heartPlayers = dbManager.loadPlayersByType("heart");
-            types.palePlayers = dbManager.loadPlayersByType("pale");
-            types.notePlayers = dbManager.loadPlayersByType("note");
-            types.purplePlayers = dbManager.loadPlayersByType("purple");
-            types.cloudPlayers = dbManager.loadPlayersByType("cloud");
+        switch (config.getMethod().toLowerCase()){
+            case "mysql" -> types.players = dbManager.loadPlayers();
+            case "txt" -> types.players = manager.loadPlayers();
         }
 
-        if (types.cloudPlayers.contains(event.getPlayer())){
+        if (types.players.containsKey(event.getPlayer()) && types.players.get(event.getPlayer()).equals(Type.CLOUD)) {
             effects.startCloudEffect(event.getPlayer());
         }
     }
@@ -93,9 +70,7 @@ public class MainListener implements Listener {
             return;
         }
 
-        Map<Set<Player>, Particle> particleEffects = createParticleMap();
-
-        applyParticleEffects(player, particleEffects);
+        applyParticleEffects(player);
     }
 
     private boolean hasPlayerMovedSignificantly(PlayerMoveEvent event, Player player) {
@@ -115,31 +90,24 @@ public class MainListener implements Listener {
         return true;
     }
 
-    private Map<Set<Player>, Particle> createParticleMap() {
-        Map<Set<Player>, Particle> map = new HashMap<>();
-        map.put(types.cherryPlayers, Particle.CHERRY_LEAVES);
-        map.put(types.endRodPlayers, Particle.END_ROD);
-        map.put(types.totemPlayers, Particle.TOTEM_OF_UNDYING);
-        map.put(types.heartPlayers, Particle.HEART);
-        map.put(types.purplePlayers, Particle.WITCH);
-        map.put(types.notePlayers, Particle.NOTE);
-
-        if (!config.isOldVer()) {
-            map.put(types.palePlayers, Particle.PALE_OAK_LEAVES);
-        }
-
-        return map;
-    }
-
-    private void applyParticleEffects(Player player, Map<Set<Player>, Particle> particleEffects) {
-        particleEffects.forEach((players, particle) -> {
-            if (players.contains(player)) {
+    private void applyParticleEffects(Player player) {
+        types.players.forEach((players, type) -> {
+            if (players.equals(player)) {
                 try {
-                    effects.spawnEffect(particle, player);
-                } catch (Exception e) {
-                    if (particle == Particle.PALE_OAK_LEAVES) {
-                        return;
+                    switch (type) {
+                        case CHERRY -> effects.spawnEffect(Particle.CHERRY_LEAVES, player);
+                        case NOTE -> effects.spawnEffect(Particle.NOTE, player);
+                        case PALE -> {
+                            if (!config.isOldVer()){
+                                effects.spawnEffect(Particle.PALE_OAK_LEAVES, player);
+                            }
+                        }
+                        case ENDROD -> effects.spawnEffect(Particle.END_ROD, player);
+                        case TOTEM -> effects.spawnEffect(Particle.TOTEM_OF_UNDYING, player);
+                        case PURPLE -> effects.spawnEffect(Particle.WITCH, player);
+                        case HEART -> effects.spawnEffect(Particle.HEART, player);
                     }
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -171,35 +139,26 @@ public class MainListener implements Listener {
         }
 
         Player player = (Player) projectile.getShooter();
-        Map<Set<Player>, Particle> effectMap = createEffectMap();
 
-        effectMap.forEach((players, particle) -> {
-            if (players.contains(player)) {
-                try {
-                    effectApplier.apply(player, particle);
-                } catch (Exception e) {
-                    if (particle != Particle.PALE_OAK_LEAVES) {
-                        e.printStackTrace();
+        types.players.forEach((players, type) -> {
+            try {
+                switch (type) {
+                    case CHERRY -> effectApplier.apply(player, Particle.CHERRY_LEAVES);
+                    case ENDROD -> effectApplier.apply(player, Particle.END_ROD);
+                    case TOTEM -> effectApplier.apply(player, Particle.TOTEM_OF_UNDYING);
+                    case PALE -> {
+                        if (!config.isOldVer()){
+                            effectApplier.apply(player, Particle.PALE_OAK_LEAVES);
+                        }
                     }
+                    case HEART -> effectApplier.apply(player, Particle.HEART);
+                    case NOTE -> effectApplier.apply(player, Particle.NOTE);
+                    case PURPLE -> effectApplier.apply(player, Particle.WITCH);
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
-    }
-
-    private Map<Set<Player>, Particle> createEffectMap() {
-        Map<Set<Player>, Particle> map = new HashMap<>();
-        map.put(types.cherryPlayers, Particle.CHERRY_LEAVES);
-        map.put(types.endRodPlayers, Particle.END_ROD);
-        map.put(types.totemPlayers, Particle.TOTEM_OF_UNDYING);
-        map.put(types.heartPlayers, Particle.HEART);
-        map.put(types.purplePlayers, Particle.WITCH);
-        map.put(types.notePlayers, Particle.NOTE);
-
-        if (!config.isOldVer()) {
-            map.put(types.palePlayers, Particle.PALE_OAK_LEAVES);
-        }
-
-        return map;
     }
 
     @FunctionalInterface
