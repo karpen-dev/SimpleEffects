@@ -1,6 +1,7 @@
 package com.karpen.simpleEffects.menus;
 
 import com.karpen.simpleEffects.model.Config;
+import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.utils.Effects;
 import org.bukkit.Bukkit;
@@ -79,7 +80,7 @@ public class SelectEffectMenu implements Listener {
         assert meta != null;
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getItemCherryName()));
 
-        if (types.cherryPlayers.contains(player)){
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.CHERRY)){
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable())));
         } else {
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable())));
@@ -97,7 +98,7 @@ public class SelectEffectMenu implements Listener {
         assert meta != null;
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getItemEndRodName()));
 
-        if (types.endRodPlayers.contains(player)){
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.ENDROD)){
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable())));
         } else {
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable())));
@@ -115,7 +116,7 @@ public class SelectEffectMenu implements Listener {
         assert meta != null;
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getItemTotemName()));
 
-        if (types.totemPlayers.contains(player)){
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.TOTEM)){
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable())));
         } else {
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable())));
@@ -133,7 +134,7 @@ public class SelectEffectMenu implements Listener {
         assert meta != null;
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getItemHeartName()));
 
-        if (types.heartPlayers.contains(player)){
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.HEART)){
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable())));
         } else {
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable())));
@@ -151,7 +152,7 @@ public class SelectEffectMenu implements Listener {
         assert meta != null;
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getItemPaleName()));
 
-        if (types.palePlayers.contains(player)){
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.PALE)){
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable())));
         } else {
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable())));
@@ -174,7 +175,7 @@ public class SelectEffectMenu implements Listener {
         assert meta != null;
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getItemPurpleName()));
 
-        if (types.purplePlayers.contains(player)){
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.PURPLE)){
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable())));
         } else {
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable())));
@@ -192,7 +193,7 @@ public class SelectEffectMenu implements Listener {
         assert meta != null;
         meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getItemNotesName()));
 
-        if (types.notePlayers.contains(player)){
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.NOTE)){
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable())));
         } else {
             meta.setLore(Collections.singletonList(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable())));
@@ -212,7 +213,7 @@ public class SelectEffectMenu implements Listener {
 
         List<String> lore = new ArrayList<>();
 
-        if (types.cloudPlayers.contains(player)){
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.CLOUD)){
             lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable()));
         } else {
             lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable()));
@@ -241,12 +242,12 @@ public class SelectEffectMenu implements Listener {
             return true;
         }
 
-        if (types.cherryPlayers.contains(player)){
-            types.cherryPlayers.remove(player);
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.CHERRY)){
+            types.players.remove(player, Type.CHERRY);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else{
-            types.cherryPlayers.add(player);
+            types.players.put(player, Type.CHERRY);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
@@ -264,12 +265,12 @@ public class SelectEffectMenu implements Listener {
             return true;
         }
 
-        if (types.endRodPlayers.contains(player)){
-            types.endRodPlayers.remove(player);
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.ENDROD)){
+            types.players.remove(player, Type.ENDROD);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
-            types.endRodPlayers.add(player);
+            types.players.put(player, Type.ENDROD);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
@@ -287,12 +288,12 @@ public class SelectEffectMenu implements Listener {
             return true;
         }
 
-        if (types.totemPlayers.contains(player)){
-            types.totemPlayers.remove(player);
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.TOTEM)){
+            types.players.remove(player, Type.TOTEM);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
-            types.totemPlayers.add(player);
+            types.players.put(player, Type.TOTEM);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
@@ -310,12 +311,12 @@ public class SelectEffectMenu implements Listener {
             return true;
         }
 
-        if (types.heartPlayers.contains(player)){
-            types.heartPlayers.remove(player);
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.HEART)){
+            types.players.remove(player, Type.HEART);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
-            types.heartPlayers.add(player);
+            types.players.put(player, Type.HEART);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
@@ -339,12 +340,12 @@ public class SelectEffectMenu implements Listener {
             return true;
         }
 
-        if (types.palePlayers.contains(player)){
-            types.palePlayers.remove(player);
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.PALE)){
+            types.players.remove(player, Type.PALE);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
-            types.palePlayers.add(player);
+            types.players.put(player, Type.PALE);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
@@ -362,12 +363,12 @@ public class SelectEffectMenu implements Listener {
             return true;
         }
 
-        if (types.purplePlayers.contains(player)){
-            types.purplePlayers.remove(player);
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.PURPLE)){
+            types.players.remove(player, Type.PURPLE);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
-            types.purplePlayers.add(player);
+            types.players.put(player, Type.PURPLE);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
@@ -385,12 +386,12 @@ public class SelectEffectMenu implements Listener {
             return true;
         }
 
-        if (types.notePlayers.contains(player)){
-            types.notePlayers.remove(player);
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.NOTE)){
+            types.players.remove(player, Type.NOTE);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
-            types.notePlayers.add(player);
+            types.players.put(player, Type.NOTE);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }
 
@@ -408,12 +409,12 @@ public class SelectEffectMenu implements Listener {
             return true;
         }
 
-        if (types.cloudPlayers.contains(player)){
-            types.cloudPlayers.remove(player);
+        if (types.players.containsKey(player) && types.players.get(player).equals(Type.CLOUD)){
+            types.players.remove(player, Type.CLOUD);
             effects.removePlayer(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
-            types.cloudPlayers.add(player);
+            types.players.put(player, Type.CLOUD);
             effects.startCloudEffect(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
         }

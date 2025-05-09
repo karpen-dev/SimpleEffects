@@ -6,7 +6,7 @@
 
     <groupId>com.karpen</groupId>
     <artifactId>SimpleEffects</artifactId>
-    <version>1.4.2</version>
+    <version>1.4.3</version>
     <packaging>jar</packaging>
 
     <name>SimpleEffects</name>

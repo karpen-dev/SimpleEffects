@@ -51,8 +51,8 @@ public final class SimpleEffects extends JavaPlugin {
 
         types = new Types();
 
-        dbManager = new DBManager(config, this, types);
-        manager = new FileManager(this, types);
+        dbManager = new DBManager(config, this);
+        manager = new FileManager(this);
         effects = new Effects(this, config, manager, dbManager, types);
         effectMenu = new SelectEffectMenu(config, effects, types);
         eff = new Eff(config, effects, types, effectMenu);

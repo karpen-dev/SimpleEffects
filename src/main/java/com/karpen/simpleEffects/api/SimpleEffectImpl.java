@@ -1,6 +1,7 @@
 package com.karpen.simpleEffects.api;
 
 import com.karpen.simpleEffects.SimpleEffects;
+import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
 import org.bukkit.entity.Player;
 
@@ -15,15 +16,15 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
     }
 
     public void activeEffectCherryToPlayer(Player player){
-        types.cherryPlayers.add(player);
+        types.players.put(player, Type.CHERRY);
     }
 
     public void activeEndrodToPlayer(Player player){
-        types.endRodPlayers.add(player);
+        types.players.put(player, Type.ENDROD);
     }
 
     public void activeTotemToPlayer(Player player){
-        types.totemPlayers.add(player);
+        types.players.put(player, Type.TOTEM);
     }
 
     public void activePaleToPlayer(Player player){
@@ -31,35 +32,35 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
             return;
         }
 
-        types.palePlayers.add(player);
+        types.players.put(player, Type.PALE);
     }
 
     public void activeHeartToPlayer(Player player){
-        types.heartPlayers.add(player);
+        types.players.put(player, Type.HEART);
     }
 
     public void activePurpleToPlayer(Player player){
-        types.purplePlayers.add(player);
+        types.players.put(player, Type.PURPLE);
     }
 
     public void activeNoteToPlayer(Player player){
-        types.notePlayers.add(player);
+        types.players.put(player, Type.NOTE);
     }
 
     public void activeCloudToPlayer(Player player){
-        types.cloudPlayers.add(player);
+        types.players.put(player, Type.CLOUD);
     }
 
     public void disableEffectCherryToPlayer(Player player){
-        types.cherryPlayers.remove(player);
+        types.players.remove(player, Type.CHERRY);
     }
 
     public void disableEndrodToPlayer(Player player){
-        types.endRodPlayers.remove(player);
+        types.players.remove(player, Type.ENDROD);
     }
 
     public void disableTotemToPlayer(Player player){
-        types.totemPlayers.remove(player);
+        types.players.remove(player, Type.TOTEM);
     }
 
     public void disablePaleToPlayer(Player player){
@@ -67,22 +68,22 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
             return;
         }
 
-        types.palePlayers.remove(player);
+        types.players.remove(player, Type.PALE);
     }
 
     public void disableHeartToPlayer(Player player){
-        types.heartPlayers.remove(player);
+        types.players.remove(player, Type.HEART);
     }
 
     public void disablePurpleToPlayer(Player player){
-        types.purplePlayers.remove(player);
+        types.players.remove(player, Type.PURPLE);
     }
 
     public void disableNoteToPlayer(Player player){
-        types.notePlayers.remove(player);
+        types.players.remove(player, Type.NOTE);
     }
 
     public void disableCloudToPlayer(Player player){
-        types.cloudPlayers.remove(player);
+        types.players.remove(player, Type.CLOUD);
     }
 }
