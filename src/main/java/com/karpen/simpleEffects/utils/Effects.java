@@ -10,6 +10,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class Effects {
     private final DBManager dbManager;
     private final Types types;
     private final Map<Particle, ParticleEffectHandler> particleHandlers;
+    private final Map<Player, BukkitTask> activeClouds = new HashMap<>();
 
     public Effects(SimpleEffects plugin, Config config, FileManager manager, DBManager dbManager, Types types) {
         this.plugin = Objects.requireNonNull(plugin, "Plugin cannot be null");
@@ -134,55 +136,71 @@ public class Effects {
     }
 
     public void startCloudEffect(Player player) {
-        if (player == null) return;
+        if (activeClouds.containsKey(player)) return;
 
-        new BukkitRunnable() {
-            private Location cloudLocation = null;
-            private int animationStep = 0;
+        BukkitTask task = new CloudEffectRunnable(player).runTaskTimerAsynchronously(plugin, 0, 1);
+        activeClouds.put(player, task);
+    }
 
-            @Override
-            public void run() {
-                if (!types.players.containsKey(player) && types.players.get(player) == Type.CLOUD) {
-                    this.cancel();
-                }
+    private class CloudEffectRunnable extends BukkitRunnable {
+        private final Player player;
+        private Location cloudLocation = null;
+        private int animationStep = 0;
 
-                if (player.getGameMode() == GameMode.SPECTATOR) {
-                    return;
-                }
+        public CloudEffectRunnable(Player player) {
+            this.player = player;
+        }
 
-                Location playerLocation = player.getLocation();
+        @Override
+        public void run() {
+            if (!Type.CLOUD.equals(types.players.get(player))) {
+                this.cancel();
+                activeClouds.remove(player);
+                return;
+            }
 
-                if (cloudLocation == null || cloudLocation.distance(playerLocation) > 10) {
-                    cloudLocation = playerLocation.clone().add(0, 3, 0);
-                }
+            if (player.getGameMode() == GameMode.SPECTATOR) {
+                return;
+            }
 
-                Location targetLocation = playerLocation.clone().add(0, 3, 0);
-                Vector direction = targetLocation.toVector().subtract(cloudLocation.toVector()).multiply(0.2);
-                cloudLocation.add(direction);
+            Location playerLocation = player.getLocation();
+            if (cloudLocation == null || cloudLocation.distance(playerLocation) > 10) {
+                cloudLocation = playerLocation.clone().add(0, 3, 0);
+            }
 
-                if (!hasSpaceAbove(player, 3)) {
-                    return;
-                }
+            Location targetLocation = playerLocation.clone().add(0, 3, 0);
+            Vector direction = targetLocation.toVector().subtract(cloudLocation.toVector()).multiply(0.2);
+            cloudLocation.add(direction);
 
-                player.spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, cloudLocation, 1, 0, 0, 0, 0);
+            if (!hasSpaceAbove(player, 3)) {
+                return;
+            }
 
-                if (player.getVelocity().lengthSquared() < 0.01) {
-                    if (animationStep % 25 == 0) {
-                        for (int i = 0; i < 3; i++) {
-                            Location rainLocation = cloudLocation.clone().add(
-                                    Math.random() * 0.8 - 0.4,
-                                    -1,
-                                    Math.random() * 0.8 - 0.4
-                            );
-                            player.spawnParticle(Particle.DRIPPING_WATER, rainLocation, 1, 0, -0.3, 0);
-                        }
+            player.spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, cloudLocation, 1, 0, 0, 0, 0);
+
+            if (player.getVelocity().lengthSquared() < 0.01) {
+                if (animationStep % 25 == 0) {
+                    for (int i = 0; i < 3; i++) {
+                        Location rainLocation = cloudLocation.clone().add(
+                                Math.random() * 0.8 - 0.4,
+                                -1,
+                                Math.random() * 0.8 - 0.4
+                        );
+                        player.spawnParticle(Particle.DRIPPING_WATER, rainLocation, 1, 0, -0.3, 0);
                     }
                 }
-
-                animationStep++;
-                if (animationStep > 1000) animationStep = 0;
             }
-        }.runTaskTimerAsynchronously(plugin, 0, 1);
+
+            animationStep++;
+            if (animationStep > 1000) animationStep = 0;
+        }
+    }
+
+    public void stopCloudEffect(Player player) {
+        BukkitTask task = activeClouds.remove(player);
+        if (task != null) {
+            task.cancel();
+        }
     }
 
     private void spawnSimpleParticle(Location location, int count, double spread, Particle particle) {

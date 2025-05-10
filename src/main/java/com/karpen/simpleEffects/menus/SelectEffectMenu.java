@@ -398,20 +398,18 @@ public class SelectEffectMenu implements Listener {
         return true;
     }
 
-    private boolean activeCloud(Player player){
+    private boolean activeCloud(Player player) {
         playerInventors.remove(player);
-
         player.closeInventory();
 
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsCloud())){
+        if (config.isRightsUsing() && !player.hasPermission(config.getRightsCloud())) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
             return true;
         }
 
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.CLOUD)){
-            types.players.remove(player, Type.CLOUD);
-            effects.removePlayer(player);
+        if (Type.CLOUD.equals(types.players.get(player))) {
+            types.players.remove(player);
+            effects.stopCloudEffect(player);
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
         } else {
             types.players.put(player, Type.CLOUD);
