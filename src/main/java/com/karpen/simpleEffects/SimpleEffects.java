@@ -176,6 +176,37 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setItemCloudName(configuration.getString("ru.cloud", "Cloud"));
 
                 break;
+            case "jp":
+                config.setMsgEnable(configuration.getString("jp.enable-effect", "Эффект включен"));
+                config.setMsgDisable(configuration.getString("jp.disable-effect", "Эффект выключен"));
+                config.setErrConsole(configuration.getString("jp.err-console", "Эту команду может отправлять только игрок"));
+                config.setErrPerms(configuration.getString("jp.err-perms", "Вы не имейте прав для использования этой команды"));
+                config.setErrArgs(configuration.getString("jp.err-args", "Используйте /eff <cherry | endrod | totem | heart>"));
+                config.setErrCommand(configuration.getString("jp.err-command", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
+
+                config.setNotAvailableMsg(configuration.getString("jp.unsupported-ver", "Вы используйте версию сервера ниже 1.21.4, эта функция недоступна"));
+                config.setUnsupportedName(configuration.getString("jp.unsupported-name", "Недоступно на вашей версии"));
+
+                config.setMenuName(configuration.getString("jp.menu-name", "Выбрать эффект"));
+                config.setItemsEnable(configuration.getString("jp.item-enable", "Включить этот эффект"));
+                config.setItemsDisable(configuration.getString("jp.item-disable", "Выключить этот эффект"));
+
+                if (configuration.getBoolean("warning")){
+                    config.setWarning(configuration.getString("jp.warning", "При использовании этого эффекта вы можете увидеть вспышки и размытие изображения."));
+                } else {
+                    config.setWarning(null);
+                }
+
+                config.setItemCherryName(configuration.getString("jp.cherry", "Cherry"));
+                config.setItemEndRodName(configuration.getString("jp.endrod", "Endrod"));
+                config.setItemTotemName(configuration.getString("jp.totem", "Totem"));
+                config.setItemHeartName(configuration.getString("jp.heart", "Heart"));
+                config.setItemPaleName(configuration.getString("jp.pale", "Pale"));
+                config.setItemPurpleName(configuration.getString("jp.purple", "Purple"));
+                config.setItemNotesName(configuration.getString("jp.notes", "Notes"));
+                config.setItemCloudName(configuration.getString("jp.cloud", "Cloud"));
+
+                break;
         }
 
     }

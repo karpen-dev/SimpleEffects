@@ -1,22 +1,16 @@
-# SimpleEffects - v1.4.3 https://github.com/karpen-dev/SimpleEffects
+# SimpleEffects - v1.5 https://github.com/karpen-dev/SimpleEffects
 
 # For change color use ampersand and §
 # Example &fHello or §fWorld
-# Для выбора цвета используйте & или §
-# Например &fHello или §fWorld
 
-# Plugin language - ru, en
-# Язык плагина - ru, en
+# Plugin language - ru, en, jp
 lang: en
 
 # Save method (TXT, MYSQL)
-# Метод сохранения (TXT, MYSQL)
 method: TXT
 
 # Waring for flashes effects
 # Don't recommend disable this
-# Предупреждения о резких вспышках
-# Не рекомендую отключать это
 warning: true
 
 update:
@@ -24,23 +18,18 @@ update:
   msg: "&cYou do not have the latest version of the plugin installed. You can download the latest version at https://modrinth.com/plugin/simpleeffects"
 
 # If you using mysql, change db config
-# Если вы используйте mysql настройте данные для подключения
 db:
 
   # Connection url
-  # Url для подключения к базе
   url: "jdbc:mysql://localhost:3306/effects"
 
   # db username
-  # Пользователь базы
   username: "root"
 
   # db user password
-  # Пароль пользователя базы
   password: "root"
 
 # Separate rights
-# Использовать отдельные права
 rights:
   using: false
 
@@ -54,7 +43,6 @@ rights:
 
   cloud: "karpen.simpleeffects.cloud"
 
-# Количество частиц
 # Count particle
 count:
   cherry: 1
@@ -66,13 +54,14 @@ count:
   purple: 1
 
   # The count of cloud doesn't change
-  # Количество частиц для эффекта облака изменять не возможно
 
-# Сообщения
 # Messages
 
 # The translation of the plugin is not perfect and may contain errors,
 # I will be glad to receive feedback from X: https://x.com/karpen5i5
+
+# プラグインの翻訳は完璧ではなく、誤りが含まれている可能性があります。
+# X: https://x.com/karpen5i5 からのフィードバックをお待ちしております。
 
 # Перевод плагина не идеальный и может содержать ошибки,
 # буду рад фитбеку X: https://x.com/karpen5i5
@@ -82,7 +71,7 @@ en:
   enable-effect: "&aEffect enabled"
   disable-effect: "&aEffect disabled"
 
-  menu-name: "&aSelect effect"
+  menu-name: "Select effect"
   item-enable: "&aEnable this effect"
   item-disable: "&cDisable this effect"
 
@@ -106,12 +95,41 @@ en:
   err-args: "&cUsing /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
   err-command: "&cInvalid command. Use /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
 
+# Japanese
+jp:
+  enable-effect: "&aエフェクト有効"
+  disable-effect: "&a効果は無効です"
+
+  menu-name: "エフェクトを選択"
+  item-enable: "&aこの効果を有効にする"
+  item-disable: "&cこの効果を無効にする"
+
+  unsupported-ver: "&c1.21.4より前のバージョンを使用しています。一部の機能はご利用いただけません。"
+  unsupported-name: "&cあなたのバージョンではサポートされていません"
+
+  cherry: "&dCherry"
+  endrod: "&fEndrod"
+  totem: "&eTotem"
+  heart: "&cHeart"
+  pale: "&8Pale"
+  purple: "&5Purple"
+  notes: "&3Notes"
+  cloud: "&7Cloud"
+
+  # Warning
+  warning: "&cこの効果を使用すると、フラッシュやぼやけた画像が見える場合があります。"
+
+  err-console: "&cこのコマンドは送信できません"
+  err-perms: "&cこれを使用する権限がありません"
+  err-args: "&c/eff を使用する <cherry | endrod | totem | heart | pale | purple | note | cloud>"
+  err-command: "&c無効なコマンドです。/eff <cherry | endrod | totem | heart | pale | purple | note | cloud> を使用してください。"
+
 # Russian
 ru:
   enable-effect: "&aЭффект включен"
   disable-effect: "&aЭффект выключен"
 
-  menu-name: "&aВыбрать эффект"
+  menu-name: "Выбрать эффект"
   item-enable: "&aВключить этот эффект"
   item-disable: "&cВыключить этот эффект"
 

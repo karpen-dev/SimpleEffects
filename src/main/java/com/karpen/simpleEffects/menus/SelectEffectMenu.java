@@ -32,7 +32,7 @@ public class SelectEffectMenu implements Listener {
     }
 
     public void openMenu(Player player){
-        Inventory inventory = Bukkit.createInventory(player, 27, config.getMenuName());
+        Inventory inventory = Bukkit.createInventory(player, 27, ChatColor.translateAlternateColorCodes('&', config.getMenuName()));
         playerInventors.put(player, inventory);
 
         inventory.setItem(1, cherryItem(player));
