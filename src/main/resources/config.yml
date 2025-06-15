@@ -1,9 +1,9 @@
-# SimpleEffects - v1.5 https://github.com/karpen-dev/SimpleEffects
+# SimpleEffects - v1.5.1 https://github.com/karpen-dev/SimpleEffects
 
 # For change color use ampersand and §
 # Example &fHello or §fWorld
 
-# Plugin language - ru, en, jp
+# Plugin language - ru, en, jp, be
 lang: en
 
 # Save method (TXT, MYSQL)
@@ -152,3 +152,32 @@ ru:
   err-perms: "&cВы не имейте прав для использования этой команды"
   err-args: "&cИспользуйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>>"
   err-command: "&cНеизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
+
+# Belarusian
+be:
+  enable-effect: "&aЭфект уключаны"
+  disable-effect: "&aЭфект выключаны"
+
+  menu-name: "Выбраць эфект"
+  item-enable: "&aУключыць гэты эфект"
+  item-disable: "&cВыключыць гэты эфект"
+
+  unsupported-ver: "&cВы карыстаецеся версію сервера ніжэй 1.21.4, гэтая функцыя недаступная"
+  unsupported-name: "&cНедаступна на вашай версіі"
+
+  cherry: "&dCherry"
+  endrod: "&fEndrod"
+  totem: "&eTotem"
+  heart: "&cHeart"
+  pale: "&8Pale"
+  purple: "&5Purple"
+  notes: "&3Notes"
+  cloud: "&7Cloud"
+
+  # Warning
+  warning: "&cПры выкарыстанні гэтага эфекту вы можаце выбліскі і размыццё малюнка."
+
+  err-console: "&cГэту каманду можа адпрауляць толькі ігрок"
+  err-perms: "&cВы не маеце прау для выкарыставання гэтай каманды"
+  err-args: "&cВыкарыстовывайце /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
+  err-command: "&cНевядомая каманда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"

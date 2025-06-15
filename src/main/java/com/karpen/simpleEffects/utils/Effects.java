@@ -176,7 +176,7 @@ public class Effects {
                 return;
             }
 
-            player.spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, cloudLocation, 1, 0, 0, 0, 0);
+            player.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, cloudLocation, 1, 0, 0, 0, 0);
 
             if (player.getVelocity().lengthSquared() < 0.01) {
                 if (animationStep % 25 == 0) {
@@ -186,7 +186,7 @@ public class Effects {
                                 -1,
                                 Math.random() * 0.8 - 0.4
                         );
-                        player.spawnParticle(Particle.DRIPPING_WATER, rainLocation, 1, 0, -0.3, 0);
+                        player.getWorld().spawnParticle(Particle.DRIPPING_WATER, rainLocation, 1, 0, -0.3, 0);
                     }
                 }
             }

@@ -115,96 +115,127 @@ public final class SimpleEffects extends JavaPlugin {
 
         switch (configuration.getString("lang", "en").toLowerCase()){
             case "en":
-                config.setMsgEnable(configuration.getString("en.enable-effect", "Effect enabled"));
-                config.setMsgDisable(configuration.getString("en.disable-effect", "Effect disabled"));
-                config.setErrConsole(configuration.getString("en.err-console", "You can't send this command"));
-                config.setErrPerms(configuration.getString("en.err-perms", "You can't have permission for using this"));
-                config.setErrArgs(configuration.getString("en.err-args", "Using /eff <cherry | endrod | totem | heart | pale>"));
-                config.setErrCommand(configuration.getString("en.err-command", "Invalid command. Use /eff <cherry | endrod | totem | heart | pale>"));
+                config.setMsgEnable(configuration.getString("en.enable-effect", "&aEffect enabled"));
+                config.setMsgDisable(configuration.getString("en.disable-effect", "&aEffect disabled"));
+                config.setErrConsole(configuration.getString("en.err-console", "&cYou can't send this command"));
+                config.setErrPerms(configuration.getString("en.err-perms", "&cYou can't have permission for using this"));
+                config.setErrArgs(configuration.getString("en.err-args", "&cUsing /eff <cherry | endrod | totem | heart | pale>"));
+                config.setErrCommand(configuration.getString("en.err-command", "&cInvalid command. Use /eff <cherry | endrod | totem | heart | pale>"));
 
-                config.setNotAvailableMsg(configuration.getString("en.unsupported-ver", "You are using a version lower than 1.21.4, the some feature not available"));
-                config.setUnsupportedName(configuration.getString("en.unsupported-name", "Don't supported to you version"));
+                config.setNotAvailableMsg(configuration.getString("en.unsupported-ver", "&cYou are using a version lower than 1.21.4, the some feature not available"));
+                config.setUnsupportedName(configuration.getString("en.unsupported-name", "&cDon't supported to you version"));
 
                 config.setMenuName(configuration.getString("en.menu-name", "Select effect"));
-                config.setItemsEnable(configuration.getString("en.item-enable", "Enable this effect"));
-                config.setItemsDisable(configuration.getString("en.item-disable", "Disable this effect"));
+                config.setItemsEnable(configuration.getString("en.item-enable", "&aEnable this effect"));
+                config.setItemsDisable(configuration.getString("en.item-disable", "&cDisable this effect"));
 
                 if (configuration.getBoolean("warning")){
-                    config.setWarning(configuration.getString("en.warning", "While using this effect you may see flashes and blurry images."));
+                    config.setWarning(configuration.getString("en.warning", "&cWhile using this effect you may see flashes and blurry images."));
                 } else {
                     config.setWarning(null);
                 }
 
-                config.setItemCherryName(configuration.getString("en.cherry", "Cherry"));
-                config.setItemEndRodName(configuration.getString("en.endrod", "Endrod"));
-                config.setItemTotemName(configuration.getString("en.totem", "Totem"));
-                config.setItemHeartName(configuration.getString("en.heart", "Heart"));
-                config.setItemPaleName(configuration.getString("en.pale", "Pale"));
-                config.setItemPurpleName(configuration.getString("en.purple", "Purple"));
-                config.setItemNotesName(configuration.getString("en.notes", "Notes"));
-                config.setItemCloudName(configuration.getString("en.cloud", "Cloud"));
+                config.setItemCherryName(configuration.getString("en.cherry", "&dCherry"));
+                config.setItemEndRodName(configuration.getString("en.endrod", "&fEndrod"));
+                config.setItemTotemName(configuration.getString("en.totem", "&eTotem"));
+                config.setItemHeartName(configuration.getString("en.heart", "&cHeart"));
+                config.setItemPaleName(configuration.getString("en.pale", "&8Pale"));
+                config.setItemPurpleName(configuration.getString("en.purple", "&5Purple"));
+                config.setItemNotesName(configuration.getString("en.notes", "&3Notes"));
+                config.setItemCloudName(configuration.getString("en.cloud", "&7Cloud"));
 
                 break;
             case "ru":
-                config.setMsgEnable(configuration.getString("ru.enable-effect", "Эффект включен"));
-                config.setMsgDisable(configuration.getString("ru.disable-effect", "Эффект выключен"));
-                config.setErrConsole(configuration.getString("ru.err-console", "Эту команду может отправлять только игрок"));
-                config.setErrPerms(configuration.getString("ru.err-perms", "Вы не имейте прав для использования этой команды"));
-                config.setErrArgs(configuration.getString("ru.err-args", "Используйте /eff <cherry | endrod | totem | heart>"));
-                config.setErrCommand(configuration.getString("ru.err-command", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
+                config.setMsgEnable(configuration.getString("ru.enable-effect", "&aЭффект включен"));
+                config.setMsgDisable(configuration.getString("ru.disable-effect", "&aЭффект выключен"));
+                config.setErrConsole(configuration.getString("ru.err-console", "&cЭту команду может отправлять только игрок"));
+                config.setErrPerms(configuration.getString("ru.err-perms", "&cВы не имейте прав для использования этой команды"));
+                config.setErrArgs(configuration.getString("ru.err-args", "&cИспользуйте /eff <cherry | endrod | totem | heart>"));
+                config.setErrCommand(configuration.getString("ru.err-command", "&cНеизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
 
-                config.setNotAvailableMsg(configuration.getString("ru.unsupported-ver", "Вы используйте версию сервера ниже 1.21.4, эта функция недоступна"));
-                config.setUnsupportedName(configuration.getString("ru.unsupported-name", "Недоступно на вашей версии"));
+                config.setNotAvailableMsg(configuration.getString("ru.unsupported-ver", "&cВы используйте версию сервера ниже 1.21.4, эта функция недоступна"));
+                config.setUnsupportedName(configuration.getString("ru.unsupported-name", "&cНедоступно на вашей версии"));
 
                 config.setMenuName(configuration.getString("ru.menu-name", "Выбрать эффект"));
-                config.setItemsEnable(configuration.getString("ru.item-enable", "Включить этот эффект"));
-                config.setItemsDisable(configuration.getString("ru.item-disable", "Выключить этот эффект"));
+                config.setItemsEnable(configuration.getString("ru.item-enable", "&aВключить этот эффект"));
+                config.setItemsDisable(configuration.getString("ru.item-disable", "&cВыключить этот эффект"));
 
                 if (configuration.getBoolean("warning")){
-                    config.setWarning(configuration.getString("ru.warning", "При использовании этого эффекта вы можете увидеть вспышки и размытие изображения."));
+                    config.setWarning(configuration.getString("ru.warning", "&cПри использовании этого эффекта вы можете увидеть вспышки и размытие изображения."));
                 } else {
                     config.setWarning(null);
                 }
 
-                config.setItemCherryName(configuration.getString("ru.cherry", "Cherry"));
-                config.setItemEndRodName(configuration.getString("ru.endrod", "Endrod"));
-                config.setItemTotemName(configuration.getString("ru.totem", "Totem"));
-                config.setItemHeartName(configuration.getString("ru.heart", "Heart"));
-                config.setItemPaleName(configuration.getString("ru.pale", "Pale"));
-                config.setItemPurpleName(configuration.getString("ru.purple", "Purple"));
-                config.setItemNotesName(configuration.getString("ru.notes", "Notes"));
-                config.setItemCloudName(configuration.getString("ru.cloud", "Cloud"));
+                config.setItemCherryName(configuration.getString("ru.cherry", "&dCherry"));
+                config.setItemEndRodName(configuration.getString("ru.endrod", "&fEndrod"));
+                config.setItemTotemName(configuration.getString("ru.totem", "&eTotem"));
+                config.setItemHeartName(configuration.getString("ru.heart", "&cHeart"));
+                config.setItemPaleName(configuration.getString("ru.pale", "&8Pale"));
+                config.setItemPurpleName(configuration.getString("ru.purple", "&5Purple"));
+                config.setItemNotesName(configuration.getString("ru.notes", "&3Notes"));
+                config.setItemCloudName(configuration.getString("ru.cloud", "&7Cloud"));
 
                 break;
             case "jp":
-                config.setMsgEnable(configuration.getString("jp.enable-effect", "Эффект включен"));
-                config.setMsgDisable(configuration.getString("jp.disable-effect", "Эффект выключен"));
-                config.setErrConsole(configuration.getString("jp.err-console", "Эту команду может отправлять только игрок"));
-                config.setErrPerms(configuration.getString("jp.err-perms", "Вы не имейте прав для использования этой команды"));
-                config.setErrArgs(configuration.getString("jp.err-args", "Используйте /eff <cherry | endrod | totem | heart>"));
-                config.setErrCommand(configuration.getString("jp.err-command", "Неизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale>"));
+                config.setMsgEnable(configuration.getString("jp.enable-effect", "&aエフェクト有効"));
+                config.setMsgDisable(configuration.getString("jp.disable-effect", "&a効果は無効です"));
+                config.setErrConsole(configuration.getString("jp.err-console", "&cこのコマンドは送信できません"));
+                config.setErrPerms(configuration.getString("jp.err-perms", "&cこれを使用する権限がありません"));
+                config.setErrArgs(configuration.getString("jp.err-args", "&c/eff を使用する <cherry | endrod | totem | heart | pale | purple | note | cloud>"));
+                config.setErrCommand(configuration.getString("jp.err-command", "&c無効なコマンドです。/eff <cherry | endrod | totem | heart | pale | purple | note | cloud> を使用してください。"));
 
-                config.setNotAvailableMsg(configuration.getString("jp.unsupported-ver", "Вы используйте версию сервера ниже 1.21.4, эта функция недоступна"));
-                config.setUnsupportedName(configuration.getString("jp.unsupported-name", "Недоступно на вашей версии"));
+                config.setNotAvailableMsg(configuration.getString("jp.unsupported-ver", "&c1.21.4より前のバージョンを使用しています。一部の機能はご利用いただけません。"));
+                config.setUnsupportedName(configuration.getString("jp.unsupported-name", "&cあなたのバージョンではサポートされていません"));
 
-                config.setMenuName(configuration.getString("jp.menu-name", "Выбрать эффект"));
-                config.setItemsEnable(configuration.getString("jp.item-enable", "Включить этот эффект"));
-                config.setItemsDisable(configuration.getString("jp.item-disable", "Выключить этот эффект"));
+                config.setMenuName(configuration.getString("jp.menu-name", "エフェクトを選択"));
+                config.setItemsEnable(configuration.getString("jp.item-enable", "&aこの効果を有効にする"));
+                config.setItemsDisable(configuration.getString("jp.item-disable", "&cこの効果を無効にする"));
 
                 if (configuration.getBoolean("warning")){
-                    config.setWarning(configuration.getString("jp.warning", "При использовании этого эффекта вы можете увидеть вспышки и размытие изображения."));
+                    config.setWarning(configuration.getString("jp.warning", "&cこの効果を使用すると、フラッシュやぼやけた画像が見える場合があります。"));
                 } else {
                     config.setWarning(null);
                 }
 
-                config.setItemCherryName(configuration.getString("jp.cherry", "Cherry"));
-                config.setItemEndRodName(configuration.getString("jp.endrod", "Endrod"));
-                config.setItemTotemName(configuration.getString("jp.totem", "Totem"));
-                config.setItemHeartName(configuration.getString("jp.heart", "Heart"));
-                config.setItemPaleName(configuration.getString("jp.pale", "Pale"));
-                config.setItemPurpleName(configuration.getString("jp.purple", "Purple"));
-                config.setItemNotesName(configuration.getString("jp.notes", "Notes"));
-                config.setItemCloudName(configuration.getString("jp.cloud", "Cloud"));
+                config.setItemCherryName(configuration.getString("jp.cherry", "&dCherry"));
+                config.setItemEndRodName(configuration.getString("jp.endrod", "&fEndrod"));
+                config.setItemTotemName(configuration.getString("jp.totem", "&eTotem"));
+                config.setItemHeartName(configuration.getString("jp.heart", "&cHeart"));
+                config.setItemPaleName(configuration.getString("jp.pale", "&8Pale"));
+                config.setItemPurpleName(configuration.getString("jp.purple", "&5Purple"));
+                config.setItemNotesName(configuration.getString("jp.notes", "&3Notes"));
+                config.setItemCloudName(configuration.getString("jp.cloud", "&7Cloud"));
+
+                break;
+            case "be":
+                config.setMsgEnable(configuration.getString("be.enable-effect", "&aЭфект уключаны"));
+                config.setMsgDisable(configuration.getString("be.disable-effect", "&aЭфект выключаны"));
+                config.setErrConsole(configuration.getString("be.err-console", "&cГэту каманду можа адпрауляць толькі ігрок"));
+                config.setErrPerms(configuration.getString("be.err-perms", "&cВы не маеце прау для выкарыставання гэтай каманды"));
+                config.setErrArgs(configuration.getString("be.err-args", "&cВыкарыстовывайце /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"));
+                config.setErrCommand(configuration.getString("be.err-command", "&cНевядомая каманда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"));
+
+                config.setNotAvailableMsg(configuration.getString("be.unsupported-ver", "&cВы карыстаецеся версію сервера ніжэй 1.21.4, гэтая функцыя недаступная"));
+                config.setUnsupportedName(configuration.getString("be.unsupported-name", "&cНедаступна на вашай версіі"));
+
+                config.setMenuName(configuration.getString("be.menu-name", "Выбраць эфект"));
+                config.setItemsEnable(configuration.getString("be.item-enable", "&aУключыць гэты эфект"));
+                config.setItemsDisable(configuration.getString("be.item-disable", "&cВыключыць гэты эфект"));
+
+                if (configuration.getBoolean("warning")){
+                    config.setWarning(configuration.getString("be.warning", "&cПры выкарыстанні гэтага эфекту вы можаце выбліскі і размыццё малюнка."));
+                } else {
+                    config.setWarning(null);
+                }
+
+                config.setItemCherryName(configuration.getString("be.cherry", "&dCherry"));
+                config.setItemEndRodName(configuration.getString("be.endrod", "&fEndrod"));
+                config.setItemTotemName(configuration.getString("be.totem", "&eTotem"));
+                config.setItemHeartName(configuration.getString("be.heart", "&cHeart"));
+                config.setItemPaleName(configuration.getString("be.pale", "&8Pale"));
+                config.setItemPurpleName(configuration.getString("be.purple", "&5Purple"));
+                config.setItemNotesName(configuration.getString("be.notes", "&3Notes"));
+                config.setItemCloudName(configuration.getString("be.cloud", "&7Cloud"));
 
                 break;
         }
