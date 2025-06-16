@@ -15,6 +15,9 @@ import com.karpen.simpleEffects.utils.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
 
 public final class SimpleEffects extends JavaPlugin {
 
@@ -91,7 +94,28 @@ public final class SimpleEffects extends JavaPlugin {
 
     public void loadConfig() {
         saveDefaultConfig();
+        reloadConfig();
+
         Configuration configuration = getConfig();
+
+        String[] ver = getDescription().getVersion().split("1.");
+        double currentVersion = Double.parseDouble(ver[1]);
+        double configVersion = configuration.getDouble("config-version", currentVersion);
+
+        if (configVersion < currentVersion) {
+            File configFile = new File(getDataFolder(), "config.yml");
+            File oldConfig = new File(getDataFolder(), "config_old_" + configVersion + ".yml");
+            configFile.renameTo(oldConfig);
+
+            saveDefaultConfig();
+            reloadConfig();
+
+            configuration = getConfig();
+            configuration.set("config-version", currentVersion);
+            saveConfig();
+
+            getLogger().info("Config successful updated to " + getDescription().getVersion() + " version");
+        }
 
         config.setMethod(configuration.getString("method", "TXT"));
         config.setDbUrl(configuration.getString("db.url"));
@@ -243,7 +267,6 @@ public final class SimpleEffects extends JavaPlugin {
 
                 break;
         }
-
     }
 
     public static SimpleEffectsApi getApi() {

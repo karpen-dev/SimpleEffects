@@ -1,5 +1,5 @@
 name: SimpleEffects
-version: '1.5.1'
+version: '1.5.2'
 main: com.karpen.simpleEffects.SimpleEffects
 api-version: '1.21'
 commands:

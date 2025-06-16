@@ -1,4 +1,8 @@
-# SimpleEffects - v1.5.1 https://github.com/karpen-dev/SimpleEffects
+# SimpleEffects - https://github.com/karpen-dev/SimpleEffects
+
+# Config version
+# Don't change this parameter
+config-version: 5.2
 
 # For change color use ampersand and §
 # Example &fHello or §fWorld
