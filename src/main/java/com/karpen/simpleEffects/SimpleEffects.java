@@ -27,6 +27,7 @@ public final class SimpleEffects extends JavaPlugin {
     private FileManager manager;
     private SelectEffectMenu effectMenu;
     private CheckVersion checkVersion;
+    private SimpleEffectImpl simpleEffectImpl;
     private volatile SimpleEffectsApi api;
 
     public static SimpleEffects instance;
@@ -59,7 +60,8 @@ public final class SimpleEffects extends JavaPlugin {
         effReload = new EffReload(this);
         checkVersion = new CheckVersion(this);
 
-        this.api = new SimpleEffectImpl(this, types);
+        this.simpleEffectImpl = new SimpleEffectImpl(this, types);
+        this.api = this.simpleEffectImpl;
 
         if (getCommand("eff") != null) {
             getCommand("eff-reload").setExecutor(effReload);
@@ -83,6 +85,8 @@ public final class SimpleEffects extends JavaPlugin {
         if (configuration.getBoolean("update.using") && !checkVersion.isLatest()){
             getLogger().info(configuration.getString("update.msg"));
         }
+
+        getLogger().info("Instance initialized: " + (instance != null));
     }
 
     public void loadConfig() {
@@ -243,19 +247,23 @@ public final class SimpleEffects extends JavaPlugin {
     }
 
     public static SimpleEffectsApi getApi() {
-        SimpleEffects instance = SimpleEffects.instance;
-        if (instance == null) {
-            throw new IllegalStateException("SimpleEffects not initialized");
-        }
+        try {
+            SimpleEffects instance = SimpleEffects.instance;
+            if (instance == null) {
+                throw new IllegalStateException("SimpleEffects not initialized");
+            }
 
-        if (instance.api == null) {
-            synchronized (SimpleEffects.class) {
-                if (instance.api == null) {
-                    instance.api = new SimpleEffectImpl(instance, instance.types);
+            if (instance.api == null) {
+                synchronized (SimpleEffects.class) {
+                    if (instance.api == null) {
+                        instance.api = new SimpleEffectImpl(instance, instance.types);
+                    }
                 }
             }
+            return instance.api;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return instance.api;
     }
 
     public boolean isOldVer(){

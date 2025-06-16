@@ -1,6 +1,6 @@
 ## SimpleEffects plugin
 
-[![](https://jitpack.io/v/karpen-dev/SimpleEffects.svg)](https://jitpack.io/#karpen-dev/SimpleEffects)
+**The old API no longer works, use the new more convenient one according to the documentation below**
 
 If you are using a version lower than 1.21.4, don't report issues.
 
@@ -20,6 +20,8 @@ Available at:
 <details>
 <summary>Maven</summary>
 
+[![](https://jitpack.io/v/karpen-dev/SimpleEffects.svg)](https://jitpack.io/#karpen-dev/SimpleEffects)
+
 ```xml
 <!-- Jitpack repo -->
 <repository>
@@ -31,13 +33,16 @@ Available at:
 <dependency>
     <groupId>com.github.karpen-dev</groupId>
     <artifactId>SimpleEffects</artifactId>
-    <version>SEE VERSION IN GITHUB REPO</version>
+    <version>YOU VERSION</version>
+    <scope>provided</scope>
 </dependency>
 ```
 </details> 
 
 <details>
 <summary>Gradle</summary>
+
+[![](https://jitpack.io/v/karpen-dev/SimpleEffects.svg)](https://jitpack.io/#karpen-dev/SimpleEffects)
 
 ```groovy
 // Jitpack repo
@@ -48,12 +53,14 @@ repositories {
 }
 
 // Main dependency
-implementation 'com.github.karpen-dev:SimpleEffects:SEE VERSION IN GITHUB REPO'
+compileOnly 'com.github.karpen-dev:SimpleEffects:YOU VERSION'
 ```
 </details>
 
 <details>
 <summary>Gradle.kts</summary>
+
+[![](https://jitpack.io/v/karpen-dev/SimpleEffects.svg)](https://jitpack.io/#karpen-dev/SimpleEffects)
 
 ``` kotlin
 // Jitpack repo
@@ -64,11 +71,20 @@ repositories {
 }
 
 // Main dependency
-implementation("com.github.karpen-dev:SimpleEffects:SEE VERSION IN GITHUB REPO")
+compileOnly("com.github.karpen-dev:SimpleEffects:YOU VERSION")
 ```
 </details>
 
-### Using api   
+### Using api
+```yaml
+# plugin.yml
+# Register dependency
+...
+depend: [SimpleEffects]
+# or
+softDepend: [SimpleEffects]
+...
+```
 
 <details>
 <summary>Java</summary>
@@ -78,7 +94,9 @@ implementation("com.github.karpen-dev:SimpleEffects:SEE VERSION IN GITHUB REPO")
 SimpleEffectsApi api = SimpleEffects.getApi();
 
 // Active cherry effect
-api.activeEffectCherryToPlayer(player);
+api.active(Type.CHERRY, player); // Type: CHERRY, ENDROD, TOTEM, PALE, HEART, PURPLE, NOTE, CLOUD
+api.disable(Type.CHERRY, player); // Disable effect if its active
+api.getEffect(player); // return Type enum
 ```
 </details>
 
@@ -90,6 +108,8 @@ api.activeEffectCherryToPlayer(player);
 val api = SimpleEffects.getApi();
 
 // Active cherry effect
-api.activeEffectCherryToPlayer(player);
+api.active(Type.CHERRY, player); // Type: CHERRY, ENDROD, TOTEM, PALE, HEART, PURPLE, NOTE, CLOUD
+api.disable(Type.CHERRY, player); // Disable effect if its active
+api.getEffect(player); // return Type enum
 ```
 </details>

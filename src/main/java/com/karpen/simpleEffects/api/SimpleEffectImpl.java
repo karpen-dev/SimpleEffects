@@ -15,75 +15,20 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
         this.types = types;
     }
 
-    public void activeEffectCherryToPlayer(Player player){
-        types.players.put(player, Type.CHERRY);
+    @Override
+    public void active(Type type, Player player) {
+        if (plugin.isOldVer() && type.equals(Type.PALE)) return;
+        types.players.put(player, type);
     }
 
-    public void activeEndrodToPlayer(Player player){
-        types.players.put(player, Type.ENDROD);
+    @Override
+    public void disable(Type type, Player player) {
+        if (plugin.isOldVer() && type.equals(Type.PALE)) return;
+        types.players.remove(player);
     }
 
-    public void activeTotemToPlayer(Player player){
-        types.players.put(player, Type.TOTEM);
-    }
-
-    public void activePaleToPlayer(Player player){
-        if (plugin.isOldVer()){
-            return;
-        }
-
-        types.players.put(player, Type.PALE);
-    }
-
-    public void activeHeartToPlayer(Player player){
-        types.players.put(player, Type.HEART);
-    }
-
-    public void activePurpleToPlayer(Player player){
-        types.players.put(player, Type.PURPLE);
-    }
-
-    public void activeNoteToPlayer(Player player){
-        types.players.put(player, Type.NOTE);
-    }
-
-    public void activeCloudToPlayer(Player player){
-        types.players.put(player, Type.CLOUD);
-    }
-
-    public void disableEffectCherryToPlayer(Player player){
-        types.players.remove(player, Type.CHERRY);
-    }
-
-    public void disableEndrodToPlayer(Player player){
-        types.players.remove(player, Type.ENDROD);
-    }
-
-    public void disableTotemToPlayer(Player player){
-        types.players.remove(player, Type.TOTEM);
-    }
-
-    public void disablePaleToPlayer(Player player){
-        if (plugin.isOldVer()){
-            return;
-        }
-
-        types.players.remove(player, Type.PALE);
-    }
-
-    public void disableHeartToPlayer(Player player){
-        types.players.remove(player, Type.HEART);
-    }
-
-    public void disablePurpleToPlayer(Player player){
-        types.players.remove(player, Type.PURPLE);
-    }
-
-    public void disableNoteToPlayer(Player player){
-        types.players.remove(player, Type.NOTE);
-    }
-
-    public void disableCloudToPlayer(Player player){
-        types.players.remove(player, Type.CLOUD);
+    @Override
+    public Type getEffect(Player player) {
+        return types.players.get(player);
     }
 }
