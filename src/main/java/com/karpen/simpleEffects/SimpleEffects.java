@@ -10,14 +10,19 @@ import com.karpen.simpleEffects.menus.SelectEffectMenu;
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.utils.CheckVersion;
+import com.karpen.simpleEffects.utils.EffectAppler;
 import com.karpen.simpleEffects.utils.Effects;
 import com.karpen.simpleEffects.utils.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class SimpleEffects extends JavaPlugin {
 
@@ -32,6 +37,8 @@ public final class SimpleEffects extends JavaPlugin {
     private CheckVersion checkVersion;
     private SimpleEffectImpl simpleEffectImpl;
     private volatile SimpleEffectsApi api;
+
+    private Map<Player, Inventory> playerInventors = new HashMap<>();
 
     public static SimpleEffects instance;
 
@@ -58,8 +65,11 @@ public final class SimpleEffects extends JavaPlugin {
         dbManager = new DBManager(config, this);
         manager = new FileManager(this);
         effects = new Effects(this, config, manager, dbManager, types);
-        effectMenu = new SelectEffectMenu(config, effects, types);
-        eff = new Eff(config, effects, types, effectMenu);
+
+        new EffectAppler(config, effects, types, playerInventors);
+
+        effectMenu = new SelectEffectMenu(config, types, playerInventors);
+        eff = new Eff(config, effectMenu);
         effReload = new EffReload(this);
         checkVersion = new CheckVersion(this);
 

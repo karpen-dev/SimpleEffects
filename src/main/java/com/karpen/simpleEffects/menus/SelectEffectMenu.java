@@ -3,6 +3,7 @@ package com.karpen.simpleEffects.menus;
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
+import com.karpen.simpleEffects.utils.EffectAppler;
 import com.karpen.simpleEffects.utils.Effects;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,15 +21,14 @@ import java.util.*;
 public class SelectEffectMenu implements Listener {
 
     private Config config;
-    private Effects effects;
     private Types types;
 
-    private final Map<Player, Inventory> playerInventors = new HashMap<>();
+    private final Map<Player, Inventory> playerInventors;
 
-    public SelectEffectMenu(Config config, Effects effects, Types types){
-        this.effects = effects;
+    public SelectEffectMenu(Config config, Types types, Map<Player, Inventory> playerInventors){
         this.types = types;
         this.config = config;
+        this.playerInventors = playerInventors;
     }
 
     public void openMenu(Player player){
@@ -60,15 +60,14 @@ public class SelectEffectMenu implements Listener {
             event.setCancelled(true);
 
             switch (event.getRawSlot()){
-                case 1 -> activeCherry(player);
-                case 2 -> activeEndRod(player);
-                case 3 -> activeTotem(player);
-                case 4 -> activeHeart(player);
-                case 5 -> activePale(player);
-                case 6 -> activePurple(player);
-                case 7 -> activeNote(player);
-
-                case 13 -> activeCloud(player);
+                case 1 -> EffectAppler.activeEff(player, Type.CHERRY);
+                case 2 -> EffectAppler.activeEff(player, Type.ENDROD);
+                case 3 -> EffectAppler.activeEff(player, Type.TOTEM);
+                case 4 -> EffectAppler.activeEff(player, Type.HEART);
+                case 5 -> EffectAppler.activeEff(player, Type.PALE);
+                case 6 -> EffectAppler.activeEff(player, Type.PURPLE);
+                case 7 -> EffectAppler.activeEff(player, Type.NOTE);
+                case 13 -> EffectAppler.activeEff(player, Type.CLOUD);
             }
         }
     }
@@ -229,194 +228,5 @@ public class SelectEffectMenu implements Listener {
         item.setItemMeta(meta);
 
         return item;
-    }
-
-    private boolean activeCherry(Player player){
-        playerInventors.remove(player);
-
-        player.closeInventory();
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsCherry())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.CHERRY)){
-            types.players.remove(player, Type.CHERRY);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else{
-            types.players.put(player, Type.CHERRY);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeEndRod(Player player){
-        playerInventors.remove(player);
-
-        player.closeInventory();
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsEndRod())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.ENDROD)){
-            types.players.remove(player, Type.ENDROD);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.ENDROD);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeTotem(Player player){
-        playerInventors.remove(player);
-
-        player.closeInventory();
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsTotem())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.TOTEM)){
-            types.players.remove(player, Type.TOTEM);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.TOTEM);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeHeart(Player player){
-        playerInventors.remove(player);
-
-        player.closeInventory();
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsHeart())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.HEART)){
-            types.players.remove(player, Type.HEART);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.HEART);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activePale(Player player){
-        playerInventors.remove(player);
-
-        player.closeInventory();
-
-        if (config.isOldVer()){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getNotAvailableMsg()));
-
-            return true;
-        }
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsPale())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.PALE)){
-            types.players.remove(player, Type.PALE);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.PALE);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activePurple(Player player){
-        playerInventors.remove(player);
-
-        player.closeInventory();
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsPurple())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.PURPLE)){
-            types.players.remove(player, Type.PURPLE);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.PURPLE);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeNote(Player player){
-        playerInventors.remove(player);
-
-        player.closeInventory();
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsNotes())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.NOTE)){
-            types.players.remove(player, Type.NOTE);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.NOTE);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeCloud(Player player) {
-        playerInventors.remove(player);
-        player.closeInventory();
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsCloud())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-            return true;
-        }
-
-        if (Type.CLOUD.equals(types.players.get(player))) {
-            types.players.remove(player);
-            effects.stopCloudEffect(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.CLOUD);
-            effects.startCloudEffect(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
     }
 }

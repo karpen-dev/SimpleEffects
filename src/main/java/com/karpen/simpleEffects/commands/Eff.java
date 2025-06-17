@@ -3,6 +3,7 @@ package com.karpen.simpleEffects.commands;
 import com.karpen.simpleEffects.menus.SelectEffectMenu;
 import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
+import com.karpen.simpleEffects.utils.EffectAppler;
 import com.karpen.simpleEffects.utils.Effects;
 import com.karpen.simpleEffects.model.Config;
 import org.bukkit.ChatColor;
@@ -14,14 +15,10 @@ import org.bukkit.entity.Player;
 public class Eff implements CommandExecutor {
 
     private final Config config;
-    private final Effects effects;
-    private Types types;
     private SelectEffectMenu effectMenu;
 
-    public Eff(Config config, Effects effects, Types types, SelectEffectMenu effectMenu) {
+    public Eff(Config config, SelectEffectMenu effectMenu) {
         this.config = config;
-        this.effects = effects;
-        this.types = types;
         this.effectMenu = effectMenu;
     }
 
@@ -48,180 +45,20 @@ public class Eff implements CommandExecutor {
         }
 
         return switch (strings[0].toLowerCase()) {
-            case "cherry" -> activeCherry(player);
-            case "endrod" -> activeEndRod(player);
-            case "totem" -> activeTotem(player);
-            case "heart" -> activeHeart(player);
-            case "pale" -> activePale(player);
-            case "note" -> activeNote(player);
-            case "purple" -> activePurple(player);
-            case "cloud" -> activeCloud(player);
-            default -> errCommand(player);
+            case "cherry" -> EffectAppler.activeEff(player, Type.CHERRY);
+            case "endrod" -> EffectAppler.activeEff(player, Type.ENDROD);
+            case "totem" -> EffectAppler.activeEff(player, Type.TOTEM);
+            case "heart" -> EffectAppler.activeEff(player, Type.HEART);
+            case "pale" -> EffectAppler.activeEff(player, Type.PALE);
+            case "note" -> EffectAppler.activeEff(player, Type.NOTE);
+            case "purple" -> EffectAppler.activeEff(player, Type.PURPLE);
+            case "cloud" -> EffectAppler.activeEff(player, Type.CLOUD);
+            default -> errCmd(player);
         };
     }
 
-    private boolean activeCherry(Player player){
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsCherry())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.CHERRY)){
-            types.players.remove(player, Type.CHERRY);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else{
-            types.players.put(player, Type.CHERRY);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeEndRod(Player player){
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsEndRod())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.ENDROD)){
-            types.players.remove(player, Type.ENDROD);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.ENDROD);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeTotem(Player player){
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsTotem())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.TOTEM)){
-            types.players.remove(player, Type.TOTEM);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.TOTEM);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeHeart(Player player){
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsHeart())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.HEART)){
-            types.players.remove(player, Type.HEART);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.HEART);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activePale(Player player){
-        if (config.isOldVer()){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getNotAvailableMsg()));
-
-            return true;
-        }
-
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsPale())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.PALE)){
-            types.players.remove(player, Type.PALE);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.PALE);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activePurple(Player player){
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsPurple())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.PURPLE)){
-            types.players.remove(player, Type.PURPLE);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.PURPLE);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeNote(Player player){
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsNotes())){
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-
-            return true;
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(Type.NOTE)){
-            types.players.remove(player, Type.NOTE);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.NOTE);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean activeCloud(Player player) {
-        if (config.isRightsUsing() && !player.hasPermission(config.getRightsCloud())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
-            return true;
-        }
-
-        if (Type.CLOUD.equals(types.players.get(player))) {
-            types.players.remove(player);
-            effects.stopCloudEffect(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, Type.CLOUD);
-            effects.startCloudEffect(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-        }
-
-        return true;
-    }
-
-    private boolean errCommand(Player player){
+    private boolean errCmd(Player player) {
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrCommand()));
-
         return true;
     }
 }
