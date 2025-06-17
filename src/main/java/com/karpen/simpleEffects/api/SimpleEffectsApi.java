@@ -7,4 +7,6 @@ public interface SimpleEffectsApi {
     void active(Type type, Player player);
     void disable(Type type, Player player);
     Type getEffect(Player player);
+    void loadPlayers();
+    void savePlayers();
 }

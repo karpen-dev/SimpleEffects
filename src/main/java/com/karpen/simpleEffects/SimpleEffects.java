@@ -73,7 +73,7 @@ public final class SimpleEffects extends JavaPlugin {
         effReload = new EffReload(this);
         checkVersion = new CheckVersion(this);
 
-        this.simpleEffectImpl = new SimpleEffectImpl(this, types);
+        this.simpleEffectImpl = new SimpleEffectImpl(this, types, config, manager, dbManager);
         this.api = this.simpleEffectImpl;
 
         if (getCommand("eff") != null) {
@@ -289,7 +289,7 @@ public final class SimpleEffects extends JavaPlugin {
             if (instance.api == null) {
                 synchronized (SimpleEffects.class) {
                     if (instance.api == null) {
-                        instance.api = new SimpleEffectImpl(instance, instance.types);
+                        instance.api = new SimpleEffectImpl(instance, instance.types, instance.config, instance.manager, instance.dbManager);
                     }
                 }
             }
