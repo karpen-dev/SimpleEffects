@@ -97,6 +97,8 @@ SimpleEffectsApi api = SimpleEffects.getApi();
 api.active(Type.CHERRY, player); // Type: CHERRY, ENDROD, TOTEM, PALE, HEART, PURPLE, NOTE, CLOUD
 api.disable(Type.CHERRY, player); // Disable effect if its active
 api.getEffect(player); // return Type enum
+api.savePlayers(); // save players
+api.loadPlayers(); // load players
 ```
 </details>
 
@@ -111,5 +113,7 @@ val api = SimpleEffects.getApi();
 api.active(Type.CHERRY, player); // Type: CHERRY, ENDROD, TOTEM, PALE, HEART, PURPLE, NOTE, CLOUD
 api.disable(Type.CHERRY, player); // Disable effect if its active
 api.getEffect(player); // return Type enum
+api.savePlayers(); // save players
+api.loadPlayers(); // load players
 ```
 </details>
