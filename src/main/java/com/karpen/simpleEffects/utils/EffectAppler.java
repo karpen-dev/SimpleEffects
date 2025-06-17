@@ -87,24 +87,25 @@ public class EffectAppler {
             return true;
         }
 
-        if (Type.CLOUD.equals(types.players.get(player))) {
-            types.players.remove(player);
-            effects.stopCloudEffect(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+        if (Type.CLOUD.equals(type)) {
+            if (Type.CLOUD.equals(types.players.get(player))) {
+                types.players.remove(player);
+                effects.stopCloudEffect(player);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+            } else {
+                types.players.put(player, Type.CLOUD);
+                effects.startCloudEffect(player);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+            }
         } else {
-            types.players.put(player, Type.CLOUD);
-            effects.startCloudEffect(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-
-        }
-
-        if (types.players.containsKey(player) && types.players.get(player).equals(type) && !type.equals(Type.CLOUD)) {
-            types.players.remove(player, type);
-            effects.removePlayer(player);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
-        } else {
-            types.players.put(player, type);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+            if (types.players.containsKey(player) && types.players.get(player).equals(type)) {
+                types.players.remove(player);
+                effects.removePlayer(player);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+            } else {
+                types.players.put(player, type);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+            }
         }
 
         return true;
