@@ -84,7 +84,7 @@ public class Effects {
         if (player == null) return;
 
         if (config.getMethod().equals("TXT")) {
-            manager.removePlayer(player);
+            manager.removePlayer(player.getUniqueId());
         } else {
             dbManager.removePlayer(player);
         }
@@ -153,7 +153,7 @@ public class Effects {
 
         @Override
         public void run() {
-            if (!Type.CLOUD.equals(types.players.get(player))) {
+            if (!Type.CLOUD.equals(types.players.get(player.getUniqueId()))) {
                 this.cancel();
                 activeClouds.remove(player);
                 return;

@@ -27,18 +27,18 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
     @Override
     public void active(Type type, Player player) {
         if (plugin.isOldVer() && type.equals(Type.PALE)) return;
-        types.players.put(player, type);
+        types.players.put(player.getUniqueId(), type);
     }
 
     @Override
     public void disable(Type type, Player player) {
         if (plugin.isOldVer() && type.equals(Type.PALE)) return;
-        types.players.remove(player);
+        types.players.remove(player.getUniqueId());
     }
 
     @Override
     public Type getEffect(Player player) {
-        return types.players.get(player);
+        return types.players.get(player.getUniqueId());
     }
 
     @Override

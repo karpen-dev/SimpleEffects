@@ -1,9 +1,6 @@
 package com.karpen.simpleEffects.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,9 +12,12 @@ import lombok.Setter;
 public class PlayerTypeEntity {
 
     @Id
-    @Column(name = "playerName", length = 100)
-    private String playerName;
+    @Column(name = "player_uuid", length = 36)
+    private String playerUUid;
 
     @Column(name = "type", nullable = false, length = 50)
     private String type;
+
+    @Version
+    private int version;
 }

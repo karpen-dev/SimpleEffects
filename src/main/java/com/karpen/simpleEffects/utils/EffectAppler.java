@@ -88,22 +88,22 @@ public class EffectAppler {
         }
 
         if (Type.CLOUD.equals(type)) {
-            if (Type.CLOUD.equals(types.players.get(player))) {
-                types.players.remove(player);
+            if (Type.CLOUD.equals(types.players.get(player.getUniqueId()))) {
+                types.players.remove(player.getUniqueId());
                 effects.stopCloudEffect(player);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
             } else {
-                types.players.put(player, Type.CLOUD);
+                types.players.put(player.getUniqueId(), Type.CLOUD);
                 effects.startCloudEffect(player);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
             }
         } else {
-            if (types.players.containsKey(player) && types.players.get(player).equals(type)) {
-                types.players.remove(player);
+            if (types.players.containsKey(player.getUniqueId()) && types.players.get(player.getUniqueId()).equals(type)) {
+                types.players.remove(player.getUniqueId());
                 effects.removePlayer(player);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
             } else {
-                types.players.put(player, type);
+                types.players.put(player.getUniqueId(), type);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
             }
         }

@@ -84,7 +84,7 @@ public final class SimpleEffects extends JavaPlugin {
             getLogger().warning("Command 'eff' is not registered in plugin.yml");
         }
 
-        Bukkit.getPluginManager().registerEvents(new MainListener(config, dbManager, types, manager, effects), this);
+        Bukkit.getPluginManager().registerEvents(new MainListener(config, dbManager, types, manager, effects, api), this);
         Bukkit.getPluginManager().registerEvents(effectMenu, this);
 
         getLogger().info("SimpleEffects v" + getDescription().getVersion() + " by karpen");

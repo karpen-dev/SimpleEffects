@@ -1,9 +1,11 @@
 package com.karpen.simpleEffects.listeners;
 
+import com.karpen.simpleEffects.api.SimpleEffectsApi;
 import com.karpen.simpleEffects.database.DBManager;
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
+import com.karpen.simpleEffects.utils.EffectAppler;
 import com.karpen.simpleEffects.utils.Effects;
 import com.karpen.simpleEffects.utils.FileManager;
 import org.bukkit.Location;
@@ -22,6 +24,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class MainListener implements Listener {
 
@@ -31,35 +34,51 @@ public class MainListener implements Listener {
     private DBManager dbManager;
     private Types types;
     private FileManager manager;
+    private SimpleEffectsApi api;
 
-    public MainListener(Config config, DBManager dbManager, Types types, FileManager manager, Effects effects){
+    public MainListener(Config config, DBManager dbManager, Types types, FileManager manager, Effects effects, SimpleEffectsApi api){
         this.config = config;
         this.dbManager = dbManager;
         this.types = types;
         this.manager = manager;
         this.effects = effects;
+        this.api = api;
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        UUID playerId = player.getUniqueId();
+        
+        if (types.players.containsKey(playerId)) {
+            switch (config.getMethod().toLowerCase()) {
+                case "mysql" -> dbManager.savePlayers(types.players);
+                case "txt" -> manager.savePlayers(types.players);
+            }
+        }
 
-        switch (config.getMethod().toLowerCase()){
-            case "mysql" -> dbManager.savePlayers(types.players);
-            case "txt" -> manager.savePlayers(types.players);
+        for (Map.Entry<UUID, Type> entry : types.players.entrySet()) {
+            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
         }
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event){
-        switch (config.getMethod().toLowerCase()){
-            case "mysql" -> types.players = dbManager.loadPlayers();
-            case "txt" -> types.players = manager.loadPlayers();
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Map<UUID, Type> players = switch (config.getMethod().toLowerCase()) {
+            case "mysql" -> dbManager.loadPlayers();
+            case "txt" -> manager.loadPlayers();
+            default -> throw new IllegalStateException("Unknown method: " + config.getMethod());
+        };
+
+        Player player = event.getPlayer();
+        Type playerType = players.get(player.getUniqueId());
+
+        if (playerType != null) {
+            api.active(playerType, player);
         }
 
-        if (types.players.containsKey(event.getPlayer()) && types.players.get(event.getPlayer()).equals(Type.CLOUD)) {
-            effects.startCloudEffect(event.getPlayer());
-        }
+        players.forEach((uuid, type) ->
+                System.out.println("Key: " + uuid + ", Value: " + type));
     }
 
     @EventHandler
@@ -92,7 +111,7 @@ public class MainListener implements Listener {
 
     private void applyParticleEffects(Player player) {
         types.players.forEach((players, type) -> {
-            if (players.equals(player)) {
+            if (players.equals(player.getUniqueId())) {
                 try {
                     switch (type) {
                         case CHERRY -> effects.spawnEffect(Particle.CHERRY_LEAVES, player);
@@ -134,11 +153,9 @@ public class MainListener implements Listener {
     }
 
     private void applyProjectileEffects(Projectile projectile, ProjectileEffectApplier effectApplier) {
-        if (!(projectile.getShooter() instanceof Player)) {
+        if (!(projectile.getShooter() instanceof Player player)) {
             return;
         }
-
-        Player player = (Player) projectile.getShooter();
 
         types.players.forEach((players, type) -> {
             try {

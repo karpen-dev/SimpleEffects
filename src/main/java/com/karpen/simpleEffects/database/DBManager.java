@@ -4,6 +4,7 @@ import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.PlayerTypeEntity;
 import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
+import jakarta.persistence.OptimisticLockException;
 import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,6 +16,7 @@ import org.hibernate.query.Query;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class DBManager {
 
@@ -53,65 +55,84 @@ public class DBManager {
             hibernateConfig.addAnnotatedClass(PlayerTypeEntity.class);
 
             sessionFactory = hibernateConfig.buildSessionFactory();
+            
+            System.out.println("Database connected");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public void removePlayer(Player player) {
+        if (player == null || player.getUniqueId() == null) {
+            throw new IllegalArgumentException("Player or UUID cannot be null");
+        }
+
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
+            try {
+                Query query = session.createQuery(
+                        "DELETE FROM PlayerTypeEntity WHERE playerUUid = :uuid");
+                query.setParameter("uuid", player.getUniqueId().toString());
 
-            Query query = session.createQuery(
-                    "DELETE FROM PlayerTypeEntity WHERE playerName = :playerName");
-            query.setParameter("playerName", player.getName());
-            query.executeUpdate();
-
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null && transaction.isActive()) {
+                    transaction.rollback();
+                }
+                throw new RuntimeException("Failed to remove player: " + player.getUniqueId(), e);
+            }
         }
     }
 
-    public void savePlayers(Map<Player, Type> playerTypeMap) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-
-            for (Player player : playerTypeMap.keySet()) {
-                removePlayer(player);
-            }
-
-            for (Map.Entry<Player, Type> entry : playerTypeMap.entrySet()) {
-                PlayerTypeEntity entity = new PlayerTypeEntity();
-                entity.setPlayerName(entry.getKey().getName());
-                entity.setType(entry.getValue().name());
-                session.save(entity);
-            }
-
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Map<Player, Type> loadPlayers() {
-        Map<Player, Type> playerTypeMap = new HashMap<>();
-
-        try (Session session = sessionFactory.openSession()) {
-            Query<PlayerTypeEntity> query = session.createQuery(
-                    "FROM PlayerTypeEntity", PlayerTypeEntity.class);
-
-            for (PlayerTypeEntity entity : query.list()) {
-                Player player = plugin.getServer().getPlayer(entity.getPlayerName());
-                if (player != null) {
-                    Type type = Type.valueOf(entity.getType().toUpperCase());
-                    playerTypeMap.put(player, type);
+    public void savePlayers(Map<UUID, Type> playerTypeMap) {
+        int retryCount = 0;
+        while (retryCount < 3) {
+            try (Session session = sessionFactory.openSession()) {
+                Transaction transaction = session.beginTransaction();
+                try {
+                    for (Map.Entry<UUID, Type> entry : playerTypeMap.entrySet()) {
+                        PlayerTypeEntity entity = session.get(PlayerTypeEntity.class, entry.getKey().toString());
+                        if (entity == null) {
+                            entity = new PlayerTypeEntity();
+                            entity.setPlayerUUid(entry.getKey().toString());
+                        }
+                        entity.setType(entry.getValue().name());
+                        session.saveOrUpdate(entity);
+                    }
+                    transaction.commit();
+                    return;
+                } catch (OptimisticLockException e) {
+                    if (transaction != null && transaction.isActive()) {
+                        transaction.rollback();
+                    }
+                    retryCount++;
+                    if (retryCount >= 3) {
+                        throw new RuntimeException("Failed to save players after 3 retries", e);
+                    }
+                } catch (Exception e) {
+                    if (transaction != null && transaction.isActive()) {
+                        transaction.rollback();
+                    }
+                    throw new RuntimeException("Failed to save players", e);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+    }
 
+    public Map<UUID, Type> loadPlayers() {
+        Map<UUID, Type> playerTypeMap = new HashMap<>();
+        try (Session session = sessionFactory.openSession()) {
+            Query<PlayerTypeEntity> query = session.createQuery("FROM PlayerTypeEntity", PlayerTypeEntity.class);
+            for (PlayerTypeEntity entity : query.list()) {
+                UUID uuid = UUID.fromString(entity.getPlayerUUid());
+                Type type = Type.valueOf(entity.getType().toUpperCase());
+                playerTypeMap.put(uuid, type);
+            }
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Failed to parse player data", e);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load players", e);
+        }
         return playerTypeMap;
     }
 
