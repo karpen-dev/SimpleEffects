@@ -110,4 +110,16 @@ public class EffectAppler {
 
         return true;
     }
+
+    public static void stopCloudEffect(Player player) {
+        if (types.players.get(player.getUniqueId()).equals(Type.CLOUD)) {
+            effects.stopCloudEffect(player);
+        }
+    }
+
+    public static void startCloudEffect(Player player) {
+        if (types.players.get(player.getUniqueId()).equals(Type.CLOUD)) {
+            effects.startCloudEffect(player);
+        }
+    }
 }

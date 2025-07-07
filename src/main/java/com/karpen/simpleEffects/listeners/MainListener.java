@@ -50,35 +50,30 @@ public class MainListener implements Listener {
         Player player = event.getPlayer();
         UUID playerId = player.getUniqueId();
         
-        if (types.players.containsKey(playerId)) {
+        if (types.players != null && types.players.containsKey(playerId)) {
             switch (config.getMethod().toLowerCase()) {
                 case "mysql" -> dbManager.savePlayers(types.players);
                 case "txt" -> manager.savePlayers(types.players);
             }
-        }
 
-        for (Map.Entry<UUID, Type> entry : types.players.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+            if (types.players.get(playerId).equals(Type.CLOUD)) {
+                EffectAppler.stopCloudEffect(player);
+            }
         }
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Map<UUID, Type> players = switch (config.getMethod().toLowerCase()) {
-            case "mysql" -> dbManager.loadPlayers();
-            case "txt" -> manager.loadPlayers();
+        switch (config.getMethod().toLowerCase()) {
+            case "mysql" -> types.players = dbManager.loadPlayers();
+            case "txt" -> types.players = manager.loadPlayers();
             default -> throw new IllegalStateException("Unknown method: " + config.getMethod());
-        };
-
-        Player player = event.getPlayer();
-        Type playerType = players.get(player.getUniqueId());
-
-        if (playerType != null) {
-            api.active(playerType, player);
         }
 
-        players.forEach((uuid, type) ->
-                System.out.println("Key: " + uuid + ", Value: " + type));
+        UUID playerId = event.getPlayer().getUniqueId();
+        if (types.players.get(playerId).equals(Type.CLOUD)) {
+            EffectAppler.startCloudEffect(event.getPlayer());
+        }
     }
 
     @EventHandler
