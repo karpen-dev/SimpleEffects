@@ -10,8 +10,8 @@ config-version: 5.2
 # Plugin language - ru, en, jp, be
 lang: en
 
-# Save method (TXT, MYSQL)
-method: TXT
+# Save method
+method: TXT # now available only txt file save
 
 # Waring for flashes effects
 # Don't recommend disable this

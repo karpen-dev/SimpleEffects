@@ -50,6 +50,11 @@ public final class SimpleEffects extends JavaPlugin {
 
         loadConfig();
 
+        if (!config.getMethod().equalsIgnoreCase("TXT")) {
+            getLogger().severe("Save method " + config.getMethod() + " not available now");
+            getPluginLoader().disablePlugin(this);
+        }
+
         String version = Bukkit.getVersion().split("-")[0];
         String[] parts = version.split("\\.");
 
