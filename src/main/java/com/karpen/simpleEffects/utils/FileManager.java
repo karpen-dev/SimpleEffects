@@ -17,12 +17,15 @@ public class FileManager {
     public void savePlayers(Map<UUID, Type> data) {
         File file = new File(plugin.getDataFolder(), "players.dat");
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-            if (!file.exists()) {
-                file.mkdirs();
+        if (!file.exists()) {
+            try {
                 file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+        }
 
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(data);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -31,15 +34,21 @@ public class FileManager {
 
     public Map<UUID, Type> loadPlayers() {
         File file = new File(plugin.getDataFolder(), "players.dat");
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            if (!file.exists()) {
-                file.mkdirs();
-                file.createNewFile();
 
-                return new HashMap<>();
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
-             return (Map<UUID, Type>) ois.readObject();
+            return new HashMap<>();
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+             Map<UUID, Type> res = (Map<UUID, Type>) ois.readObject();
+             if (res == null) return new HashMap<>();
+             else return res;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

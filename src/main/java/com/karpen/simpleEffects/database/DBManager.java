@@ -16,6 +16,7 @@ import org.hibernate.query.Query;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class DBManager {
@@ -91,13 +92,13 @@ public class DBManager {
                 Transaction transaction = session.beginTransaction();
                 try {
                     for (Map.Entry<UUID, Type> entry : playerTypeMap.entrySet()) {
-                        PlayerTypeEntity entity = session.get(PlayerTypeEntity.class, entry.getKey().toString());
+                        PlayerTypeEntity entity = session.find(PlayerTypeEntity.class, entry.getKey().toString());
                         if (entity == null) {
                             entity = new PlayerTypeEntity();
                             entity.setPlayerUUid(entry.getKey().toString());
                         }
                         entity.setType(entry.getValue().name());
-                        session.saveOrUpdate(entity);
+                        session.merge(entity);
                     }
                     transaction.commit();
                     return;

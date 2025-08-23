@@ -56,7 +56,7 @@ public class MainListener implements Listener {
                 case "txt" -> manager.savePlayers(types.players);
             }
 
-            if (types.players.get(playerId).equals(Type.CLOUD)) {
+            if (types.players.get(playerId) != null && types.players.get(playerId).equals(Type.CLOUD)) {
                 EffectAppler.stopCloudEffect(player);
             }
         }
@@ -71,7 +71,7 @@ public class MainListener implements Listener {
         }
 
         UUID playerId = event.getPlayer().getUniqueId();
-        if (types.players.get(playerId).equals(Type.CLOUD)) {
+        if (types.players.get(playerId) != null && types.players.get(playerId).equals(Type.CLOUD)) {
             EffectAppler.startCloudEffect(event.getPlayer());
         }
     }

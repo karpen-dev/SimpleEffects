@@ -27,49 +27,49 @@ public class EffectAppler {
         if (config.isRightsUsing()) {
             switch (type) {
                 case CHERRY -> {
-                    if (player.hasPermission(config.getRightsCherry())) {
+                    if (!player.hasPermission(config.getRightsCherry())) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
                         return true;
                     }
                 }
                 case ENDROD -> {
-                    if (player.hasPermission(config.getRightsEndRod())) {
+                    if (!player.hasPermission(config.getRightsEndRod())) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
                         return true;
                     }
                 }
                 case TOTEM -> {
-                    if (player.hasPermission(config.getRightsTotem())) {
+                    if (!player.hasPermission(config.getRightsTotem())) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
                         return true;
                     }
                 }
                 case HEART -> {
-                    if (player.hasPermission(config.getRightsHeart())) {
+                    if (!player.hasPermission(config.getRightsHeart())) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
                         return true;
                     }
                 }
                 case PALE -> {
-                    if (player.hasPermission(config.getRightsPale())) {
+                    if (!player.hasPermission(config.getRightsPale())) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
                         return true;
                     }
                 }
                 case PURPLE -> {
-                    if (player.hasPermission(config.getRightsPurple())) {
+                    if (!player.hasPermission(config.getRightsPurple())) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
                         return true;
                     }
                 }
                 case NOTE -> {
-                    if (player.hasPermission(config.getRightsNotes())) {
+                    if (!player.hasPermission(config.getRightsNotes())) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
                         return true;
                     }
                 }
                 case CLOUD -> {
-                    if (player.hasPermission(config.getRightsCloud())) {
+                    if (!player.hasPermission(config.getRightsCloud())) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
                         return true;
                     }

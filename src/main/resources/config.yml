@@ -11,7 +11,9 @@ config-version: 5.2
 lang: en
 
 # Save method
-method: TXT # now available only txt file save
+# TXT for default saving to file
+# MYSQL for mysql database saving
+method: TXT
 
 # Waring for flashes effects
 # Don't recommend disable this
@@ -79,7 +81,7 @@ en:
   item-enable: "&aEnable this effect"
   item-disable: "&cDisable this effect"
 
-  unsupported-ver: "&cYou are using a version lower than 1.21.4, the some feature not available"
+  unsupported-ver: "&cYou are using a version lower than 1.21.8, the some feature not available"
   unsupported-name: "&cDon't supported to you version"
 
   cherry: "&dCherry"
@@ -108,7 +110,7 @@ jp:
   item-enable: "&aこの効果を有効にする"
   item-disable: "&cこの効果を無効にする"
 
-  unsupported-ver: "&c1.21.4より前のバージョンを使用しています。一部の機能はご利用いただけません。"
+  unsupported-ver: "&c1.21.8より前のバージョンを使用しています。一部の機能はご利用いただけません。"
   unsupported-name: "&cあなたのバージョンではサポートされていません"
 
   cherry: "&dCherry"
@@ -137,7 +139,7 @@ ru:
   item-enable: "&aВключить этот эффект"
   item-disable: "&cВыключить этот эффект"
 
-  unsupported-ver: "&cВы используйте версию сервера ниже 1.21.4, эта функция недоступна"
+  unsupported-ver: "&cВы используйте версию сервера ниже 1.21.8, эта функция недоступна"
   unsupported-name: "&cНедоступно на вашей версии"
 
   cherry: "&dCherry"
@@ -166,7 +168,7 @@ be:
   item-enable: "&aУключыць гэты эфект"
   item-disable: "&cВыключыць гэты эфект"
 
-  unsupported-ver: "&cВы карыстаецеся версію сервера ніжэй 1.21.4, гэтая функцыя недаступная"
+  unsupported-ver: "&cВы карыстаецеся версію сервера ніжэй 1.21.8, гэтая функцыя недаступная"
   unsupported-name: "&cНедаступна на вашай версіі"
 
   cherry: "&dCherry"

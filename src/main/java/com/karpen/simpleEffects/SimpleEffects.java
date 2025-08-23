@@ -18,7 +18,6 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.HashMap;
@@ -50,18 +49,13 @@ public final class SimpleEffects extends JavaPlugin {
 
         loadConfig();
 
-        if (!config.getMethod().equalsIgnoreCase("TXT")) {
-            getLogger().severe("Save method " + config.getMethod() + " not available now");
-            getPluginLoader().disablePlugin(this);
-        }
-
         String version = Bukkit.getVersion().split("-")[0];
         String[] parts = version.split("\\.");
 
         int major = Integer.parseInt(parts[1]);
         int minor = Integer.parseInt(parts[2]);
 
-        if (!(major == 21 && (minor == 4 || minor == 5))){
+        if (!(major == 21 && (minor <= 8))){
             config.setOldVer(true);
         }
 
@@ -95,8 +89,8 @@ public final class SimpleEffects extends JavaPlugin {
         getLogger().info("SimpleEffects v" + getDescription().getVersion() + " by karpen");
 
         if (config.isOldVer()){
-            getLogger().info("You are using a version lower than 1.21.4, the server may be unstable.");
-            getLogger().info("Don't report issue.");
+            getLogger().warning("You are using a version lower than 1.21.8, the server may be unstable.");
+            getLogger().warning("Don't report issue.");
         }
 
         Configuration configuration = getConfig();
