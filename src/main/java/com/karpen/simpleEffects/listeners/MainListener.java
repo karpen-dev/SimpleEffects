@@ -152,25 +152,27 @@ public class MainListener implements Listener {
             return;
         }
 
-        types.players.forEach((players, type) -> {
-            try {
-                switch (type) {
-                    case CHERRY -> effectApplier.apply(player, Particle.CHERRY_LEAVES);
-                    case ENDROD -> effectApplier.apply(player, Particle.END_ROD);
-                    case TOTEM -> effectApplier.apply(player, Particle.TOTEM_OF_UNDYING);
-                    case PALE -> {
-                        if (!config.isOldVer()){
-                            effectApplier.apply(player, Particle.PALE_OAK_LEAVES);
-                        }
+        Type type = types.players.get(player.getUniqueId());
+        if (type == null) return;
+
+        try {
+            switch (type) {
+                case CHERRY -> effectApplier.apply(player, Particle.CHERRY_LEAVES);
+                case ENDROD -> effectApplier.apply(player, Particle.END_ROD);
+                case TOTEM -> effectApplier.apply(player, Particle.TOTEM_OF_UNDYING);
+                case PALE -> {
+                    if (!config.isOldVer()){
+                        effectApplier.apply(player, Particle.PALE_OAK_LEAVES);
                     }
-                    case HEART -> effectApplier.apply(player, Particle.HEART);
-                    case NOTE -> effectApplier.apply(player, Particle.NOTE);
-                    case PURPLE -> effectApplier.apply(player, Particle.WITCH);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+                case HEART -> effectApplier.apply(player, Particle.HEART);
+                case NOTE -> effectApplier.apply(player, Particle.NOTE);
+                case PURPLE -> effectApplier.apply(player, Particle.WITCH);
+                default -> {}
             }
-        });
+        } catch (Exception e) {
+            new RuntimeException(e);
+        }
     }
 
     @FunctionalInterface

@@ -105,34 +105,61 @@ public class Effects {
         }
     }
 
+    public void spawnEffectArrow(Arrow arrow, Particle particle, Player player) {
+        if (arrow == null || particle == null) return;
+
+        new BukkitRunnable() {
+            private int ticksLived = 0;
+            private final int maxTicks = 200;
+
+            @Override
+            public void run() {
+                ticksLived++;
+
+                if (!arrow.isValid() || arrow.isDead() || arrow.isOnGround() ||
+                        ticksLived > maxTicks || arrow.isInWater()) {
+                    this.cancel();
+                    return;
+                }
+
+                spawnParticleAtLocation(arrow.getLocation(), particle);
+            }
+        }.runTaskTimer(plugin, 0L, 1L);
+    }
+
+    private void spawnParticleAtLocation(Location location, Particle particle) {
+        ParticleEffectHandler handler = particleHandlers.get(particle);
+        if (handler != null && location.getWorld() != null) {
+            try {
+                handler.handle(location, config);
+            } catch (Exception e) {
+                plugin.getLogger().warning("Ошибка при спавне частиц: " + e.getMessage());
+            }
+        }
+    }
+
     public void spawnEffectSnowball(Snowball snowball, Particle particle, Player player) {
         if (snowball == null || particle == null || player == null) return;
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!snowball.isValid()) {
+                if (!snowball.isValid() || snowball.isDead()) {
                     this.cancel();
                     return;
                 }
-                spawnEffect(particle, player);
-            }
-        }.runTaskTimerAsynchronously(plugin, 0L, 5L);
-    }
 
-    public void spawnEffectArrow(Arrow arrow, Particle particle, Player player) {
-        if (arrow == null || particle == null || player == null) return;
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                if (!arrow.isValid()) {
-                    this.cancel();
-                    return;
+                Location snowballLocation = snowball.getLocation();
+                ParticleEffectHandler handler = particleHandlers.get(particle);
+                if (handler != null) {
+                    try {
+                        handler.handle(snowballLocation, config);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-                spawnEffect(particle, player);
             }
-        }.runTaskTimerAsynchronously(plugin, 0L, 5L);
+        }.runTaskTimer(plugin, 0L, 1L);
     }
 
     public void startCloudEffect(Player player) {
