@@ -49,14 +49,30 @@ public final class SimpleEffects extends JavaPlugin {
 
         loadConfig();
 
-        String version = Bukkit.getVersion().split("-")[0];
-        String[] parts = version.split("\\.");
+        String versionString = Bukkit.getVersion();
+        String[] mcVersionParts = versionString.split("MC: ");
+        if (mcVersionParts.length > 1) {
+            String mcVersion = mcVersionParts[1].replace(")", "").trim();
+            String[] versionParts = mcVersion.split("\\.");
 
-        int major = Integer.parseInt(parts[1]);
-        int minor = Integer.parseInt(parts[2]);
+            if (versionParts.length >= 2) {
+                try {
+                    int major = Integer.parseInt(versionParts[0]);
+                    int minor = Integer.parseInt(versionParts[1]);
 
-        if (!(major == 21 && (minor <= 8))){
-            config.setOldVer(true);
+                    if (!(major == 1 && minor == 21)) {
+                        config.setOldVer(true);
+                        getLogger().warning("Plugin supported only Minecraft 1.21.x");
+                        getLogger().warning("Current version: " + mcVersion);
+                    }
+                } catch (NumberFormatException e) {
+                    getLogger().warning("Version parsing error: " + mcVersion);
+                }
+            } else {
+                getLogger().warning("Unknown version format: " + mcVersion);
+            }
+        } else {
+            getLogger().warning("Version parsing error: " + versionString);
         }
 
         types = new Types();
