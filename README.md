@@ -1,6 +1,6 @@
 ## SimpleEffects plugin
 
-**The old API no longer works, use the new more convenient one according to the documentation below**
+**[Download latest version](https://karpen.dev/pl/se)**
 
 If you are using a version lower than 1.21.4, don't report issues.
 
