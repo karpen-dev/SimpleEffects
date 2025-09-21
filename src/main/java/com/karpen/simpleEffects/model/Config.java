@@ -28,15 +28,8 @@ public class Config {
     private String rightsPale;
     private String rightsNotes;
     private String rightsPurple;
-
     private String rightsCloud;
-
     private String rightsTotemSpiral;
-    private String rightsEndrodSpiral;
-    private String rightsCherrySpiral;
-    private String rightsPaleSpiral;
-    private String rightsPurpleSpiral;
-    private String rightsNoteSpiral;
 
     private boolean doubleUsing;
 
@@ -57,15 +50,8 @@ public class Config {
     private String itemPaleName;
     private String itemNotesName;
     private String itemPurpleName;
-
     private String itemCloudName;
-
     private String itemTotemSpiralName;
-    private String endrodSpiralName;
-    private String cherrySpiralName;
-    private String paleSpiralName;
-    private String purpleSpiralName;
-    private String noteSpiralName;
 
     private String warning;
 

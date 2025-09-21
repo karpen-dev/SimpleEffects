@@ -1,6 +1,5 @@
 package com.karpen.simpleEffects.menus;
 
-import com.karpen.simpleEffects.commands.Eff;
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
@@ -44,13 +43,8 @@ public class SelectEffectMenu implements Listener {
         inventory.setItem(6, purpleItem(player));
         inventory.setItem(7, noteItem(player));
 
-        inventory.setItem(10, cherrySpiralItem(player));
-        inventory.setItem(11, endrodSpiralItem(player));
-        inventory.setItem(12, totemSpiralItem(player));
-        inventory.setItem(13, cloudItem(player));
-        inventory.setItem(14, paleSpiralItem(player));
-        inventory.setItem(15, purpleSpiralItem(player));
-        inventory.setItem(16, noteSpiralItem(player));
+        inventory.setItem(12, cloudItem(player));
+        inventory.setItem(14, totemSpiralItem(player));
 
         player.openInventory(inventory);
     }
@@ -74,13 +68,8 @@ public class SelectEffectMenu implements Listener {
                 case 5 -> EffectAppler.activeEff(player, Type.PALE);
                 case 6 -> EffectAppler.activeEff(player, Type.PURPLE);
                 case 7 -> EffectAppler.activeEff(player, Type.NOTE);
-                case 10 -> EffectAppler.activeEff(player, Type.CHERRY_SPIRAL);
-                case 11 -> EffectAppler.activeEff(player, Type.ENDROD_SPIRAL);
-                case 12 -> EffectAppler.activeEff(player, Type.TOTEM_SPIRAL);
-                case 13 -> EffectAppler.activeEff(player, Type.CLOUD);
-                case 14 -> EffectAppler.activeEff(player, Type.PALE_SPIRAL);
-                case 15 -> EffectAppler.activeEff(player, Type.PURPLE_SPIRAL);
-                case 16 -> EffectAppler.activeEff(player, Type.NOTE_SPIRAL);
+                case 12 -> EffectAppler.activeEff(player, Type.CLOUD);
+                case 14 -> EffectAppler.activeEff(player, Type.TOTEM_SPIRAL);
             }
         }
     }
@@ -244,7 +233,7 @@ public class SelectEffectMenu implements Listener {
     }
 
     private ItemStack totemSpiralItem(Player player){
-        ItemStack item = new ItemStack(Material.YELLOW_DYE, 1);
+        ItemStack item = new ItemStack(Material.ORANGE_DYE, 1);
         ItemMeta meta = item.getItemMeta();
 
         assert meta != null;
@@ -253,141 +242,6 @@ public class SelectEffectMenu implements Listener {
         List<String> lore = new ArrayList<>();
 
         if (types.players.containsKey(player.getUniqueId()) && types.players.get(player.getUniqueId()).equals(Type.TOTEM_SPIRAL)){
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable()));
-        } else {
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable()));
-        }
-
-        if (config.getWarning() != null){
-            lore.add(" ");
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getWarning()));
-        }
-
-        meta.setLore(lore);
-
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
-    private ItemStack endrodSpiralItem(Player player){
-        ItemStack item = new ItemStack(Material.WHITE_DYE, 1);
-        ItemMeta meta = item.getItemMeta();
-
-        assert meta != null;
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getEndrodSpiralName()));
-
-        List<String> lore = new ArrayList<>();
-
-        if (types.players.containsKey(player.getUniqueId()) && types.players.get(player.getUniqueId()).equals(Type.ENDROD_SPIRAL)){
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable()));
-        } else {
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable()));
-        }
-
-        if (config.getWarning() != null){
-            lore.add(" ");
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getWarning()));
-        }
-
-        meta.setLore(lore);
-
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
-    private ItemStack cherrySpiralItem(Player player){
-        ItemStack item = new ItemStack(Material.PINK_DYE, 1);
-        ItemMeta meta = item.getItemMeta();
-
-        assert meta != null;
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getCherrySpiralName()));
-
-        List<String> lore = new ArrayList<>();
-
-        if (types.players.containsKey(player.getUniqueId()) && types.players.get(player.getUniqueId()).equals(Type.CHERRY_SPIRAL)){
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable()));
-        } else {
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable()));
-        }
-
-        if (config.getWarning() != null){
-            lore.add(" ");
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getWarning()));
-        }
-
-        meta.setLore(lore);
-
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
-    private ItemStack paleSpiralItem(Player player){
-        ItemStack item = new ItemStack(Material.GRAY_DYE, 1);
-        ItemMeta meta = item.getItemMeta();
-
-        assert meta != null;
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getPaleSpiralName()));
-
-        List<String> lore = new ArrayList<>();
-
-        if (types.players.containsKey(player.getUniqueId()) && types.players.get(player.getUniqueId()).equals(Type.PALE_SPIRAL)){
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable()));
-        } else {
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable()));
-        }
-
-        if (config.getWarning() != null){
-            lore.add(" ");
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getWarning()));
-        }
-
-        meta.setLore(lore);
-
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
-    private ItemStack purpleSpiralItem(Player player){
-        ItemStack item = new ItemStack(Material.PURPLE_DYE, 1);
-        ItemMeta meta = item.getItemMeta();
-
-        assert meta != null;
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getPurpleSpiralName()));
-
-        List<String> lore = new ArrayList<>();
-
-        if (types.players.containsKey(player.getUniqueId()) && types.players.get(player.getUniqueId()).equals(Type.PURPLE_SPIRAL)){
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable()));
-        } else {
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable()));
-        }
-
-        if (config.getWarning() != null){
-            lore.add(" ");
-            lore.add(ChatColor.translateAlternateColorCodes('&', config.getWarning()));
-        }
-
-        meta.setLore(lore);
-
-        item.setItemMeta(meta);
-
-        return item;
-    }
-
-    private ItemStack noteSpiralItem(Player player){
-        ItemStack item = new ItemStack(Material.GREEN_DYE, 1);
-        ItemMeta meta = item.getItemMeta();
-
-        assert meta != null;
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getNoteSpiralName()));
-
-        List<String> lore = new ArrayList<>();
-
-        if (types.players.containsKey(player.getUniqueId()) && types.players.get(player.getUniqueId()).equals(Type.NOTE_SPIRAL)){
             lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable()));
         } else {
             lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable()));

@@ -67,11 +67,6 @@ public class Eff implements CommandExecutor {
 
         switch (args[1].toLowerCase()) {
             case "totem" -> EffectAppler.activeEff(player, Type.TOTEM_SPIRAL);
-            case "endrod" -> EffectAppler.activeEff(player, Type.ENDROD_SPIRAL);
-            case "cherry" -> EffectAppler.activeEff(player, Type.CHERRY_SPIRAL);
-            case "pale" -> EffectAppler.activeEff(player, Type.PALE_SPIRAL);
-            case "purple" -> EffectAppler.activeEff(player, Type.PURPLE_SPIRAL);
-            case "note" -> EffectAppler.activeEff(player, Type.NOTE_SPIRAL);
             default -> errCmd(player);
         }
 

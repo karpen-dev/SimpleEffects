@@ -48,13 +48,7 @@ rights:
   purple: "karpen.simpleeffects.purple"
 
   cloud: "karpen.simpleeffects.cloud"
-
   totem_spiral: "karpen.simpleefects.totem_spiral"
-  endrod_spiral: "karpen.simpleefects.endrod_spiral"
-  cherry_spiral: "karpen.simpleefects.cherry_spiral"
-  pale_spiral: "karpen.simpleefects.pale_spiral"
-  purple_spiral: "karpen.simpleefects.purple_spiral"
-  note_spiral: "karpen.simpleefects.note_spiral"
 
 # Count particle
 count:
@@ -66,7 +60,7 @@ count:
   notes: 1
   purple: 1
 
-  # The count of cloud or spiral effects doesn't change
+  # The count of cloud doesn't change
 
 # Messages
 
@@ -98,15 +92,8 @@ en:
   pale: "&8Pale"
   purple: "&5Purple"
   notes: "&3Notes"
-
   cloud: "&7Cloud"
-
   totem_spiral: "&eTotem spiral"
-  endrod_spiral: "&fEndrod spiral"
-  cherry_spiral: "&dCherry spiral"
-  pale_spiral: "&8Pale spiral"
-  purple_spiral: "&5Purple spiral"
-  note_spiral: "&3 Note spiral"
 
   # Warning
   warning: "&cWhile using this effect you may see flashes and blurry images."
@@ -135,15 +122,8 @@ jp:
   pale: "&8Pale"
   purple: "&5Purple"
   notes: "&3Notes"
-
   cloud: "&7Cloud"
-
   totem_spiral: "&eTotem spiral"
-  endrod_spiral: "&fEndrod spiral"
-  cherry_spiral: "&dCherry spiral"
-  pale_spiral: "&8Pale spiral"
-  purple_spiral: "&5Purple spiral"
-  note_spiral: "&3Note spiral"
 
   # Warning
   warning: "&cこの効果を使用すると、フラッシュやぼやけた画像が見える場合があります。"
@@ -172,15 +152,8 @@ ru:
   pale: "&8Pale"
   purple: "&5Purple"
   notes: "&3Notes"
-
   cloud: "&7Cloud"
-
   totem_spiral: "&eTotem spiral"
-  endrod_spiral: "&fEndrod spiral"
-  cherry_spiral: "&dCherry spiral"
-  pale_spiral: "&8Pale spiral"
-  purple_spiral: "&5Purple spiral"
-  note_spiral: "&3 Note spiral"
 
   # Warning
   warning: "&cПри использовании этого эффекта вы можете увидеть вспышки и размытие изображения."
@@ -209,15 +182,8 @@ be:
   pale: "&8Pale"
   purple: "&5Purple"
   notes: "&3Notes"
-
   cloud: "&7Cloud"
-
   totem_spiral: "&eTotem spiral"
-  endrod_spiral: "&fEndrod spiral"
-  cherry_spiral: "&dCherry spiral"
-  pale_spiral: "&8Pale spiral"
-  purple_spiral: "&5Purple spiral"
-  note_spiral: "&3 Note spiral"
 
   # Warning
   warning: "&cПры выкарыстанні гэтага эфекту вы можаце выбліскі і размыццё малюнка."
