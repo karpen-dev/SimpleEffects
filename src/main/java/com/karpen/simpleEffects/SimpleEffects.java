@@ -99,7 +99,7 @@ public final class SimpleEffects extends JavaPlugin {
             getLogger().warning("Command 'eff' is not registered in plugin.yml");
         }
 
-        Bukkit.getPluginManager().registerEvents(new MainListener(config, dbManager, types, manager, effects, api), this);
+        Bukkit.getPluginManager().registerEvents(new MainListener(config, dbManager, types, manager, effects), this);
         Bukkit.getPluginManager().registerEvents(effectMenu, this);
 
         getLogger().info("SimpleEffects v" + getDescription().getVersion() + " by karpen");
@@ -163,8 +163,15 @@ public final class SimpleEffects extends JavaPlugin {
         config.setRightsPale(configuration.getString("rights.pale", "karpen.simpleeffects.pale"));
         config.setRightsPurple(configuration.getString("rights.purple", "karpen.simpleeffects.purple"));
         config.setRightsNotes(configuration.getString("rights.notes", "karpen.simpleeffects.notes"));
+
         config.setRightsCloud(configuration.getString("rights.cloud", "karpen.simpleeffects.cloud"));
-        config.setRightsTotemSpiral(configuration.getString("rights.totem_spiral", "karpen.totem_spiral"));
+
+        config.setRightsTotemSpiral(configuration.getString("rights.totem_spiral", "karpen.simpleeffects.totem_spiral"));
+        config.setRightsEndrodSpiral(configuration.getString("rights.endrod_spiral", "karpen.simpleeffects.endrod_spiral"));
+        config.setRightsCherrySpiral(configuration.getString("rights.cherry_spiral", "karpen.simpleeffects.cherry_spiral"));
+        config.setRightsPaleSpiral(configuration.getString("rights.pale_spiral", "karpen.simpleeffects.pale_spiral"));
+        config.setRightsPurpleSpiral(configuration.getString("rights.purple_spiral", "karpen.simpleeffects.purple_spiral"));
+        config.setRightsNoteSpiral(configuration.getString("rights.note_spiral", "karpen.simpleeffects.note_spiral"));
 
 
         switch (configuration.getString("lang", "en").toLowerCase()){
@@ -196,8 +203,15 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setItemPaleName(configuration.getString("en.pale", "&8Pale"));
                 config.setItemPurpleName(configuration.getString("en.purple", "&5Purple"));
                 config.setItemNotesName(configuration.getString("en.notes", "&3Notes"));
+
                 config.setItemCloudName(configuration.getString("en.cloud", "&7Cloud"));
+
                 config.setItemTotemSpiralName(configuration.getString("en.totem_spiral", "&eTotem spiral"));
+                config.setEndrodSpiralName(configuration.getString("en.endrod_spiral"));
+                config.setCherrySpiralName(configuration.getString("en.cherry_spiral"));
+                config.setPaleSpiralName(configuration.getString("en.pale_spiral"));
+                config.setPurpleSpiralName(configuration.getString("en.purple_spiral"));
+                config.setNoteSpiralName(configuration.getString("en.note_spiral"));
 
                 break;
             case "ru":
@@ -228,8 +242,15 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setItemPaleName(configuration.getString("ru.pale", "&8Pale"));
                 config.setItemPurpleName(configuration.getString("ru.purple", "&5Purple"));
                 config.setItemNotesName(configuration.getString("ru.notes", "&3Notes"));
+
                 config.setItemCloudName(configuration.getString("ru.cloud", "&7Cloud"));
+
                 config.setItemTotemSpiralName(configuration.getString("ru.totem_spiral", "&eTotem spiral"));
+                config.setEndrodSpiralName(configuration.getString("ru.endrod_spiral"));
+                config.setCherrySpiralName(configuration.getString("ru.cherry_spiral"));
+                config.setPaleSpiralName(configuration.getString("ru.pale_spiral"));
+                config.setPurpleSpiralName(configuration.getString("ru.purple_spiral"));
+                config.setNoteSpiralName(configuration.getString("ru.note_spiral"));
 
                 break;
             case "jp":
@@ -260,8 +281,15 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setItemPaleName(configuration.getString("jp.pale", "&8Pale"));
                 config.setItemPurpleName(configuration.getString("jp.purple", "&5Purple"));
                 config.setItemNotesName(configuration.getString("jp.notes", "&3Notes"));
+
                 config.setItemCloudName(configuration.getString("jp.cloud", "&7Cloud"));
+
                 config.setItemTotemSpiralName(configuration.getString("jp.totem_spiral", "&eTotem spiral"));
+                config.setEndrodSpiralName(configuration.getString("jp.endrod_spiral"));
+                config.setCherrySpiralName(configuration.getString("jp.cherry_spiral"));
+                config.setPaleSpiralName(configuration.getString("jp.pale_spiral"));
+                config.setPurpleSpiralName(configuration.getString("jp.purple_spiral"));
+                config.setNoteSpiralName(configuration.getString("jp.note_spiral"));
 
                 break;
             case "be":
@@ -292,8 +320,15 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setItemPaleName(configuration.getString("be.pale", "&8Pale"));
                 config.setItemPurpleName(configuration.getString("be.purple", "&5Purple"));
                 config.setItemNotesName(configuration.getString("be.notes", "&3Notes"));
+
                 config.setItemCloudName(configuration.getString("be.cloud", "&7Cloud"));
+
                 config.setItemTotemSpiralName(configuration.getString("be.totem_spiral", "&eTotem spiral"));
+                config.setEndrodSpiralName(configuration.getString("be.endrod_spiral"));
+                config.setCherrySpiralName(configuration.getString("be.cherry_spiral"));
+                config.setPaleSpiralName(configuration.getString("be.pale_spiral"));
+                config.setPurpleSpiralName(configuration.getString("be.purple_spiral"));
+                config.setNoteSpiralName(configuration.getString("be.note_spiral"));
 
                 break;
         }

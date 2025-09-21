@@ -94,19 +94,79 @@ public class EffectAppler {
             return true;
         }
 
-        if (Type.TOTEM_SPIRAL.equals(type)) {
-            if (Type.TOTEM_SPIRAL.equals(types.players.get(player.getUniqueId()))) {
-                types.players.remove(player.getUniqueId());
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+        switch (type) {
+            case TOTEM_SPIRAL -> {
+                if (Type.TOTEM_SPIRAL.equals(types.players.get(player.getUniqueId()))) {
+                    types.players.remove(player.getUniqueId());
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+                } else {
+                    types.players.put(player.getUniqueId(), Type.TOTEM_SPIRAL);
+                    effects.spawnSpiralParticle(player, type, 1.0, 3, 3, 30);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+                }
 
-            } else {
-                types.players.put(player.getUniqueId(), Type.TOTEM_SPIRAL);
-                effects.spawnSpiralParticle(player, Particle.TOTEM_OF_UNDYING, 100, 1.0, 3, 3, 30);
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
-
+                return true;
             }
+            case ENDROD_SPIRAL -> {
+                if (Type.ENDROD_SPIRAL.equals(types.players.get(player.getUniqueId()))) {
+                    types.players.remove(player.getUniqueId());
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+                } else {
+                    types.players.put(player.getUniqueId(), Type.ENDROD_SPIRAL);
+                    effects.spawnSpiralParticle(player, type, 1.0, 3, 3, 30);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+                }
 
-            return true;
+                return true;
+            }
+            case CHERRY_SPIRAL -> {
+                if (Type.CHERRY_SPIRAL.equals(types.players.get(player.getUniqueId()))) {
+                    types.players.remove(player.getUniqueId());
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+                } else {
+                    types.players.put(player.getUniqueId(), Type.CHERRY_SPIRAL);
+                    effects.spawnSpiralParticle(player, type, 1.0, 3, 3, 30);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+                }
+
+                return true;
+            }
+            case PALE_SPIRAL -> {
+                if (Type.PALE_SPIRAL.equals(types.players.get(player.getUniqueId()))) {
+                    types.players.remove(player.getUniqueId());
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+                } else {
+                    types.players.put(player.getUniqueId(), Type.PALE_SPIRAL);
+                    effects.spawnSpiralParticle(player, type, 1.0, 3, 3, 30);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+                }
+
+                return true;
+            }
+            case PURPLE_SPIRAL -> {
+                if (Type.PURPLE_SPIRAL.equals(types.players.get(player.getUniqueId()))) {
+                    types.players.remove(player.getUniqueId());
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+                } else {
+                    types.players.put(player.getUniqueId(), Type.PURPLE_SPIRAL);
+                    effects.spawnSpiralParticle(player, type, 1.0, 3, 3, 30);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+                }
+
+                return true;
+            }
+            case NOTE_SPIRAL -> {
+                if (Type.NOTE_SPIRAL.equals(types.players.get(player.getUniqueId()))) {
+                    types.players.remove(player.getUniqueId());
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+                } else {
+                    types.players.put(player.getUniqueId(), Type.NOTE_SPIRAL);
+                    effects.spawnSpiralParticle(player, type, 1.0, 3, 3, 30);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+                }
+
+                return true;
+            }
         }
 
         if (Type.CLOUD.equals(type)) {

@@ -263,20 +263,30 @@ public class Effects {
         void handle(Location location, Config config) throws Exception;
     }
 
-    public void spawnSpiralParticle(Player player, Particle particle, int duration, double radius, double height, int rotations, int particlesPerRotation) {
+    public void spawnSpiralParticle(Player player, Type type, double radius, double height, int rotations, int particlesPerRotation) {
         new BukkitRunnable() {
             int ticks = 0;
             double currentAngle = 0;
 
+            final Particle particle = switch (type) {
+                case TOTEM_SPIRAL -> Particle.TOTEM_OF_UNDYING;
+                case ENDROD_SPIRAL -> Particle.END_ROD;
+                case CHERRY_SPIRAL -> Particle.CHERRY_LEAVES;
+                case PALE_SPIRAL -> Particle.PALE_OAK_LEAVES;
+                case PURPLE_SPIRAL -> Particle.WITCH;
+                case NOTE_SPIRAL -> Particle.NOTE;
+                default -> null;
+            };
+
             @Override
             public void run() {
-                if (!player.isOnline()) {
+                if (!player.isOnline() || particle == null) {
                     this.cancel();
                     return;
                 }
 
                 Type playerType = types.players.get(player.getUniqueId());
-                if (playerType == null || !playerType.equals(Type.TOTEM_SPIRAL)) {
+                if (playerType == null || !playerType.equals(type)) {
                     this.cancel();
                     return;
                 }
@@ -286,7 +296,6 @@ public class Effects {
                 double progress = (ticks % particlesPerRotation) / (double) particlesPerRotation;
                 double y = progress * height;
 
-                //currentAngle = 2 * Math.PI * rotations * progress;
                 currentAngle = Math.PI * rotations * progress;
 
                 double x = radius * Math.cos(currentAngle);
