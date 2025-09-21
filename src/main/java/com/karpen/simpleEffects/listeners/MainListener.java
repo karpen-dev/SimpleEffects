@@ -21,9 +21,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public class MainListener implements Listener {
@@ -34,15 +31,13 @@ public class MainListener implements Listener {
     private DBManager dbManager;
     private Types types;
     private FileManager manager;
-    private SimpleEffectsApi api;
 
-    public MainListener(Config config, DBManager dbManager, Types types, FileManager manager, Effects effects, SimpleEffectsApi api){
+    public MainListener(Config config, DBManager dbManager, Types types, FileManager manager, Effects effects){
         this.config = config;
         this.dbManager = dbManager;
         this.types = types;
         this.manager = manager;
         this.effects = effects;
-        this.api = api;
     }
 
     @EventHandler
@@ -71,12 +66,18 @@ public class MainListener implements Listener {
         }
 
         UUID playerId = event.getPlayer().getUniqueId();
-        if (types.players.get(playerId) != null && types.players.get(playerId).equals(Type.CLOUD)) {
-            EffectAppler.startCloudEffect(event.getPlayer());
-        }
 
-        if (types.players.get(playerId) != null && types.players.get(playerId).equals(Type.TOTEM_SPIRAL)) {
-            effects.spawnSpiralParticle(event.getPlayer(), Particle.TOTEM_OF_UNDYING, 100, 1.0, 3, 3, 30);
+        if (types.players.get(playerId) != null) {
+            Type type = types.players.get(playerId);
+            if (type.equals(Type.TOTEM_SPIRAL) ||
+                type.equals(Type.ENDROD_SPIRAL) ||
+                type.equals(Type.CHERRY_SPIRAL) ||
+                type.equals(Type.PALE_SPIRAL) ||
+                type.equals(Type.PURPLE_SPIRAL) ||
+                type.equals(Type.NOTE_SPIRAL)) {
+
+                effects.spawnSpiralParticle(event.getPlayer(), type, 1.0, 3, 3, 30);
+            }
         }
     }
 

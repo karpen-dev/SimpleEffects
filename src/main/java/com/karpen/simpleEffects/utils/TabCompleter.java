@@ -37,7 +37,12 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
             }
 
             if (args.length == 2) {
+                suggestions.add("cherry");
+                suggestions.add("endrod");
                 suggestions.add("totem");
+                suggestions.add("pale");
+                suggestions.add("purple");
+                suggestions.add("note");
             }
         }
 
