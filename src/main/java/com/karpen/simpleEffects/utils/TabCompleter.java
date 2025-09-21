@@ -33,6 +33,11 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
                 suggestions.add("purple");
                 suggestions.add("note");
                 suggestions.add("cloud");
+                suggestions.add("spiral");
+            }
+
+            if (args.length == 2) {
+                suggestions.add("totem");
             }
         }
 

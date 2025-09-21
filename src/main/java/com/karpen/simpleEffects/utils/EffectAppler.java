@@ -4,6 +4,7 @@ import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
 import org.bukkit.ChatColor;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -74,6 +75,12 @@ public class EffectAppler {
                         return true;
                     }
                 }
+                case TOTEM_SPIRAL -> {
+                    if (!player.hasPermission(config.getRightsTotemSpiral())) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrPerms()));
+                        return true;
+                    }
+                }
             }
         }
 
@@ -84,6 +91,21 @@ public class EffectAppler {
 
         if (type.equals(Type.PALE) && config.isOldVer()) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getUnsupportedName()));
+            return true;
+        }
+
+        if (Type.TOTEM_SPIRAL.equals(type)) {
+            if (Type.TOTEM_SPIRAL.equals(types.players.get(player.getUniqueId()))) {
+                types.players.remove(player.getUniqueId());
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgDisable()));
+
+            } else {
+                types.players.put(player.getUniqueId(), Type.TOTEM_SPIRAL);
+                effects.spawnSpiralParticle(player, Particle.TOTEM_OF_UNDYING, 100, 1.0, 3, 3, 30);
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
+
+            }
+
             return true;
         }
 

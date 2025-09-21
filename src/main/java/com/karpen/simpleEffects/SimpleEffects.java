@@ -164,6 +164,7 @@ public final class SimpleEffects extends JavaPlugin {
         config.setRightsPurple(configuration.getString("rights.purple", "karpen.simpleeffects.purple"));
         config.setRightsNotes(configuration.getString("rights.notes", "karpen.simpleeffects.notes"));
         config.setRightsCloud(configuration.getString("rights.cloud", "karpen.simpleeffects.cloud"));
+        config.setRightsTotemSpiral(configuration.getString("rights.totem_spiral", "karpen.totem_spiral"));
 
 
         switch (configuration.getString("lang", "en").toLowerCase()){
@@ -196,6 +197,7 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setItemPurpleName(configuration.getString("en.purple", "&5Purple"));
                 config.setItemNotesName(configuration.getString("en.notes", "&3Notes"));
                 config.setItemCloudName(configuration.getString("en.cloud", "&7Cloud"));
+                config.setItemTotemSpiralName(configuration.getString("en.totem_spiral", "&eTotem spiral"));
 
                 break;
             case "ru":
@@ -227,6 +229,7 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setItemPurpleName(configuration.getString("ru.purple", "&5Purple"));
                 config.setItemNotesName(configuration.getString("ru.notes", "&3Notes"));
                 config.setItemCloudName(configuration.getString("ru.cloud", "&7Cloud"));
+                config.setItemTotemSpiralName(configuration.getString("ru.totem_spiral", "&eTotem spiral"));
 
                 break;
             case "jp":
@@ -258,6 +261,7 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setItemPurpleName(configuration.getString("jp.purple", "&5Purple"));
                 config.setItemNotesName(configuration.getString("jp.notes", "&3Notes"));
                 config.setItemCloudName(configuration.getString("jp.cloud", "&7Cloud"));
+                config.setItemTotemSpiralName(configuration.getString("jp.totem_spiral", "&eTotem spiral"));
 
                 break;
             case "be":
@@ -289,6 +293,7 @@ public final class SimpleEffects extends JavaPlugin {
                 config.setItemPurpleName(configuration.getString("be.purple", "&5Purple"));
                 config.setItemNotesName(configuration.getString("be.notes", "&3Notes"));
                 config.setItemCloudName(configuration.getString("be.cloud", "&7Cloud"));
+                config.setItemTotemSpiralName(configuration.getString("be.totem_spiral", "&eTotem spiral"));
 
                 break;
         }

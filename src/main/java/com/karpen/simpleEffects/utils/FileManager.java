@@ -2,6 +2,7 @@ package com.karpen.simpleEffects.utils;
 
 import com.karpen.simpleEffects.SimpleEffects;
 import com.karpen.simpleEffects.model.Type;
+import org.bukkit.Bukkit;
 
 import java.io.*;
 import java.util.*;
@@ -34,24 +35,25 @@ public class FileManager {
 
     public Map<UUID, Type> loadPlayers() {
         File file = new File(plugin.getDataFolder(), "players.dat");
+        Map<UUID, Type> data = new HashMap<>();
 
         if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            return new HashMap<>();
+            return data;
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-             Map<UUID, Type> res = (Map<UUID, Type>) ois.readObject();
-             if (res == null) return new HashMap<>();
-             else return res;
-        } catch (Exception e) {
+            Object obj = ois.readObject();
+            if (obj instanceof Map) {
+                data = (Map<UUID, Type>) obj;
+            }
+        } catch (EOFException e) {
+            savePlayers(new HashMap<>());
             throw new RuntimeException(e);
+        } catch (IOException | ClassNotFoundException e) {
+           throw new RuntimeException(e);
         }
+
+        return data;
     }
 
     public void removePlayer(UUID playerId) {

@@ -262,4 +262,41 @@ public class Effects {
     private interface ParticleEffectHandler {
         void handle(Location location, Config config) throws Exception;
     }
+
+    public void spawnSpiralParticle(Player player, Particle particle, int duration, double radius, double height, int rotations, int particlesPerRotation) {
+        new BukkitRunnable() {
+            int ticks = 0;
+            double currentAngle = 0;
+
+            @Override
+            public void run() {
+                if (!player.isOnline()) {
+                    this.cancel();
+                    return;
+                }
+
+                Type playerType = types.players.get(player.getUniqueId());
+                if (playerType == null || !playerType.equals(Type.TOTEM_SPIRAL)) {
+                    this.cancel();
+                    return;
+                }
+
+                Location playerLoc = player.getLocation();
+
+                double progress = (ticks % particlesPerRotation) / (double) particlesPerRotation;
+                double y = progress * height;
+
+                //currentAngle = 2 * Math.PI * rotations * progress;
+                currentAngle = Math.PI * rotations * progress;
+
+                double x = radius * Math.cos(currentAngle);
+                double z = radius * Math.sin(currentAngle);
+
+                Location particleLoc = playerLoc.clone().add(x, y, z);
+                player.getWorld().spawnParticle(particle, particleLoc, 1, 0, 0, 0, 0);
+
+                ticks++;
+            }
+        }.runTaskTimer(plugin, 0L, 2L);
+    }
 }

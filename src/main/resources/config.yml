@@ -2,7 +2,7 @@
 
 # Config version
 # Don't change this parameter
-config-version: 5.2
+config-version: 6.0
 
 # For change color use ampersand and §
 # Example &fHello or §fWorld
@@ -48,6 +48,7 @@ rights:
   purple: "karpen.simpleeffects.purple"
 
   cloud: "karpen.simpleeffects.cloud"
+  totem_spiral: "karpen.simpleefects.totem_spiral"
 
 # Count particle
 count:
@@ -92,14 +93,15 @@ en:
   purple: "&5Purple"
   notes: "&3Notes"
   cloud: "&7Cloud"
+  totem_spiral: "&eTotem spiral"
 
   # Warning
   warning: "&cWhile using this effect you may see flashes and blurry images."
 
   err-console: "&cYou can't send this command"
   err-perms: "&cYou can't have permission for using this"
-  err-args: "&cUsing /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
-  err-command: "&cInvalid command. Use /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
+  err-args: "&cUsing /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
+  err-command: "&cInvalid command. Use /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
 
 # Japanese
 jp:
@@ -121,14 +123,15 @@ jp:
   purple: "&5Purple"
   notes: "&3Notes"
   cloud: "&7Cloud"
+  totem_spiral: "&eTotem spiral"
 
   # Warning
   warning: "&cこの効果を使用すると、フラッシュやぼやけた画像が見える場合があります。"
 
   err-console: "&cこのコマンドは送信できません"
   err-perms: "&cこれを使用する権限がありません"
-  err-args: "&c/eff を使用する <cherry | endrod | totem | heart | pale | purple | note | cloud>"
-  err-command: "&c無効なコマンドです。/eff <cherry | endrod | totem | heart | pale | purple | note | cloud> を使用してください。"
+  err-args: "&c/eff を使用する <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
+  err-command: "&c無効なコマンドです。/eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>> を使用してください。"
 
 # Russian
 ru:
@@ -150,14 +153,15 @@ ru:
   purple: "&5Purple"
   notes: "&3Notes"
   cloud: "&7Cloud"
+  totem_spiral: "&eTotem spiral"
 
   # Warning
   warning: "&cПри использовании этого эффекта вы можете увидеть вспышки и размытие изображения."
 
   err-console: "&cЭту команду может отправлять только игрок"
   err-perms: "&cВы не имейте прав для использования этой команды"
-  err-args: "&cИспользуйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>>"
-  err-command: "&cНеизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
+  err-args: "&cИспользуйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
+  err-command: "&cНеизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
 
 # Belarusian
 be:
@@ -179,11 +183,12 @@ be:
   purple: "&5Purple"
   notes: "&3Notes"
   cloud: "&7Cloud"
+  totem_spiral: "&eTotem spiral"
 
   # Warning
   warning: "&cПры выкарыстанні гэтага эфекту вы можаце выбліскі і размыццё малюнка."
 
   err-console: "&cГэту каманду можа адпрауляць толькі ігрок"
   err-perms: "&cВы не маеце прау для выкарыставання гэтай каманды"
-  err-args: "&cВыкарыстовывайце /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
-  err-command: "&cНевядомая каманда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud>"
+  err-args: "&cВыкарыстовывайце /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
+  err-command: "&cНевядомая каманда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"

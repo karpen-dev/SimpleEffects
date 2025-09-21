@@ -74,6 +74,10 @@ public class MainListener implements Listener {
         if (types.players.get(playerId) != null && types.players.get(playerId).equals(Type.CLOUD)) {
             EffectAppler.startCloudEffect(event.getPlayer());
         }
+
+        if (types.players.get(playerId) != null && types.players.get(playerId).equals(Type.TOTEM_SPIRAL)) {
+            effects.spawnSpiralParticle(event.getPlayer(), Particle.TOTEM_OF_UNDYING, 100, 1.0, 3, 3, 30);
+        }
     }
 
     @EventHandler

@@ -43,7 +43,8 @@ public class SelectEffectMenu implements Listener {
         inventory.setItem(6, purpleItem(player));
         inventory.setItem(7, noteItem(player));
 
-        inventory.setItem(13, cloudItem(player));
+        inventory.setItem(12, cloudItem(player));
+        inventory.setItem(14, totemSpiralItem(player));
 
         player.openInventory(inventory);
     }
@@ -67,7 +68,8 @@ public class SelectEffectMenu implements Listener {
                 case 5 -> EffectAppler.activeEff(player, Type.PALE);
                 case 6 -> EffectAppler.activeEff(player, Type.PURPLE);
                 case 7 -> EffectAppler.activeEff(player, Type.NOTE);
-                case 13 -> EffectAppler.activeEff(player, Type.CLOUD);
+                case 12 -> EffectAppler.activeEff(player, Type.CLOUD);
+                case 14 -> EffectAppler.activeEff(player, Type.TOTEM_SPIRAL);
             }
         }
     }
@@ -213,6 +215,33 @@ public class SelectEffectMenu implements Listener {
         List<String> lore = new ArrayList<>();
 
         if (types.players.containsKey(player.getUniqueId()) && types.players.get(player.getUniqueId()).equals(Type.CLOUD)){
+            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable()));
+        } else {
+            lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable()));
+        }
+
+        if (config.getWarning() != null){
+            lore.add(" ");
+            lore.add(ChatColor.translateAlternateColorCodes('&', config.getWarning()));
+        }
+
+        meta.setLore(lore);
+
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
+    private ItemStack totemSpiralItem(Player player){
+        ItemStack item = new ItemStack(Material.ORANGE_DYE, 1);
+        ItemMeta meta = item.getItemMeta();
+
+        assert meta != null;
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', config.getItemTotemSpiralName()));
+
+        List<String> lore = new ArrayList<>();
+
+        if (types.players.containsKey(player.getUniqueId()) && types.players.get(player.getUniqueId()).equals(Type.TOTEM_SPIRAL)){
             lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsDisable()));
         } else {
             lore.add(ChatColor.translateAlternateColorCodes('&', config.getItemsEnable()));

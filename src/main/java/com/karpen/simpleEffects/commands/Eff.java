@@ -53,8 +53,24 @@ public class Eff implements CommandExecutor {
             case "note" -> EffectAppler.activeEff(player, Type.NOTE);
             case "purple" -> EffectAppler.activeEff(player, Type.PURPLE);
             case "cloud" -> EffectAppler.activeEff(player, Type.CLOUD);
+            case "spiral" -> selectSpiral(player, strings);
             default -> errCmd(player);
         };
+    }
+
+    private boolean selectSpiral(Player player, String[] args) {
+        if (args.length != 2) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getErrArgs()));
+
+            return true;
+        }
+
+        switch (args[1].toLowerCase()) {
+            case "totem" -> EffectAppler.activeEff(player, Type.TOTEM_SPIRAL);
+            default -> errCmd(player);
+        }
+
+        return true;
     }
 
     private boolean errCmd(Player player) {
