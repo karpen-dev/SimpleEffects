@@ -1,5 +1,6 @@
 package com.karpen.simpleEffects.utils;
 
+import com.karpen.simpleEffects.api.SimpleEffectsApi;
 import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
@@ -16,12 +17,14 @@ public class EffectAppler {
     private static Effects effects;
     private static Types types;
     private static Map<Player, Inventory> playerInventors;
+    private static SimpleEffectsApi api;
 
-    public EffectAppler(Config config, Effects effects, Types types, Map<Player, Inventory> playerInventors) {
+    public EffectAppler(Config config, Effects effects, Types types, Map<Player, Inventory> playerInventors, SimpleEffectsApi api) {
         EffectAppler.config = config;
         EffectAppler.effects = effects;
         EffectAppler.types = types;
         EffectAppler.playerInventors = playerInventors;
+        EffectAppler.api = api;
     }
 
     public static boolean activeEff(Player player, Type type) {
@@ -189,6 +192,8 @@ public class EffectAppler {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getMsgEnable()));
             }
         }
+
+        api.callEvent(player);
 
         return true;
     }

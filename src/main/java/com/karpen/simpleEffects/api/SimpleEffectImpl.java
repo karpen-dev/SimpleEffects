@@ -6,7 +6,11 @@ import com.karpen.simpleEffects.model.Config;
 import com.karpen.simpleEffects.model.Type;
 import com.karpen.simpleEffects.model.Types;
 import com.karpen.simpleEffects.utils.FileManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleEffectImpl implements SimpleEffectsApi {
 
@@ -16,12 +20,24 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
     private FileManager fileManager;
     private DBManager dbManager;
 
+    private List<SimpleEffectsListener> listeners = new ArrayList<>();
+
     public SimpleEffectImpl(SimpleEffects plugin, Types types, Config config, FileManager fileManager, DBManager dbManager){
         this.plugin = plugin;
         this.types = types;
         this.config = config;
         this.fileManager = fileManager;
         this.dbManager = dbManager;
+    }
+
+    @Override
+    public void registerListener(SimpleEffectsListener listener) {
+        listeners.add(listener);
+    }
+
+    @Override
+    public void unRegisterListener(SimpleEffectsListener listener) {
+        listeners.remove(listener);
     }
 
     @Override
@@ -62,6 +78,20 @@ public class SimpleEffectImpl implements SimpleEffectsApi {
             case "MYSQL":
                 dbManager.savePlayers(types.players);
                 break;
+        }
+    }
+
+    @Override
+    public void callEvent(Player player) {
+        SimpleEffectsEvent event = new SimpleEffectsEvent(player);
+        Bukkit.getPluginManager().callEvent(event);
+
+        for (SimpleEffectsListener listener : listeners) {
+            try {
+                listener.onEffectChange(player);
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

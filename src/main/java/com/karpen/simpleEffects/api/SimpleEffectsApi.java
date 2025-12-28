@@ -9,4 +9,7 @@ public interface SimpleEffectsApi {
     Type getEffect(Player player);
     void loadPlayers();
     void savePlayers();
+    void registerListener(SimpleEffectsListener listener);
+    void unRegisterListener(SimpleEffectsListener listener);
+    void callEvent(Player player);
 }

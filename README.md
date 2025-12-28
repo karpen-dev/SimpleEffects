@@ -1,9 +1,5 @@
 ## SimpleEffects plugin
 
-**[Download latest version](https://karpen.dev/pl/se)**
-
-[<img src="https://cdn.karpendev.ru/stoping.png">](https://karpen.dev/pl/se)
-
 If you are using a version lower than 1.21.4, don't report issues.
 
 Command: ``/eff``  
