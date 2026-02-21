@@ -335,23 +335,7 @@ public final class SimpleEffects extends JavaPlugin {
     }
 
     public static SimpleEffectsApi getApi() {
-        try {
-            SimpleEffects instance = SimpleEffects.instance;
-            if (instance == null) {
-                throw new IllegalStateException("SimpleEffects not initialized");
-            }
-
-            if (instance.api == null) {
-                synchronized (SimpleEffects.class) {
-                    if (instance.api == null) {
-                        instance.api = new SimpleEffectImpl(instance, instance.types, instance.config, instance.manager, instance.dbManager);
-                    }
-                }
-            }
-            return instance.api;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return instance.api;
     }
 
     public boolean isOldVer(){
