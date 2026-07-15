@@ -1,0 +1,6 @@
+package jp.karpen.simpleEffects.model;
+
+public enum Type {
+    CHERRY, ENDROD, TOTEM, PALE, HEART, PURPLE, NOTE,
+    TOTEM_SPIRAL, ENDROD_SPIRAL, CHERRY_SPIRAL, PALE_SPIRAL, PURPLE_SPIRAL, NOTE_SPIRAL
+}

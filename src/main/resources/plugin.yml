@@ -1,6 +1,6 @@
 name: SimpleEffects
-version: '1.6'
-main: com.karpen.simpleEffects.SimpleEffects
+version: '2.0'
+main: jp.karpen.simpleEffects.SimpleEffects
 api-version: '1.21'
 commands:
   eff:

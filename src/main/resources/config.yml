@@ -2,7 +2,7 @@
 
 # Config version
 # Don't change this parameter
-config-version: 6.0
+config-version: 7.0
 
 # For change color use ampersand and §
 # Example &fHello or §fWorld
@@ -10,30 +10,9 @@ config-version: 6.0
 # Plugin language - ru, en, jp, be
 lang: en
 
-# Save method
-# TXT for default saving to file
-# MYSQL for mysql database saving
-method: TXT
-
-# Waring for flashes effects
-# Don't recommend disable this
-warning: true
-
 update:
   using: true
   msg: "&cYou do not have the latest version of the plugin installed. You can download the latest version at https://modrinth.com/plugin/simpleeffects"
-
-# If you using mysql, change db config
-db:
-
-  # Connection url
-  url: "jdbc:mysql://localhost:3306/effects"
-
-  # db username
-  username: "root"
-
-  # db user password
-  password: "root"
 
 # Separate rights
 rights:
@@ -47,8 +26,6 @@ rights:
   notes: "karpen.simpleeffects.notes"
   purple: "karpen.simpleeffects.purple"
 
-  cloud: "karpen.simpleeffects.cloud"
-
   totem_spiral: "karpen.simpleefects.totem_spiral"
   endrod_spiral: "karpen.simpleefects.endrod_spiral"
   cherry_spiral: "karpen.simpleefects.cherry_spiral"
@@ -56,28 +33,16 @@ rights:
   purple_spiral: "karpen.simpleefects.purple_spiral"
   note_spiral: "karpen.simpleefects.note_spiral"
 
-# Count particle
-count:
-  cherry: 1
-  endrod: 1
-  totem: 1
-  heart: 1
-  pale: 1
-  notes: 1
-  purple: 1
-
-  # The count of cloud or spiral effects doesn't change
-
 # Messages
 
 # The translation of the plugin is not perfect and may contain errors,
-# I will be glad to receive feedback from X: https://x.com/karpen5i5
+# I will be glad to receive feedback from X: https://x.com/akariyapl
 
 # プラグインの翻訳は完璧ではなく、誤りが含まれている可能性があります。
-# X: https://x.com/karpen5i5 からのフィードバックをお待ちしております。
+# X: https://x.com/akariyapl からのフィードバックをお待ちしております。
 
 # Перевод плагина не идеальный и может содержать ошибки,
-# буду рад фитбеку X: https://x.com/karpen5i5
+# буду рад фитбеку X: https://x.com/akariyapl
 
 # English
 en:
@@ -88,18 +53,13 @@ en:
   item-enable: "&aEnable this effect"
   item-disable: "&cDisable this effect"
 
-  unsupported-ver: "&cYou are using a version lower than 1.21.8, the some feature not available"
-  unsupported-name: "&cDon't supported to you version"
-
   cherry: "&dCherry"
   endrod: "&fEndrod"
   totem: "&eTotem"
   heart: "&cHeart"
   pale: "&8Pale"
   purple: "&5Purple"
-  notes: "&3Notes"
-
-  cloud: "&7Cloud"
+  note: "&3Notes"
 
   totem_spiral: "&eTotem spiral"
   endrod_spiral: "&fEndrod spiral"
@@ -113,8 +73,8 @@ en:
 
   err-console: "&cYou can't send this command"
   err-perms: "&cYou can't have permission for using this"
-  err-args: "&cUsing /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
-  err-command: "&cInvalid command. Use /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
+  err-args: "&cUsing /eff <cherry | endrod | totem | heart | pale | purple | note | spiral <effect>>"
+  err-command: "&cInvalid command. Use /eff <cherry | endrod | totem | heart | pale | purple | note | spiral <effect>>"
 
 # Japanese
 jp:
@@ -125,18 +85,13 @@ jp:
   item-enable: "&aこの効果を有効にする"
   item-disable: "&cこの効果を無効にする"
 
-  unsupported-ver: "&c1.21.8より前のバージョンを使用しています。一部の機能はご利用いただけません。"
-  unsupported-name: "&cあなたのバージョンではサポートされていません"
-
   cherry: "&dCherry"
   endrod: "&fEndrod"
   totem: "&eTotem"
   heart: "&cHeart"
   pale: "&8Pale"
   purple: "&5Purple"
-  notes: "&3Notes"
-
-  cloud: "&7Cloud"
+  note: "&3Notes"
 
   totem_spiral: "&eTotem spiral"
   endrod_spiral: "&fEndrod spiral"
@@ -150,8 +105,8 @@ jp:
 
   err-console: "&cこのコマンドは送信できません"
   err-perms: "&cこれを使用する権限がありません"
-  err-args: "&c/eff を使用する <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
-  err-command: "&c無効なコマンドです。/eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>> を使用してください。"
+  err-args: "&c/eff を使用する <cherry | endrod | totem | heart | pale | purple | note | spiral <effect>>"
+  err-command: "&c無効なコマンドです。/eff <cherry | endrod | totem | heart | pale | purple | note | spiral <effect>> を使用してください。"
 
 # Russian
 ru:
@@ -162,18 +117,13 @@ ru:
   item-enable: "&aВключить этот эффект"
   item-disable: "&cВыключить этот эффект"
 
-  unsupported-ver: "&cВы используйте версию сервера ниже 1.21.8, эта функция недоступна"
-  unsupported-name: "&cНедоступно на вашей версии"
-
   cherry: "&dCherry"
   endrod: "&fEndrod"
   totem: "&eTotem"
   heart: "&cHeart"
   pale: "&8Pale"
   purple: "&5Purple"
-  notes: "&3Notes"
-
-  cloud: "&7Cloud"
+  note: "&3Notes"
 
   totem_spiral: "&eTotem spiral"
   endrod_spiral: "&fEndrod spiral"
@@ -187,8 +137,8 @@ ru:
 
   err-console: "&cЭту команду может отправлять только игрок"
   err-perms: "&cВы не имейте прав для использования этой команды"
-  err-args: "&cИспользуйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
-  err-command: "&cНеизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
+  err-args: "&cИспользуйте /eff <cherry | endrod | totem | heart | pale | purple | note | spiral <effect>>"
+  err-command: "&cНеизвестная команда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | spiral <effect>>"
 
 # Belarusian
 be:
@@ -199,18 +149,13 @@ be:
   item-enable: "&aУключыць гэты эфект"
   item-disable: "&cВыключыць гэты эфект"
 
-  unsupported-ver: "&cВы карыстаецеся версію сервера ніжэй 1.21.8, гэтая функцыя недаступная"
-  unsupported-name: "&cНедаступна на вашай версіі"
-
   cherry: "&dCherry"
   endrod: "&fEndrod"
   totem: "&eTotem"
   heart: "&cHeart"
   pale: "&8Pale"
   purple: "&5Purple"
-  notes: "&3Notes"
-
-  cloud: "&7Cloud"
+  note: "&3Notes"
 
   totem_spiral: "&eTotem spiral"
   endrod_spiral: "&fEndrod spiral"
@@ -224,5 +169,5 @@ be:
 
   err-console: "&cГэту каманду можа адпрауляць толькі ігрок"
   err-perms: "&cВы не маеце прау для выкарыставання гэтай каманды"
-  err-args: "&cВыкарыстовывайце /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
-  err-command: "&cНевядомая каманда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <totem>>"
+  err-args: "&cВыкарыстовывайце /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <effect>>"
+  err-command: "&cНевядомая каманда. Используйте /eff <cherry | endrod | totem | heart | pale | purple | note | cloud | spiral <effect>>"
