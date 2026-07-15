@@ -1,6 +1,6 @@
 ## SimpleEffects plugin
 
-If you are using a version lower than 1.21.4, don't report issues.
+Supported version 1.21.4 - 26.1.2
 
 Command: ``/eff``  
 To enable effects, give permission `karpen.simpleEffects.eff`.  
@@ -31,7 +31,7 @@ Available at:
 <dependency>
     <groupId>com.github.karpen-dev</groupId>
     <artifactId>SimpleEffects</artifactId>
-    <version>YOU VERSION</version>
+    <version>PLUGIN VERSION</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -51,7 +51,7 @@ repositories {
 }
 
 // Main dependency
-compileOnly 'com.github.karpen-dev:SimpleEffects:YOU VERSION'
+compileOnly 'com.github.karpen-dev:SimpleEffects:PLUGIN VERSION'
 ```
 </details>
 
@@ -69,7 +69,7 @@ repositories {
 }
 
 // Main dependency
-compileOnly("com.github.karpen-dev:SimpleEffects:YOU VERSION")
+compileOnly("com.github.karpen-dev:SimpleEffects:PLUGIN VERSION")
 ```
 </details>
 
@@ -92,11 +92,7 @@ softDepend: [SimpleEffects]
 SimpleEffectsApi api = SimpleEffects.getApi();
 
 // Active cherry effect
-api.active(Type.CHERRY, player); // Type: CHERRY, ENDROD, TOTEM, PALE, HEART, PURPLE, NOTE, CLOUD
-api.disable(Type.CHERRY, player); // Disable effect if its active
-api.getEffect(player); // return Type enum
-api.savePlayers(); // save players
-api.loadPlayers(); // load players
+api.toggle(Player, Type)
 ```
 </details>
 
@@ -108,10 +104,7 @@ api.loadPlayers(); // load players
 val api = SimpleEffects.getApi();
 
 // Active cherry effect
-api.active(Type.CHERRY, player); // Type: CHERRY, ENDROD, TOTEM, PALE, HEART, PURPLE, NOTE, CLOUD
-api.disable(Type.CHERRY, player); // Disable effect if its active
-api.getEffect(player); // return Type enum
-api.savePlayers(); // save players
-api.loadPlayers(); // load players
+api.toggle(player, Type);
+
 ```
 </details>
