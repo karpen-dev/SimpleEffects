@@ -29,9 +29,7 @@ public class SelectEffectMenu implements Listener {
 
     public void openMenu(Player player){
         Inventory inventory = Bukkit.createInventory(player, 27,
-                ChatColor.translateAlternateColorCodes('&', String.format(
-                        "%s.menu-name",
-                        SimpleEffects.PLUGIN_LANGUAGE)));
+                SimpleEffects.getLanguageManager().getMessage("menu-name"));
 
         playerInventors.put(player, inventory);
 
@@ -85,18 +83,9 @@ public class SelectEffectMenu implements Listener {
         ItemMeta meta = item.getItemMeta();
 
         assert meta != null;
-        Configuration config = SimpleEffects.getConfiguration();
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&',
-                Objects.requireNonNull(config.getString(String.format(
-                    "%s.%s",
-                    SimpleEffects.PLUGIN_LANGUAGE,
-                    type.toString().toLowerCase())))));
+        meta.setDisplayName(SimpleEffects.getLanguageManager().getMessage(type.toString().toLowerCase()));
 
-        meta.setLore(List.of(ChatColor.translateAlternateColorCodes('&',
-                Objects.requireNonNull(config.getString(String.format(
-                    "%s.item-enable",
-                    SimpleEffects.PLUGIN_LANGUAGE))))
-        ));
+        meta.setLore(List.of(SimpleEffects.getLanguageManager().getMessage("item-enable")));
 
         item.setItemMeta(meta);
 

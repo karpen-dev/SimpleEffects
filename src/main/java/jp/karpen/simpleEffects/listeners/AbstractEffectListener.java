@@ -43,16 +43,12 @@ public abstract class AbstractEffectListener implements Listener {
             enabledPlayers.remove(player.getUniqueId());
             fileManager.removePlayer(effectType, player.getUniqueId());
 
-            player.sendMessage(ChatColor
-                    .translateAlternateColorCodes('&', Objects.requireNonNull(config.getString(
-                            String.format("%s.disable-effect", SimpleEffects.PLUGIN_LANGUAGE)))));
+            player.sendMessage(SimpleEffects.getLanguageManager().getMessage("disable-effect"));
         } else {
             enabledPlayers.add(player.getUniqueId());
             fileManager.savePlayer(effectType, player.getUniqueId());
 
-            player.sendMessage(ChatColor
-                    .translateAlternateColorCodes('&', Objects.requireNonNull(config.getString(
-                            String.format("%s.enable-effect", SimpleEffects.PLUGIN_LANGUAGE)))));
+            player.sendMessage(SimpleEffects.getLanguageManager().getMessage("enable-effect"));
 
             runSpiralParticle(player);
         }

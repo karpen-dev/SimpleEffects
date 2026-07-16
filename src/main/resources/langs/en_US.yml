@@ -1,0 +1,29 @@
+enable-effect: "&aEffect enabled"
+disable-effect: "&aEffect disabled"
+
+menu-name: "Select effect"
+item-enable: "&aEnable this effect"
+item-disable: "&cDisable this effect"
+
+cherry: "&dCherry"
+endrod: "&fEndrod"
+totem: "&eTotem"
+heart: "&cHeart"
+pale: "&8Pale"
+purple: "&5Purple"
+note: "&3Notes"
+
+totem_spiral: "&eTotem spiral"
+endrod_spiral: "&fEndrod spiral"
+cherry_spiral: "&dCherry spiral"
+pale_spiral: "&8Pale spiral"
+purple_spiral: "&5Purple spiral"
+note_spiral: "&3 Note spiral"
+
+# Warning
+warning: "&cWhile using this effect you may see flashes and blurry images."
+
+err-console: "&cYou can't send this command"
+err-perms: "&cYou can't have permission for using this"
+err-args: "&cUsing /eff <cherry | endrod | totem | heart | pale | purple | note | spiral <effect>>"
+err-command: "&cInvalid command. Use /eff <cherry | endrod | totem | heart | pale | purple | note | spiral <effect>>"

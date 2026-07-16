@@ -17,6 +17,7 @@ public class EffReload implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         plugin.reloadConfig();
+        SimpleEffects.getLanguageManager().loadLanguages();
 
         commandSender.sendMessage(ChatColor.GREEN + "Simple effects reloaded");
 

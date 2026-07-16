@@ -2,15 +2,12 @@ package jp.karpen.simpleEffects.commands;
 
 import jp.karpen.simpleEffects.SimpleEffects;
 import jp.karpen.simpleEffects.menus.SelectEffectMenu;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class Eff implements CommandExecutor {
 
@@ -27,9 +24,7 @@ public class Eff implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (!(commandSender instanceof Player player)){
-            commandSender.sendMessage(ChatColor
-                    .translateAlternateColorCodes('&', Objects.requireNonNull(config.getString(
-                                    String.format("%s.err-console", SimpleEffects.PLUGIN_LANGUAGE)))));
+            commandSender.sendMessage(SimpleEffects.getLanguageManager().getMessage("err-console"));
 
             return true;
         }
@@ -57,9 +52,7 @@ public class Eff implements CommandExecutor {
 
     private void selectSpiral(Player player, String[] args) {
         if (args.length != 2) {
-            player.sendMessage(ChatColor
-                    .translateAlternateColorCodes('&', Objects.requireNonNull(config.getString(
-                            String.format("%s.err-args", SimpleEffects.PLUGIN_LANGUAGE)))));
+            player.sendMessage(SimpleEffects.getLanguageManager().getMessage("err-args"));
 
             return;
         }
@@ -77,9 +70,7 @@ public class Eff implements CommandExecutor {
     }
 
     private boolean errCmd(Player player) {
-        player.sendMessage(ChatColor
-                .translateAlternateColorCodes('&', Objects.requireNonNull(config.getString(
-                        String.format("%s.err-command", SimpleEffects.PLUGIN_LANGUAGE)))));
+        player.sendMessage(SimpleEffects.getLanguageManager().getMessage("err-command"));
         return true;
     }
 }

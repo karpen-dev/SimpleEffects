@@ -1,0 +1,29 @@
+enable-effect: "&aエフェクト オン にする"
+disable-effect: "&aエフェクト けす"
+
+menu-name: "エフェクト を せんたく"
+item-enable: "&aこの こうかを ゆうこう にする"
+item-disable: "&cこの こうかを むこう にする"
+
+cherry: "&dちぇりー"
+endrod: "&fえんどろっど"
+totem: "&eとーてむ"
+heart: "&cはーと"
+pale: "&8ぺいる"
+purple: "&5ぱーぷる"
+note: "&3のーと"
+
+totem_spiral: "&eとーてむ すぱいらる"
+endrod_spiral: "&fえんどろっど すぱいらる"
+cherry_spiral: "&dちぇりー すぱいらる"
+pale_spiral: "&8ぺいる すぱいらる"
+purple_spiral: "&5ぱーぷる すぱいらる"
+note_spiral: "&3のーと すぱいらる"
+
+# Warning
+warning: "&cこの こうかを つかうと、ふらっしゅ や ぼやけた えいぞうが みえる ことが あります。"
+
+err-console: "&cこの こまんどは そうしん できません"
+err-perms: "&cこれを つかう けんげんが ありません"
+err-args: "&c/eff を つかう <cherry | endrod | totem | heart | pale | purple | note | spiral <エフェクト>>"
+err-command: "&cむこうな こまんどです。/eff <cherry | totem | heart | pale | purple | spiral <エフェクト>> を つかって ください。"

@@ -11,6 +11,7 @@ import jp.karpen.simpleEffects.listeners.spiral.*;
 import jp.karpen.simpleEffects.menus.SelectEffectMenu;
 import jp.karpen.simpleEffects.utils.CheckVersion;
 import jp.karpen.simpleEffects.utils.FileManager;
+import jp.karpen.simpleEffects.utils.LanguageManager;
 import jp.karpen.simpleEffects.utils.TabCompleter;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -31,6 +32,9 @@ public final class SimpleEffects extends JavaPlugin {
 
     @Getter
     private static Configuration configuration;
+
+    @Getter
+    private static LanguageManager languageManager;
 
     @Getter
     private static SimpleEffectsApi api;
@@ -61,6 +65,7 @@ public final class SimpleEffects extends JavaPlugin {
 
         saveDefaultConfig();
         configuration = getConfig();
+        languageManager = new LanguageManager(this);
         PLUGIN_LANGUAGE = configuration.getString("lang");
 
         FileManager manager = new FileManager(this);
