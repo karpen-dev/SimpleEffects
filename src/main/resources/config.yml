@@ -2,7 +2,7 @@
 
 # Config version
 # Don't change this parameter
-config-version: 7.0
+config-version: 7.1
 
 # For change color use ampersand and §
 # Example &fHello or §fWorld
